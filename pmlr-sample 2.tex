@@ -1,0 +1,915 @@
+\PassOptionsToPackage{noend}{algorithm2e}
+\documentclass[pmlr]{jmlr}% new name PMLR (Proceedings of Machine Learning Research)
+
+ % The following packages will be automatically loaded:
+ % amsmath, amssymb, natbib, graphicx, url, algorithm2e
+
+ %\usepackage{rotating}% for sideways figures and tables
+\usepackage{longtable}% for long tables
+
+ % The booktabs package is used by this sample document
+ % (it provides \toprule, \midrule and \bottomrule).
+ % Remove the next line if you don't require it.
+\usepackage{booktabs}
+ % The siunitx package is used by this sample document
+ % to align numbers in a column by their decimal point.
+ % Remove the next line if you don't require it.
+\usepackage[load-configurations=version-1]{siunitx} % newer version
+ %\usepackage{siunitx}
+
+ % The following command is just for this sample document:
+\newcommand{\cs}[1]{\texttt{\char`\\#1}}
+
+ % Define an unnumbered theorem just for this sample document:
+\theorembodyfont{\upshape}
+\theoremheaderfont{\scshape}
+\theorempostheader{:}
+\theoremsep{\newline}
+\newtheorem*{note}{Note}
+
+ % change the arguments, as appropriate, in the following:
+\jmlrvolume{1}
+\jmlryear{2010}
+\jmlrworkshop{Workshop Title}
+
+
+% Han's packages
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, matrix, tikzmark}
+\usepackage{subcaption}
+\newcommand{\refs}{%
+    \textcolor{red}{\textbf{[NEED REF]}}%
+    }
+\usepackage[table]{xcolor}
+
+
+
+
+\title{Association Transformations in Multi-tier Structures}
+
+%\title[Short Title]{Full Title of Article\titlebreak This Title Has
+%A Line Break\titletag{\thanks{sample footnote}}}
+%
+ % Use \Name{Author Name} to specify the name.
+
+ % Spaces are used to separate forenames from the surname so that
+ % the surnames can be picked up for the page header and copyright footer.
+ 
+ % If the surname contains spaces, enclose the surname
+ % in braces, e.g. \Name{John {Smith Jones}} similarly
+ % if the name has a "von" part, e.g \Name{Jane {de Winter}}.
+ % If the first letter in the forenames is a diacritic
+ % enclose the diacritic in braces, e.g. \Name{{\'E}louise Smith}
+
+ % *** Make sure there's no spurious space before \nametag ***
+
+ % Two authors with the same address
+%  \author{\Name{Author Name1\nametag{\thanks{with a note}}} \Email{abc@sample.com}\and
+%   \Name{Author Name2} \Email{xyz@sample.com}\\
+%   \addr Address}
+
+ % Three or more authors with the same address:
+ % \author{\Name{Author Name1} \Email{an1@sample.com}\\
+ %  \Name{Author Name2} \Email{an2@sample.com}\\
+ %  \Name{Author Name3} \Email{an3@sample.com}\\
+ %  \Name{Author Name4} \Email{an4@sample.com}\\
+ %  \Name{Author Name5} \Email{an5@sample.com}\\
+ %  \Name{Author Name6} \Email{an6@sample.com}\\
+ %  \Name{Author Name7} \Email{an7@sample.com}\\
+ %  \Name{Author Name8} \Email{an8@sample.com}\\
+ %  \Name{Author Name9} \Email{an9@sample.com}\\
+ %  \Name{Author Name10} \Email{an10@sample.com}\\
+ %  \Name{Author Name11} \Email{an11@sample.com}\\
+ %  \Name{Author Name12} \Email{an12@sample.com}\\
+ %  \Name{Author Name13} \Email{an13@sample.com}\\
+ %  \Name{Author Name14} \Email{an14@sample.com}\\
+ %  \addr Address}
+
+
+ % Authors with different addresses:
+ % \author{\Name{Author Name1} \Email{abc@sample.com}\\
+ % \addr Address 1
+ % \AND
+ % \Name{Author Name2} \Email{xyz@sample.com}\\
+ % \addr Address 2
+ %}
+
+%\editor{Editor's name}
+ % \editors{List of editors' names}
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+%This is the abstract for this article.
+%\end{abstract}
+%\begin{keywords}
+%List of keywords
+%\end{keywords}
+
+
+\section{Introduction}
+This paper presents a method for learning transformations over multi-tier 
+representations, with a particular focus on the modification of cross-tier 
+relations (i.e., associations between tiers), which is widely used in 
+linguistics. 
+We consider a specific but linguistically important type of transformations where
+the nodes remain unchanged from input to output, while only the association relation is
+modified subject to non-crossing constraints. We formalize these 
+representations as temporally-ordered tiers with a binary association 
+relation, and the learning problem is
+therefore framed as inferring the which association relations are
+preserved, deleted, or newly introduced from observed input-output pairs.
+\begin{figure}[ht!]
+	\centering
+	
+	\begin{tikzpicture}[
+		node/.style={inner sep=1.5pt, minimum size=16pt},
+		assoc/.style={thick},
+		scale=0.9
+		]
+		
+		% ================= INPUT =================
+		
+		% top tier
+		\node[node] (a1) at (0,1.5) {$a_1$};
+		\node[node] (a2) at (1.2,1.5) {$a_2$};
+		\node[node] (a3) at (2.4,1.5) {$a_3$};
+		
+		% bottom tier
+		\node[node] (b1) at (0,0) {$b_1$};
+		\node[node] (b2) at (1.2,0) {$b_2$};
+		\node[node] (b3) at (2.4,0) {$b_3$};
+		
+		% associations
+		\draw[assoc] (a1) -- (b1);
+		\draw[assoc] (a2) -- (b2);
+		\draw[assoc] (a3) -- (b3);
+		
+		% subcaption
+		\node at (1.2,-0.8) {Input};
+		
+		% ================= ARROW =================
+		
+		\draw[->, thick] (3.5,0.75) -- (4.7,0.75);
+		
+		% ================= OUTPUT =================
+		
+		% top tier
+		\node[node] (c1) at (5.8,1.5) {$a_1$};
+		\node[node] (c2) at (7.0,1.5) {$a_2$};
+		\node[node] (c3) at (8.2,1.5) {$a_3$};
+		
+		% bottom tier
+		\node[node] (d2) at (7.0,0) {$b_2$};
+		\node[node] (d3) at (8.2,0) {$b_3$};
+		
+		% associations
+		\draw[assoc] (c1) -- (d2);
+		\draw[assoc] (c2) -- (d3);
+		\draw[assoc] (c3) -- (d3);
+		
+		% subcaption
+		\node at (7.0,-0.8) {Output};
+		
+	\end{tikzpicture}
+	
+	\caption{
+		Learning association transformations between tiers.
+	}
+\end{figure}
+
+Such multi-tiered structures have been widely used in linguistic 
+theory, such as tone-syllable associations in autosegmental 
+phonology \citep{goldsmith1976autosegmental}
+prosodic or syllable structure \citep{hayes1980metrical,
+	sagey1986representation}. This insight implies that 
+Linguistic information of different aspects are organized across multiple 
+temporally ordered tiers. Associations between tiers encode which 
+elements are linked at a given point in time, thereby capturing 
+relationships across different dimensions of the structure. We
+refer this type of graph as \textit{autosegmental graphs} (ASGs),
+which can be viewed as bipartite graphs, where 
+nodes with shared properties are organized into the same tiers. 
+Since each tier is linearly ordered, associations are subject to 
+non-crossing constraint \citep[NCC,][]{bird1994one,goldsmith1976autosegmental}.
+The core idea behind autosegmental graphs is that input-output 
+mappings are in fact more naturally characterized by rearranging 
+association lines across tiers rather than changing elements themselves.
+A large body of theoretical work on African tonal processes has demonstrated the 
+advantages of autosegmental graphs \citep{hyman2009representation}. 
+%clements2010autosegmental, oddenintroducing2013}.  
+Computationally, 
+using multi-tiered structures has been shown to reduce the complexity of 
+tonotactic patterns \citep{jardineComputationallyTone2016}.
+
+
+Previous work has modeled these structures using finite-state 
+approaches \citep{wiebe1992modelling,bird1994one,yli2013finite,
+	yli2015three}. These approaches typically convert structured 
+representations into strings or synchronized tapes to leverage 
+finite-state machinery, or rely on hard-coded mechanisms to 
+represent different types of associations.
+
+In contrast, we propose an approach that learns association 
+transformations between tiers directly over autosegmental 
+graphs using model theory and formal logic. As a preliminary 
+study, we begin with an idealized assumption: tonal processes 
+involve no changes to segmental content, but only the 
+rearrangement of association lines between the underlying 
+representation (UR) and the surface representation (SR). 
+In addition, we assume that only a single process constitutes 
+the learning target. 
+
+We show that, by adopting autosegmental graphs within a 
+model-theoretic framework of formal transductions, it is 
+possible to construct a partial order over structures and 
+apply a model-theoretic learner such as the Bottom-Up Factor 
+Inference Algorithm \citep{chandleeBufia2019,rawski2021structure}. 
+The target output of the learner is a formula that preserves 
+unchanged associations, deletes associations that must be delinked, and 
+introduces newly added associations. Learning proceeds through iterative 
+hypothesis updates while traversing a partially ordered space of logically possible structures.
+
+Furthermore, transformations that appear non-deterministic when modeled 
+over strings can instead be expressed deterministically within this 
+relational framework. To our knowledge, the problem of learning local 
+transformations of association relations in multi-tier structures has not previously been addressed in this form.
+
+
+\section{Preliminaries}
+\subsection{Autosegmental graphs}
+
+\begin{definition}[Autosegmental Graph]
+	An autosegmental graph (ASG) is a labeled bipartite graph
+	with multiple linearly-ordered tiers. Equivalently, it can be defined
+	model-theoretically as a relational structure
+	$\mathcal{A} = \langle D, \mathcal{T}, \alpha, \lhd \rangle$
+	where $D$ is a finite domain of elements; each tier $T_i \subseteq D$ 
+	is a set of nodes. $\mathcal{T} = \{T_1,\dots,T_n\}$ is a collection of tiers such that
+	$T_1 \cup T_2 \cup \dots \cup T_n = D$ and $T_i \cap T_j = \emptyset$
+	for all $i \neq j$. 
+	$\lhd$ is a binary successor relation defined between nodes on the same tier;
+	$\alpha \subseteq D \times D$ is a set of non-crossing association relations across tiers.
+\end{definition}
+
+
+ASGs represent the idea that different aspects of linguistic structure
+are organized on distinct tiers while progressing simultaneously over time.
+Each tier encodes a particular type of information,
+such as tone (pitch information), segmental (tongue shape), syllabic
+(metrical) structure. Association relations link elements across tiers that are 
+realized at the same temporal position.
+
+Note that there may be multiple tiers in ASGs, provided that the 
+elements on different tiers are disjoint. In most phonological 
+applications, ASGs typically involve two or three tiers. In this 
+work, we assume a two-tiered structure, though the definition 
+remains the same in the general case. In addition, ASGs are subject 
+to the No Crossing Constraint (NCC), which enforces temporal 
+alignment between associations.
+
+\begin{figure}[ht]
+	\centering
+	
+	% ================= GRAPH =================
+	\begin{minipage}[c]{0.30\textwidth}
+		\vspace{0pt}
+		\centering
+		
+		\begin{tikzpicture}[
+			node/.style={draw, circle, inner sep=2pt, minimum size=18pt},
+			assoc/.style={thick},
+			scale=1
+			]
+			
+			\node[node] (t1) at (0,2) {1\textsubscript{L}};
+			\node[node] (t2) at (2,2) {2\textsubscript{H}};
+			
+			\node[node] (s1) at (0,0) {3\textsubscript{$\sigma$}};
+			\node[node] (s2) at (2,0) {4\textsubscript{$\sigma$}};
+			
+			\draw (t1) -- node[midway, left] {$\alpha$} (s1);
+			\draw (t2) -- node[midway, right] {$\alpha$} (s2);
+			
+			\draw (t1) -- node[midway, above] {$\lhd$} (t2);
+			\draw (s1) -- node[midway, above] {$\lhd$} (s2);
+			
+		\end{tikzpicture}
+		
+	\end{minipage}
+	\hfill
+	% ================= MODEL =================
+	\begin{minipage}[c]{0.30\textwidth}
+		\vspace{0pt}
+		\centering
+		\footnotesize
+		
+		\[
+		\begin{aligned}
+			D &= \{1,2,3,4\} \\
+			T &= \{1,2\}\\
+			L &= \{1\}\\
+			H &= \{2\}\\
+			\sigma &= \{3,4\} \\
+			\lhd &= \{
+			\langle 1,2 \rangle,
+			\langle 3,4 \rangle
+			\} \\
+			\alpha &= \{
+			\langle 1,3 \rangle,
+			\langle 2,4 \rangle
+			\}
+		\end{aligned}
+		\]
+		
+	\end{minipage}
+	\hfill
+	% ================= MATRIX =================
+	\begin{minipage}[c]{0.22\textwidth}
+		\vspace{0pt}
+		\centering
+		
+		\[
+		\begin{array}{c|cc}
+			& L & H\\
+			\hline
+			V_1 & 1 & 0 \\
+			V_2 & 0 & 1
+		\end{array}
+		\]
+		
+	\end{minipage}
+	
+	\caption{
+		Three representations of a two-tier autosegmental graph.
+	}
+	
+\end{figure}
+\begin{definition}[No Crossing Constraint (NCC)]
+	An ASG needs to obey No Crossing Constraint. Formally,
+	For all $(x,y), (x',y') \in \alpha$,
+	\(
+	x \lhd x' \Rightarrow (y \lhd y') \vee (y = y').
+	\) and vice versa.
+\end{definition}
+
+
+In addition to representing model-theoretic relational structures 
+with graphs, one can use \textit{adjacency matrices} which use binary values to
+denote whether there is an edge between two nodes. Two nodes
+are considered \textit{adjacent} if there is an edge connecting
+them. 
+\begin{definition}[Adjacency matrix]
+	Given an ASG $\mathcal{A} = \langle D, \mathcal{T}, \alpha, \lhd \rangle$
+	and two tiers $T_i, T_j \in \mathcal{T}$, the association relation $\alpha$
+	can be represented as a binary matrix where 
+	$M_\alpha[k,\ell] = 1$ if $(x_k, y_\ell) \in \alpha$ where $x_k \in T_i, y_\ell \in T_j$; 
+	otherwise $0$.
+\end{definition}
+
+The motivation for adopting matrices is to establish a framework
+corresponding to string-based learning. Concepts such as substrings,
+subfactors, and superfactors are well developed and widely used in
+grammar inference \refs. To incorporate ASGs into this framework,
+we follow the notions of \textit{restriction} and \textit{containment} 
+proposed in \citet{chandleeBufia2019}, adapting them to graph-based
+representations through the notions of submatrices and matrix
+containment.
+
+\begin{definition}[Submatrix; comparable \ restriction in \citet{chandleeBufia2019}]
+	\label{def.submatrix}
+	\textit{
+	Let matrix $A$ be an $m \times n$ matrix. A matrix $B$ is a
+	\emph{submatrix} of $A$ if it is formed by taking
+	$k \ (1 \leq k \leq m)$ contiguous rows and
+	$v \ (1 \leq v \leq n)$ contiguous columns from $A$.
+	}
+\end{definition}
+
+\begin{definition}[Containment]
+\textit{
+An $m \times n$ matrix $A=[a_{ij}]$ is contained
+in a matrix $B$ (written $A \sqsubseteq B$) if there exists
+an $m \times n$ submatrix of $B$, denoted $B'=[b'_{ij}]$,
+such that for all $i \in [0,m]$ and $j \in [0,n]$,
+$b'_{ij} \geq a_{ij}$.
+}
+\end{definition}
+
+The containment relation provides a partial ordering over the
+space of all model-theoretic structures. As illustrated by the
+inverted pyramid, more general factors appear lower in the
+ordering, while more specific factors appear higher positions.
+This structure provides the foundation for the learning algorithm,
+which determines whether a structure is contained in another.
+Importantly, all factors that contain a forbidden structure, 
+i.e., its superfactors, are also forbidden, while all factors 
+contained in a well-formed structure, i.e., its subfactors, 
+are also well formed.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+	every node/.style={inner sep=1pt, font=\small\itshape},
+	edge/.style={},
+	]
+	\matrix (m) [matrix of nodes,
+	row sep=6mm,
+	column sep=10mm,
+	nodes={anchor=center},
+	]{
+%   \node (aaa) {aaa}; &\node (llb1) {...};&   \node (llb2) {...}; & \node (llb3) {...};&\node (llb4) {...};&\node (llb5) {...};&    \node (bbb) {bbb}; \\
+   &\node (aa) {aa}; & \node (ab) {ab}; && \node (ba) {ba}; & \node (bb) {bb}; \\
+	 && \node (a) {a}; & & \node (b) {b}; &  \\
+	 &&& \node (z) {$\epsilon$}; && \\};
+
+	\draw[edge] (z) -- (a);
+
+	\draw[edge] (z) -- (b);
+	
+	\draw[edge] (a) -- (aa) ;
+	\draw[edge] (a) -- (ab);
+	\draw[edge] (a) -- (ba);
+	
+	\draw[edge] (b) -- (bb) ;
+	\draw[edge] (b) -- (ab);
+	\draw[edge] (b) -- (ba);
+	\draw[edge, dotted] (aa) -- ++(0,1.5em);
+%	\draw[edge, dotted] (aa) -- ++(1,1.5em);
+	\draw[edge, dotted] (ab) -- ++(0,1.5em);
+%	\draw[edge, dotted] (ab) -- ++(1,1.5em);	
+%	\draw[edge, dotted] (bb) -- ++(-1,1.5em);	
+	\draw[edge, dotted] (ba) -- ++(0,1.5em);
+	\draw[edge, dotted] (bb) -- ++(0,1.5em);
+	\end{tikzpicture}
+\caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
+\label{fig.string.contain}
+\end{figure}
+
+
+
+\begin{definition}[Neighbor]
+Given an ASG $\mathcal{A}=\langle D,T,V,\alpha,\lhd\rangle$, 
+a node \(n\) is a neighbor of a node \(m\) iff
+$m \lhd n \lor n \lhd m$.
+\end{definition}
+
+\subsection{Logical Transduction}
+
+Using model theory \citep{strother2019diss,yolyan2025logical,jardine2017local}, 
+we model a phonological transformation from an underlying 
+representation (UR) to a surface representation (SR) as a 
+relation between input and output structures $\mathcal{A}_i \rightarrow \mathcal{A}_o$. 
+There have been work adopting the same fashion on 
+string-to-string transduction \refs, but the essentially 
+the logic is not restricted to strings and can operate 
+over any model-theoretic representations.
+In this framework, we use a set of logic formula to derive
+the output signature with reference to the input signature. 
+Recall from the previous section that we defined an ASG 
+signature as $\mathcal{A} = \langle D, \mathcal{T}, \alpha, \lhd \rangle$.
+Given an input model with this signature, the output 
+signature can be defined in terms of the input structure.
+\begin{table}[ht!]
+\centering
+\footnotesize
+\begin{tabular}{lcll}
+\toprule
+\textbf{Output} & & \textbf{Input} & \textbf{Interpretation} \\
+\midrule
+
+$\phi_{\textsf{Domain}}$
+&
+$:=$
+&
+$\textsc{True}$
+&
+Preserve all input elements
+\\[0.5em]
+
+
+\textsc{Copy}
+&
+$:=$
+&
+1&
+Define Output domain the same size as Input
+\\[0.5em]
+
+
+$\phi_{\textsf{license}}(x)$
+&
+$:=$
+&
+$\exists y\, \alpha(x,y)$
+&
+Preserve only associated elements
+\\[0.5em]
+
+$T'(x)$
+&
+$:=$
+&
+$T(x)$
+&
+Preserve element labels
+\\[0.5em]
+
+$\lhd'(x,y)$
+&
+$\approx$
+&
+$\lhd(x,y)$
+&
+Preserve linear order within-tier
+\\[0.5em]
+
+$\alpha'(x,y)$
+&
+$:=$
+&
+$\bigl(
+\alpha(x,y)\land
+\neg \textsf{deassoc}(x,y)
+\bigr)
+\lor
+\textsf{reassoc}(x,y)$
+&
+Update association relations
+\\
+
+\bottomrule
+\end{tabular}
+
+\caption{}
+\label{tab.transduction}
+\end{table}
+
+As shown in Table~\ref{tab.transduction}, the transduction 
+defines an output model with the same domain as the input 
+structure, while filtering out unassociated elements. All 
+unary predicates \(T(x)\) in the input signature are 
+preserved in the corresponding output predicates \(T'(x)\), 
+meaning that an element \(x\) has property \(T\) in the 
+output iff it has property \(T\) in the input. Likewise, 
+the within-tier order relation is preserved. The only 
+change is the association relation \(\alpha\), which is defined such 
+that an association line holds in the output iff either 
+(i) it is present in the input and not removed by \textsf{deassoc}, or 
+(ii) it is introduced by \textsf{reassoc}. 
+
+
+\[
+\begin{array}{rclclcl}
+\alpha'(x,y)
+&:=&
+\bigl(
+\alpha(x,y)
+&\land&
+\neg \textsf{deassoc}(x,y)
+\bigr)
+&\lor
+&
+\textsf{reassoc}(x,y)
+\\[0.5em]
+
+\text{output}
+&=&
+\text{unchanged}
+&-&
+\text{delinked}
+&+&
+\text{newly added}
+\end{array}
+\]
+
+In this way, the problem of learning association-line 
+transformations can be reduced to learning the logical 
+formulas for \textsf{deassoc} and \textsf{reassoc}. 
+Since these two predicates are combined through disjunction, 
+two parallel learning processes take place simultaneously, 
+and their outputs are combined to define the final 
+association relation $\alpha'$.
+
+We demonstrate this process using a common phenomenon in tone languages
+known as \textit{contour formation}. When two vowels become adjacent,
+the first vowel ($V_1$) may be deleted. Since the tone originally associated
+with $V_1$ cannot remain unattached, the deletion triggers delinking of
+$T_1$ from $V_1$ and reassociation of $T_1$ to the following vowel $V_2$.
+As a result, the surviving vowel bears both tones in their original order,
+which together surface as a contour tone.
+
+From a logical perspective, this transformation can be characterized
+through the interaction of the \textsf{deassoc},
+\textsf{reassoc}, and $\phi_{\textsf{license}}$ functions.
+The \textsf{deassoc} operation removes the association between the
+deleted vowel and its tone, indicated by the crossed-out line in
+Figure~\ref{fig:hiatus}. The \textsf{reassoc} operation then links the
+tone of the deleted vowel ($T_1$) to the surviving vowel ($V_2$),
+indicated by the dotted line in Figure~\ref{fig:hiatus}. Consequently,
+$T_1$ and $V_1$ are no longer associated and therefore are not
+licensed by $\phi_{\textsf{license}}$ (shown in gray in
+Figure~\ref{fig:hiatus}). Thus, $T_1, T_2$ and $V_2$ remain in the
+surface representation. If we define the relevant context as
+$\textsf{hiatus}(x,y) := V(x) \land V(y) \land \lhd(x,y)$,
+where $x$ is the first vowel ($V_1$) and $y$ is the second vowel ($V_2$),
+then the transformation can be expressed as follows:
+\[
+\begin{array}{ll}
+	\textsf{deassoc} = \alpha(t,v) \land \textsf{delete\_V (v)}\\
+	
+	\textsf{reassoc} = 	\textsf{survive\_V} \land\exists v\,(\alpha(t,v)\land \textsf{delete\_V})
+\end{array}
+\]
+
+\begin{figure}[ht!]
+	\centering
+	
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		
+		\begin{tabular}{c c c}
+			
+			\textbf{UR} & $\Rightarrow$ & \textbf{SR} \\[0.5em]
+			
+			\begin{tikzpicture}[scale=0.7, every node/.style={inner sep=2pt}]
+				\node [fill=gray!20](v1) at (0,0) {V$_1$};
+				\node (v2) at (1.4,0) {V$_2$};
+				
+				\node (t1) at (0,1.3) {T$_1$};
+				\node (t2) at (1.4,1.3) {T$_2$};
+				
+				\draw (v1)--(t1);
+				\draw (v2)--(t2);
+			\end{tikzpicture}
+			
+			&&
+			
+			\begin{tikzpicture}[scale=0.7, every node/.style={inner sep=2pt}]
+				\node [fill=gray!20](v1) at (0,0) {V$_1$};
+				\node (v2) at (1.4,0) {V$_2$};
+				
+				\node (t1) at (0,1.3) {T$_1$};
+				\node (t2) at (1.4,1.3) {T$_2$};
+				
+				\draw (v1)--(t1) node[midway] {=};
+				\draw (v2)--(t2);
+				
+				\draw[dotted, thick] (v2)--(t1);
+			\end{tikzpicture}
+			
+		\end{tabular}
+		
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		
+		\begin{tabular}{c c c}
+			
+			\textbf{UR} & $\Rightarrow$ & \textbf{SR} \\[0.5em]
+			
+			$
+			\begin{array}{c|cc}
+				& T_1 & T_2\\
+				\hline
+				V_1 & \cellcolor{gray!75}1 & 0 \\
+				V_2 & \cellcolor{gray!15}0 & 1 \\
+			\end{array}
+			$
+			
+			&&
+			
+			$
+			\begin{array}{c|cc}
+				& T_1 & T_2\\
+				\hline
+				V_1 & \cellcolor{gray!15}0 & 0 \\
+				V_2 & \cellcolor{gray!75}1 & 1 \\
+			\end{array}
+			$
+			
+		\end{tabular}
+		
+	\end{minipage}
+	
+	\caption{
+%		Vowel hiatus resolution and the corresponding adjacency matrices.
+	}
+	\label{fig:hiatus}
+	
+\end{figure}
+
+The \textsf{deassoc} and \textsf{reassoc} operations are
+equivalently reflected in the adjacency matrices.
+Figure~\refs shows the input and output
+matrices corresponding to the structures in
+Figure~\ref{fig:hiatus}. As can be seen, the value
+corresponding to the association between $T_1$ and $V_1$
+changes from $1$ in the input to $0$ in the output,
+reflecting delinking. Conversely, the value corresponding
+to $T_1$ and $V_2$ changes from $0$ to $1$,
+reflecting reassociation. In this way, the autosegmental
+graph, the adjacency matrix, and the logical expressions
+provide equivalent description of the same
+transformation. Formally, \textsf{deassoc} and \textsf{reassoc}
+can also be identified by  $ \textsf{deassoc}
+= \{(i,j) \mid \mathrm{UR}_{ij}=1 \land \mathrm{SR}_{ij}=0\}$
+and $\textsf{reassoc} =
+\{(i,j) \mid \mathrm{UR}_{ij}=0 \land \mathrm{SR}_{ij}=1\}$.
+\subsection{Association Learning}
+ This section follows the framework of using logical transductions
+to learn phonological mappings in \citet{yolyan2025logical},
+which leverages the entailment relation
+in a partially ordered space and updates hypotheses about
+contextual environments. One important aspect of the framework
+is the use of two sets of $k$-factors: $V(X)$ and
+$\hat{V}(X)$x, which contain the relevant $k$-factors
+associated with the target transformation. 
+$V(X)$ contains the \textit{positive evidence}, namely all
+$k$-factors in which the target transformation takes place
+from the input to the output. In contrast,
+$\hat{V}(X)$ contains all \textit{negative evidence} where
+the target transformation does not take place, that is,
+where the relevant property remains unchanged between
+the input and output structures. 
+
+\citet{yolyan2025logical} demonstrates how to learn a 
+string-based input-output mapping that can be written as
+ $A \rightarrow B \,/\, C \_ D$, where the goal
+of learning is to infer the contextual environment
+under which the transformation applies. She defines
+
+\begin{definition}
+For every $X \in \{\Phi_F,\varphi_F\}_{F \in \mathcal{F}}$,
+the corresponding hypothesis space is defined as
+\[
+\mathcal{H}(X) :=
+\bigcup_{x \in V(X)} \downarrow x
+\;-\;
+\bigcup_{x \in \hat{V}(X)} \downarrow x .
+\]
+\end{definition}
+
+In autosegmental phonology, such
+processes are not always easy to express linearly, since the relevant
+structure involves relations rather than simple strings. However, the
+learning question remains the same: what environment triggers the
+change from \(1\) to \(0\), and what environment triggers the change
+from \(0\) to \(1\)?
+
+
+
+
+
+
+
+With only a single UR--SR pair, there are infinitely many possible
+hypotheses. For example, one might hypothesize that all \(H\) tones
+delete their associations, or that all vowels do. However, once more
+data points are observed, counterexamples eliminate incorrect
+generalizations.
+
+The learning task, therefore, is to determine the surrounding
+environment of a particular cell value—either \(1\) or \(0\)—that
+triggers the change.
+
+\[
+\begin{array}{ccc}
+	? & ? & ? \\
+	? & \colorbox{pink}{0} & ? \\
+	? & ? & ?
+\end{array}
+\quad \rightarrow \quad
+\begin{array}{ccc}
+	? & ? & ? \\
+	? & \colorbox{pink}{1} & ? \\
+	? & ? & ?
+\end{array}
+\]
+
+\begin{algorithm}[th!]
+\small
+\KwIn{
+	$
+	D = \{(I_1,O_1),\dots,(I_n,O_n)\}
+	$
+}
+\KwOut{
+	A hypothesis $H$
+}
+
+$H,V^+,V^-,P \gets \emptyset$\;
+
+$Q \gets \{\alpha(x,y)\}$\;
+
+\ForEach{$(I,O)\in D$}{
+	
+	$V^+ \gets V^+ \cup (\alpha_I \setminus \alpha_O)$\;
+	
+	$V^- \gets V^- \cup (\alpha_I \cap \alpha_O)$\;
+}
+
+\While{$Q \neq \emptyset$}{
+	
+	$c \gets Q.\mathrm{Dequeue}()$\;
+	
+	\If{$\forall g\in V^+,\; c\sqsubseteq g$}{
+		
+		\If{$\forall g\in V^-,\; c\not\sqsubseteq g$}{
+			
+			$H \gets H \cup \{c\}$\;
+		}
+		
+		\Else{
+			
+			\ForEach{$s\in \textsc{NextSupFact}(c)$}{
+				
+				\If{$\forall p\in P,\; s\not\sqsubseteq p$}{
+					
+					$Q.\mathrm{Enqueue}(s)$\;
+				}
+			}
+		}
+	}
+	
+	\Else{
+		
+		$P \gets P \cup \{c\}$\;
+	}
+}
+
+\Return{$H$}\;
+
+\end{algorithm}
+
+\section{Case Study}
+\subsection{Contour Formation}
+We begin with an idealized assumption: the tonal process involves no
+change to the segmental string, and the only modifications between the
+underlying representation (UR) and the surface representation (SR) are
+changes in association lines, namely \textsc{deassociation} and
+\textsc{reassociation}. Although many phonological processes also
+involve segmental deletion, insertion, or feature changes, we restrict
+the current discussion to association-line modifications in order to
+isolate the learning problem.
+
+The first step is to identify exactly what structural modification has
+taken place between the UR and the SR. Since the segmental and tonal
+tiers remain constant, the comparison is made directly over the
+association relation matrix.
+
+For each cell in the association matrix:
+
+
+That is, if an association present in the UR disappears in the SR, the
+operation is classified as deassociation; if a new association appears
+in the SR that was absent in the UR, the operation is classified as
+reassociation.
+
+In Estoko, both operations are attested: one association line is
+removed while another is added. Therefore, the learner must infer both
+the deassociation environment and the reassociation environment
+separately. (maybe not maybe they can start together)
+\paragraph{Hypothesis space for deassociation.}
+
+Given a set of observed deassociation sites, the learner constructs
+candidate hypotheses describing the structural environments in which an
+association changes from $1$ to $0$. Each hypothesis corresponds to a
+local structural condition under which $\alpha(x,y)$ is removed.
+
+The search proceeds from simple to more complex descriptions. At each
+step, the learner considers increasingly rich local configurations
+(factors) until a hypothesis is found that captures all and only the
+observed deassociation sites.
+
+The most general hypothesis removes all associations:
+\[
+\text{Hypothesis 1: } 1 \rightarrow 0
+\]
+This hypothesis is immediately rejected if there exist associations in
+the data that remain unchanged.
+
+
+\section{Conclusion} This paper has argued that vowel-deletion–induced 
+tonal processes can be uniformly captured as logical transductions 
+over autosegmental representations (ARs). The observed typological 
+variation follows from modifying a single relation, $\alpha$, through 
+the interaction of \textsf{deassoc} and \textsf{reassoc}. 
+
+A limitation of the current analysis is that the transduction relies 
+on quantification to capture across-tier dependencies. An important 
+direction for future work is to determine whether these processes can 
+be simplified in a quantifier-free (QF) process.
+This work also extends naturally to learning over ARs. Recent work 
+by \citet{yolyan2025logical} demonstrates that logical transductions 
+are learnable by using a bottom-up factorial inference algorithms\citep{chandleeBufia2019}. This opens up more discussions about how linguistically meaningful 
+representations can facilitate grammar inference.
+
+
+\bibliographystyle{apalike}
+\bibliography{pmlr-sample}
+
+\end{document}

@@ -1,0 +1,73 @@
+\begin{thebibliography}{11}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bird and Ellison(1994)]{bird1994one}
+Steven Bird and T~Mark Ellison.
+\newblock One-level phonology: Autosegmental representations and rules as
+  finite automata.
+\newblock \emph{Computational Linguistics}, 20\penalty0 (1):\penalty0 55--90,
+  1994.
+
+\bibitem[Chandlee et~al.(2019)Chandlee, Eyraud, Heinz, Jardine, and
+  Rawski]{chandleeBufia2019}
+Jane Chandlee, R{\'e}mi Eyraud, Jeffrey Heinz, Adam Jardine, and Jonathan
+  Rawski.
+\newblock Learning with partially ordered representations.
+\newblock In \emph{Proceedings of MOL16}, pages 91--101, 2019.
+
+\bibitem[Goldsmith(1976)]{goldsmith1976autosegmental}
+John~Anton Goldsmith.
+\newblock \emph{Autosegmental phonology}.
+\newblock PhD thesis, MIT, 1976.
+
+\bibitem[Hayes(1980)]{hayes1980metrical}
+Bruce~Philip Hayes.
+\newblock \emph{A metrical theory of stress rules}.
+\newblock PhD thesis, MIT, 1980.
+
+\bibitem[Jardine(2017)]{jardine2017local}
+Adam Jardine.
+\newblock The local nature of tone-association patterns.
+\newblock \emph{Phonology}, 34\penalty0 (2):\penalty0 363--384, 2017.
+
+\bibitem[Sagey(1986)]{sagey1986representation}
+Elizabeth~Caroline Sagey.
+\newblock \emph{The representation of features and relations in non-linear
+  phonology}.
+\newblock PhD thesis, MIT, 1986.
+
+\bibitem[Strother-Garcia(2019)]{strother2019diss}
+Kristina Strother-Garcia.
+\newblock \emph{Using model theory in phonology: a novel characterization of
+  syllable structure and syllabification}.
+\newblock University of Delaware, 2019.
+
+\bibitem[Wiebe(1992)]{wiebe1992modelling}
+Bruce Wiebe.
+\newblock Modelling autosegmental phonology with multi-tape finite state
+  transducers.
+\newblock 1992.
+
+\bibitem[Yli-Jyr{\"a}(2013)]{yli2013finite}
+Anssi Yli-Jyr{\"a}.
+\newblock On finite-state tonology with autosegmental representations.
+\newblock In \emph{Proceedings of the 11th international conference on finite
+  state methods and natural language processing}, pages 90--98, 2013.
+
+\bibitem[Yli-Jyr{\"a}(2015)]{yli2015three}
+Anssi Yli-Jyr{\"a}.
+\newblock Three equivalent codes for autosegmental representations.
+\newblock In \emph{Proceedings of the 12th International Conference on
+  Finite-State Methods and Natural Language Processing 2015 (FSMNLP 2015
+  D{\"u}sseldorf)}, 2015.
+
+\bibitem[Yolyan(2025)]{yolyan2025logical}
+Tatevik Yolyan.
+\newblock A framework for learning phonological maps as logical transductions.
+\newblock In \emph{Proceedings of MOL18}, pages 44--58, 2025.
+
+\end{thebibliography}
