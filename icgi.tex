@@ -29,7 +29,7 @@
 
  % change the arguments, as appropriate, in the following:
 \jmlrvolume{1}
-\jmlryear{2010}
+\jmlryear{2026}
 \jmlrworkshop{Workshop Title}
 
 
@@ -111,17 +111,22 @@
 
 
 \section{Introduction}
-This paper presents a method for learning transformations over multi-tier 
-representations, with a particular focus on the modification of cross-tier 
-relations (i.e., associations between tiers), which is widely used in 
-linguistics. 
-We consider a specific but linguistically important type of transformations where
-the nodes remain unchanged from input to output, while only the association relation is
-modified subject to non-crossing constraints. We formalize these 
-representations as temporally-ordered tiers with a binary association 
-relation, and the learning problem is
-therefore framed as inferring the which association relations are
-preserved, deleted, or newly introduced from observed input-output pairs.
+This paper presents a method for learning transformations over 
+multi-tier representations, with a particular focus on modifications 
+of cross-tier relations (i.e., associations between tiers). The 
+multi-tiered structures are widely attested in linguistics and are 
+known as \textit{Autosegmental Representations}\citep{CG1984autosegmental,goldsmith1976autosegmental,hayes1980metrical,sagey1986representation}, which
+are graph structures of temporally-ordered 
+tiers and cross-tier association lines. This work focuses on a 
+specific but important type of transformation where the elements
+on each tier remain unchanged from input to output, while the 
+association lines are modified subject to non-crossing constraints. 
+We formalize these transformations as graph model structures \citep{strother2019diss} 
+and use a bottom-up factor inference method 
+\citep{chandleeBufia2019,rawski2021structure} to infer which 
+association lines are preserved, deleted, or newly introduced from 
+observed input-output pairs. 
+ 
 \begin{figure}[ht!]
 	\centering
 	
@@ -185,27 +190,17 @@ Such multi-tiered structures have been widely used in linguistic
 theory, such as tone-syllable associations in autosegmental 
 phonology \citep{goldsmith1976autosegmental}
 prosodic or syllable structure \citep{hayes1980metrical,
-	sagey1986representation}. This insight implies that 
-Linguistic information of different aspects are organized across multiple 
-temporally ordered tiers. Associations between tiers encode which 
-elements are linked at a given point in time, thereby capturing 
-relationships across different dimensions of the structure. We
-refer this type of graph as \textit{autosegmental graphs} (ASGs),
-which can be viewed as bipartite graphs, where 
-nodes with shared properties are organized into the same tiers. 
-Since each tier is linearly ordered, associations are subject to 
-non-crossing constraint \citep[NCC,][]{bird1994one,goldsmith1976autosegmental}.
-The core idea behind autosegmental graphs is that input-output 
+	sagey1986representation}. 
+The core idea behind autosegmental graphs is that linguistic 
+information has multiple parallel information organized across 
+temporally ordered tiers. The input-output 
 mappings are in fact more naturally characterized by rearranging 
-association lines across tiers rather than changing elements themselves.
-A large body of theoretical work on African tonal processes has demonstrated the 
-advantages of autosegmental graphs \citep{hyman2009representation}. 
-%clements2010autosegmental, oddenintroducing2013}.  
-Computationally, 
-using multi-tiered structures has been shown to reduce the complexity of 
-tonotactic patterns \citep{jardineComputationallyTone2016}.
-
-
+association lines across tiers rather than changing elements 
+themselves. A large body of theoretical work on African tonal 
+processes has demonstrated the advantages of autosegmental graphs 
+\citep{CG1984autosegmental, odden2013introducing}.  
+Computationally, using multi-tiered structures has been shown to 
+reduce the complexity of tonotactic patterns \citep{jardine2016computationally,Chandlee-jardine2021input}.
 Previous work has modeled these structures using finite-state 
 approaches \citep{wiebe1992modelling,bird1994one,yli2013finite,
 	yli2015three}. These approaches typically convert structured 
@@ -223,12 +218,12 @@ representation (UR) and the surface representation (SR).
 In addition, we assume that only a single process constitutes 
 the learning target. 
 
-We show that, by adopting autosegmental graphs within a 
+We demonstrate that, by adopting autosegmental graphs within a 
 model-theoretic framework of formal transductions, it is 
 possible to construct a partial order over structures and 
 apply a model-theoretic learner such as the Bottom-Up Factor 
 Inference Algorithm \citep{chandleeBufia2019,rawski2021structure}. 
-The target output of the learner is a formula that preserves 
+The learner outputs a formula that preserves 
 unchanged associations, deletes associations that must be delinked, and 
 introduces newly added associations. Learning proceeds through iterative 
 hypothesis updates while traversing a partially ordered space of logically possible structures.
@@ -242,27 +237,11 @@ transformations of association relations in multi-tier structures has not previo
 \section{Preliminaries}
 \subsection{Autosegmental graphs}
 
-\begin{definition}[Autosegmental Graph]
-	An autosegmental graph (ASG) is a labeled bipartite graph
-	with multiple linearly-ordered tiers. Equivalently, it can be defined
-	model-theoretically as a relational structure
-	$\mathcal{A} = \langle D, \mathcal{T}, \alpha, \lhd \rangle$
-	where $D$ is a finite domain of elements; each tier $T_i \subseteq D$ 
-	is a set of nodes. $\mathcal{T} = \{T_1,\dots,T_n\}$ is a collection of tiers such that
-	$T_1 \cup T_2 \cup \dots \cup T_n = D$ and $T_i \cap T_j = \emptyset$
-	for all $i \neq j$. 
-	$\lhd$ is a binary successor relation defined between nodes on the same tier;
-	$\alpha \subseteq D \times D$ is a set of non-crossing association relations across tiers. 
-\end{definition}
-
-
 ASGs represent the idea that different aspects of linguistic structure
 are organized on distinct tiers while progressing simultaneously over time.
 Each tier encodes a particular type of information,
 such as tone (pitch information), segmental (tongue shape), syllabic
-(metrical) structure. Association relations link elements across tiers that are 
-realized at the same temporal position.
-
+(metrical) structure. 
 Note that there may be multiple tiers in ASGs, provided that the 
 elements on different tiers are disjoint. In most phonological 
 applications, ASGs typically involve two or three tiers. In this 
@@ -271,18 +250,57 @@ remains the same in the general case. In addition, ASGs are subject
 to the No Crossing Constraint (NCC), which enforces temporal 
 alignment between associations.
 
+\begin{definition}[Autosegmental Graph]
+	An autosegmental graph (ASG) is a labeled $\mathcal{T}$-partite graph
+	whose vertices are partitioned into $\mathcal{T}$ disjoint sets, with 
+	each tier linearly-ordered. Equivalently, it can be defined
+	model-theoretically as a relational structure
+	$\mathcal{A} = \langle D, \mathcal{T}, \alpha, \lhd \rangle$
+	where $D$ is a finite domain of elements; $\mathcal{T} = \{T_1,\dots,T_n\}$ is a 
+	collection of tiers such that
+	$T_1 \cup T_2 \cup \dots \cup T_n = D$ and $T_i \cap T_j = \emptyset$
+	for all $i \neq j$. 
+	$\lhd$ is a binary successor relation defined between nodes within tiers;
+	$\alpha \subseteq D \times D$ is a set of non-crossing association relations across tiers. 
+\end{definition}
+
+\begin{definition}[No Crossing Constraint (NCC)]
+	An ASG needs to obey No Crossing Constraint. Formally,
+	For all $(x,y), (x',y') \in \alpha$,
+	\(
+	x \lhd x' \Rightarrow (y \lhd y') \vee (y = y').
+	\) and vice versa.
+\end{definition}
+
+
 \begin{figure}[ht]
 	\centering
 	
+	% ================= AUTSEG =================
+	\begin{minipage}[c]{0.20\textwidth}
+		\centering
+		
+		\begin{tikzpicture}
+			\node (v1) at (0,0) {$\sigma$};
+			\node (v2) at (1,0) {$\sigma$};
+			\node (t1) at (0,1) {L};
+			\node (t2) at (1,1) {H};
+			
+			\draw (v1)--(t2);			
+			\draw (v1)--(t1);
+			\draw (v2)--(t2);
+		\end{tikzpicture}
+		
+	\end{minipage}
+	\hspace{0.03\textwidth}
 	% ================= GRAPH =================
-	\begin{minipage}[c]{0.30\textwidth}
-		\vspace{0pt}
+	\begin{minipage}[c]{0.20\textwidth}
 		\centering
 		
 		\begin{tikzpicture}[
 			node/.style={draw, circle, inner sep=2pt, minimum size=18pt},
 			assoc/.style={thick},
-			scale=1
+			scale=0.8
 			]
 			
 			\node[node] (t1) at (0,2) {1\textsubscript{L}};
@@ -293,6 +311,7 @@ alignment between associations.
 			
 			\draw (t1) -- node[midway, left] {$\alpha$} (s1);
 			\draw (t2) -- node[midway, right] {$\alpha$} (s2);
+			\draw (t2) -- node[midway, right] {$\alpha$} (s1);	
 			
 			\draw (t1) -- node[midway, above] {$\lhd$} (t2);
 			\draw (s1) -- node[midway, above] {$\lhd$} (s2);
@@ -300,19 +319,16 @@ alignment between associations.
 		\end{tikzpicture}
 		
 	\end{minipage}
-	\hfill
+	\hspace{0.03\textwidth}
 	% ================= MODEL =================
-	\begin{minipage}[c]{0.30\textwidth}
-		\vspace{0pt}
+	\begin{minipage}[c]{0.40\textwidth}
 		\centering
 		\footnotesize
 		
 		\[
 		\begin{aligned}
 			D &= \{1,2,3,4\} \\
-			T &= \{1,2\}\\
-			L &= \{1\}\\
-			H &= \{2\}\\
+			T &= \{1,2\}\quad L = \{1\}\quad H = \{2\} \\
 			\sigma &= \{3,4\} \\
 			\lhd &= \{
 			\langle 1,2 \rangle,
@@ -320,144 +336,203 @@ alignment between associations.
 			\} \\
 			\alpha &= \{
 			\langle 1,3 \rangle,
-			\langle 2,4 \rangle
+			\langle 2,4 \rangle,
+			\langle 2,3 \rangle
 			\}
 		\end{aligned}
 		\]
 		
 	\end{minipage}
-	\hfill
-	% ================= MATRIX =================
-	\begin{minipage}[c]{0.22\textwidth}
-		\vspace{0pt}
-		\centering
-		
-		\[
-		\begin{array}{c|cc}
-			& L & H\\
-			\hline
-			V_1 & 1 & 0 \\
-			V_2 & 0 & 1
-		\end{array}
-		\]
-		
-	\end{minipage}
-	
+
 	\caption{
 		Three representations of a two-tier autosegmental graph.
 	}
-	
-\end{figure}
-\begin{definition}[No Crossing Constraint (NCC)]
-	An ASG needs to obey No Crossing Constraint. Formally,
-	For all $(x,y), (x',y') \in \alpha$,
-	\(
-	x \lhd x' \Rightarrow (y \lhd y') \vee (y = y').
-	\) and vice versa.
-\end{definition}
-
-
-In addition to representing model-theoretic relational structures 
-with graphs, one can use \textit{adjacency matrices} which use binary values to
-denote whether there is an edge between two nodes. Two nodes
-are considered \textit{adjacent} if there is an edge connecting
-them. 
-\begin{definition}[Adjacency matrix]
-	Given an ASG $\mathcal{A} = \langle D, \mathcal{T}, \alpha, \lhd \rangle$
-	and two tiers $T_i, T_j \in \mathcal{T}$, the association relation $\alpha$
-	can be represented as a binary matrix where 
-	$M_\alpha[k,\ell] = 1$ if $(x_k, y_\ell) \in \alpha$ where $x_k \in T_i, y_\ell \in T_j$; 
-	otherwise $0$.
-\end{definition}
-
-The motivation for adopting matrices is to establish a framework
-corresponding to string-based learning. Concepts such as substrings,
-subfactors, and superfactors are well developed and widely used in
-grammar inference \refs. To incorporate ASGs into this framework,
-we follow the notions of \textit{restriction} and \textit{containment} 
-proposed in \citet{chandleeBufia2019}, adapting them to graph-based
-representations through the notions of submatrices and matrix
-containment.
-
-\begin{definition}[Submatrix; comparable \ restriction in \citet{chandleeBufia2019}]
-	\label{def.submatrix}
-	\textit{
-	Let matrix $A$ be an $m \times n$ matrix. A matrix $B$ is a
-	\emph{submatrix} of $A$ if it is formed by taking
-	$k \ (1 \leq k \leq m)$ contiguous rows and
-	$v \ (1 \leq v \leq n)$ contiguous columns from $A$.
-	}
-\end{definition}
-
-\begin{definition}[Containment]
-\textit{
-An $m \times n$ matrix $A=[a_{ij}]$ is contained
-in a matrix $B$ (written $A \sqsubseteq B$) if there exists
-an $m \times n$ submatrix of $B$, denoted $B'=[b'_{ij}]$,
-such that for all $i \in [0,m]$ and $j \in [0,n]$,
-$b'_{ij} \geq a_{ij}$.
-}
-\end{definition}
-
-The containment relation provides a partial ordering over the
-space of all model-theoretic structures. As illustrated by the
-inverted pyramid, more general factors appear lower in the
-ordering, while more specific factors appear higher positions.
-This structure provides the foundation for the learning algorithm,
-which determines whether a structure is contained in another.
-Importantly, all factors that contain a forbidden structure, 
-i.e., its superfactors, are also forbidden, while all factors 
-contained in a well-formed structure, i.e., its subfactors, 
-are also well formed.
-
-\begin{figure}
-\centering
-\begin{tikzpicture}[
-	every node/.style={inner sep=1pt, font=\small\itshape},
-	edge/.style={},
-	]
-	\matrix (m) [matrix of nodes,
-	row sep=6mm,
-	column sep=10mm,
-	nodes={anchor=center},
-	]{
-%   \node (aaa) {aaa}; &\node (llb1) {...};&   \node (llb2) {...}; & \node (llb3) {...};&\node (llb4) {...};&\node (llb5) {...};&    \node (bbb) {bbb}; \\
-   &\node (aa) {aa}; & \node (ab) {ab}; && \node (ba) {ba}; & \node (bb) {bb}; \\
-	 && \node (a) {a}; & & \node (b) {b}; &  \\
-	 &&& \node (z) {$\epsilon$}; && \\};
-
-	\draw[edge] (z) -- (a);
-
-	\draw[edge] (z) -- (b);
-	
-	\draw[edge] (a) -- (aa) ;
-	\draw[edge] (a) -- (ab);
-	\draw[edge] (a) -- (ba);
-	
-	\draw[edge] (b) -- (bb) ;
-	\draw[edge] (b) -- (ab);
-	\draw[edge] (b) -- (ba);
-	\draw[edge, dotted] (aa) -- ++(0,1.5em);
-%	\draw[edge, dotted] (aa) -- ++(1,1.5em);
-	\draw[edge, dotted] (ab) -- ++(0,1.5em);
-%	\draw[edge, dotted] (ab) -- ++(1,1.5em);	
-%	\draw[edge, dotted] (bb) -- ++(-1,1.5em);	
-	\draw[edge, dotted] (ba) -- ++(0,1.5em);
-	\draw[edge, dotted] (bb) -- ++(0,1.5em);
-	\end{tikzpicture}
-\caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
-\label{fig.string.contain}
+	\label{fig:armodel}	
 \end{figure}
 
+Figure~\ref{fig:armodel} shows a tone--syllable structure and its
+corresponding model. In this example, the first syllable is associated
+with both a Low (L) tone and a following High (H) tone, while the second
+syllable is associated with the H tone (often
+represented as LH.H in linguistic literature).
+The model consists of four labelled nodes, numbered \(1,2,3,4\), each
+representing a linguistic unit with its corresponding properties. There
+are two tiers: the tone tier \(T\), containing the L and H tones, and the
+syllable tier \(\sigma\), containing the two syllables. The successor
+relation, denoted by \(\lhd\), represents ordering within a single tier.
+In this example, the successor relation is
+$\lhd = \{\langle 1,2 \rangle,\ \langle 3,4 \rangle\}$.
+The association relation, denoted by \(\alpha\), represents cross-tier
+associations:
+$
+\alpha =
+\{\langle 1,3 \rangle,\ \langle 2,3 \rangle,\ \langle 2,4 \rangle\}.
+$.
+Together, the tuple
+$\langle D,T,\sigma,L,H,\lhd,\alpha\rangle$
+constitutes the \textit{signature} of this ASG model.
 
+The size of an autosegmental graph is defined as the sum
+of both node and association counts, excluding successor relations,
+since successor count is implicitly determined by the count
+of nodes on each tier. For example, the size of the ASG in 
+Figure \ref{fig:armodel} is 7.
 
+\begin{definition}[Size of ASG]
+Given $\mathcal{A}=\langle D, \mathcal{T},\alpha,\lhd\rangle$, 
+the size of \(\mathcal{A}\), denoted by \(|\mathcal{A}|\), 
+is defined as $\mathcal{A} = |D| + |\alpha|$.
+\end{definition}
+
+For convenience, we also define the notion of neighbors in an ASG.
+Two nodes are considered neighbors if they are connected by a
+successor relation.
 \begin{definition}[Neighbor]
-Given an ASG $\mathcal{A}=\langle D,T,V,\alpha,\lhd\rangle$, 
+Given $\mathcal{A}=\langle D, \mathcal{T},\alpha,\lhd\rangle$, 
 a node \(n\) is a neighbor of a node \(m\) iff
 $m \lhd n \lor n \lhd m$.
 \end{definition}
 
-\subsection{Logical Transduction}
+\subsection{Matrix Representation}
+In addition to representing model-theoretic relational structures 
+with graphs, one can use \textit{adjacency matrices} which use binary values to
+denote whether there is an edge between two nodes. Two nodes
+are considered \textit{adjacent} if there is an edge connecting
+them. For example, the ASG shown in Figure~\ref{fig:armodel}
+can be equivalently represented as in Table \ref{tab:matx}.
+\begin{figure}[ht!]
+\centering
+
+\begin{definition}[Adjacency matrices]
+Given an ASG
+\(
+\mathcal{A}=\langle D,\mathcal{T},\alpha,\lhd\rangle
+\)
+with \(t\) tiers, the association relation \(\alpha\) can be represented
+by \(t-1\) adjacency matrices, each corresponding to the
+association relation between two adjacent tiers
+\(T_i,T_j \in \mathcal{T}\).
+The adjacency matrix
+\(M_{\alpha}^{(i,j)}\)
+is defined such that
+\[
+M_{\alpha}^{(i,j)}[k,\ell] =
+\begin{cases}
+1 & \text{if } (x_k,y_\ell)\in\alpha, \\
+0 & \text{otherwise},
+\end{cases}
+\qquad
+\begin{array}{c|cc}
+     & L & H \\
+\hline
+\sigma_1 & 1 & 1 \\
+\sigma_2 & 0 & 1 \\
+\end{array}
+\]
+where \(x_k \in T_i\) and \(y_\ell \in T_j\).
+\end{definition}
+
+\caption{
+Adjacency matrix representation of the ASG in
+Figure~\ref{fig:armodel}.
+}
+\label{tab:matx}
+
+\end{figure}
+
+The motivation for adopting matrices is to establish a framework
+corresponding to string-based learning. Concepts such as substrings,
+subfactors, and superfactors are well developed and widely used in
+grammar inference \refs, but have not been extensively explored for
+ASGs. To make these concepts applicable to ASGs, we follow the notions of
+\textit{restriction} and \textit{containment} proposed in
+\citet{chandleeBufia2019}, adapting them to graph-based
+representations through the notions of \textit{submatrices} and \textit{matrix
+containment.}
+
+\begin{definition}[Submatrix]
+\label{def.submatrix}
+\textit{
+Let matrix \(A\) be an \(m \times n\) matrix.
+A matrix \(B\) is a \emph{submatrix} of \(A\) if it is formed by taking
+\(k\ (1 \leq k \leq m)\) contiguous rows and
+\(v\ (1 \leq v \leq n)\) contiguous columns from \(A\).
+}
+\end{definition}
+
+\begin{definition}[Containment]
+\textit{
+An \(m \times n\) matrix \(A=[a_{ij}]\) is contained
+in a matrix \(B\) (written \(A \sqsubseteq B\))
+if there exists an \(m \times n\) submatrix of \(B\),
+denoted \(B'=[b'_{ij}]\),
+such that for all
+\(i \in [1,m]\) and \(j \in [1,n]\),
+\(
+b'_{ij} \geq a_{ij}.
+\)
+}
+\end{definition}
+
+Now that we can determine whether a matrix \(A\) is a submatrix of
+\(B\), we can also determine whether \(A\) is contained in \(B\).
+If so, \(A\) is a subfactor of \(B\), while \(B\) is a
+superfactor of \(A\). Furthermore, if the size difference between
+a superfactor and its subfactor is exactly one, then the superfactor
+is called the \textit{next superfactor} of that subfactor.
+
+Containment is important because it provides a partial ordering
+over the space of ASG factors, which enables the learner to infer
+entailment relations. The idea is simple: if  structure forms
+the foundation of the learning algorithm, which determines whether
+one structure is contained in another. Importantly, all factors 
+that contain a forbidden structure, i.e., its superfactors, are 
+also forbidden, while all factors contained in a well-formed 
+structure, i.e., its subfactors, are likewise well formed.
+%
+%
+%\begin{figure}
+%\centering
+%\begin{tikzpicture}[
+%	every node/.style={inner sep=1pt, font=\small\itshape},
+%	edge/.style={},
+%	]
+%	\matrix (m) [matrix of nodes,
+%	row sep=6mm,
+%	column sep=10mm,
+%	nodes={anchor=center},
+%	]{
+%%   \node (aaa) {aaa}; &\node (llb1) {...};&   \node (llb2) {...}; & \node (llb3) {...};&\node (llb4) {...};&\node (llb5) {...};&    \node (bbb) {bbb}; \\
+%   &\node (aa) {aa}; & \node (ab) {ab}; && \node (ba) {ba}; & \node (bb) {bb}; \\
+%	 && \node (a) {a}; & & \node (b) {b}; &  \\
+%	 &&& \node (z) {$\epsilon$}; && \\};
+%
+%	\draw[edge] (z) -- (a);
+%
+%	\draw[edge] (z) -- (b);
+%	
+%	\draw[edge] (a) -- (aa) ;
+%	\draw[edge] (a) -- (ab);
+%	\draw[edge] (a) -- (ba);
+%	
+%	\draw[edge] (b) -- (bb) ;
+%	\draw[edge] (b) -- (ab);
+%	\draw[edge] (b) -- (ba);
+%	\draw[edge, dotted] (aa) -- ++(0,1.5em);
+%%	\draw[edge, dotted] (aa) -- ++(1,1.5em);
+%	\draw[edge, dotted] (ab) -- ++(0,1.5em);
+%%	\draw[edge, dotted] (ab) -- ++(1,1.5em);	
+%%	\draw[edge, dotted] (bb) -- ++(-1,1.5em);	
+%	\draw[edge, dotted] (ba) -- ++(0,1.5em);
+%	\draw[edge, dotted] (bb) -- ++(0,1.5em);
+%	\end{tikzpicture}
+%\caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
+%\label{fig.string.contain}
+%\end{figure}
+%
+
+
+\section{Logical Transduction}
 
 Using model theory \citep{strother2019diss,yolyan2025logical,jardine2017local}, 
 we model a phonological transformation from an underlying 
@@ -720,7 +795,8 @@ can also be identified by  $ \textsf{deassoc}
 = \{(i,j) \mid \mathrm{UR}_{ij}=1 \land \mathrm{SR}_{ij}=0\}$
 and $\textsf{reassoc} =
 \{(i,j) \mid \mathrm{UR}_{ij}=0 \land \mathrm{SR}_{ij}=1\}$.
-\subsection{Association Learning}
+
+\section{Association Learning}
  This section follows the framework of using logical transductions
 to learn phonological mappings in \citet{yolyan2025logical},
 which leverages the entailment relation
@@ -749,7 +825,7 @@ negative data nevertheless undergo the transformation, then the hypothesis is
 too general. The goal of learning is therefore to identify the smallest common 
 environment that are contained in all positive evidence, but absent in all negative 
 evidence. For example, post-nasal voicing can be written as 
-\([-\mathrm{voi}] \rightarrow [+ \mathrm{voi}] \,/\, [+\mathrm{nasal}, -\mathrm{cont}] \_\),
+\([-\mathrm{voi}] \rightarrow [+ \mathrm{voi}] \,/\, [+\mathrm{nasal}, -\mathrm{cont}] \_\_\),
 meaning that whenever a segment specified as \([-\mathrm{voi}]\) occurs after a 
 \([+\mathrm{nasal}, -\mathrm{cont}]\) segment, its voicing feature changes to 
 \([+\mathrm{voi}]\). 
@@ -783,7 +859,7 @@ and exclusive in triggering the change observed in the positive evidence.
 	? & ? & ?
 \end{array}
 \]
-To learn ASGs, we adapt the bottom-up factor inference framework of
+ddTo learn ASGs, we adapt the bottom-up factor inference framework of
 \citet{chandleeBufia2019} and the logical learning framework of
 \citet{yolyan2025logical} to graph-based autosegmental representations
 \refs. At the beginning of learning, the learner first

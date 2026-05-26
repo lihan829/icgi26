@@ -2,53 +2,51 @@ This is BibTeX, Version 0.99d (TeX Live 2024)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: /Users/hanli/Documents/GitHub/icgi26/.texpadtmp/icgi.aux
 The style file: plainnat.bst
-Illegal, another \bibstyle command---line 47 of file /Users/hanli/Documents/GitHub/icgi26/.texpadtmp/icgi.aux
+Illegal, another \bibstyle command---line 50 of file /Users/hanli/Documents/GitHub/icgi26/.texpadtmp/icgi.aux
  : \bibstyle
  :          {apalike}
 I'm skipping whatever remains of this command
 Database file #1: ../ref.bib
-Warning--I didn't find a database entry for "hyman2009representation"
-Warning--I didn't find a database entry for "jardineComputationallyTone2016"
 Warning--empty journal in wiebe1992modelling
-You've used 12 entries,
+You've used 16 entries,
             2773 wiz_defined-function locations,
-            660 strings with 6757 characters,
-and the built_in function-call counts, 4518 in all, are:
-= -- 411
-> -- 169
-< -- 14
-+ -- 63
-- -- 51
-* -- 283
-:= -- 703
-add.period$ -- 36
-call.type$ -- 12
-change.case$ -- 48
-chr.to.int$ -- 12
-cite$ -- 25
-duplicate$ -- 257
-empty$ -- 421
-format.name$ -- 65
-if$ -- 954
+            679 strings with 7131 characters,
+and the built_in function-call counts, 5933 in all, are:
+= -- 536
+> -- 231
+< -- 18
++ -- 85
+- -- 69
+* -- 378
+:= -- 922
+add.period$ -- 47
+call.type$ -- 16
+change.case$ -- 66
+chr.to.int$ -- 16
+cite$ -- 33
+duplicate$ -- 331
+empty$ -- 556
+format.name$ -- 91
+if$ -- 1253
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 9
-newline$ -- 68
-num.names$ -- 48
-pop$ -- 118
+missing$ -- 13
+newline$ -- 87
+num.names$ -- 64
+pop$ -- 157
 preamble$ -- 1
-purify$ -- 41
+purify$ -- 55
 quote$ -- 0
-skip$ -- 189
+skip$ -- 248
 stack$ -- 0
-substring$ -- 143
-swap$ -- 36
+substring$ -- 176
+swap$ -- 40
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 127
+type$ -- 166
 warning$ -- 1
-while$ -- 49
+while$ -- 63
 width$ -- 0
-write$ -- 159
+write$ -- 209
 (There was 1 error message)
