@@ -41,6 +41,7 @@
     \textcolor{red}{\textbf{[NEED REF]}}%
     }
 \usepackage[table]{xcolor}
+\usepackage{todonotes}
 
 
 
@@ -251,7 +252,7 @@ transformations of association relations in multi-tier structures has not previo
 	$T_1 \cup T_2 \cup \dots \cup T_n = D$ and $T_i \cap T_j = \emptyset$
 	for all $i \neq j$. 
 	$\lhd$ is a binary successor relation defined between nodes on the same tier;
-	$\alpha \subseteq D \times D$ is a set of non-crossing association relations across tiers.
+	$\alpha \subseteq D \times D$ is a set of non-crossing association relations across tiers. 
 \end{definition}
 
 
@@ -723,175 +724,311 @@ and $\textsf{reassoc} =
  This section follows the framework of using logical transductions
 to learn phonological mappings in \citet{yolyan2025logical},
 which leverages the entailment relation
-in a partially ordered space and updates hypotheses about
-contextual environments. One important aspect of the framework
-is the use of two sets of $k$-factors: $V(X)$ and
-$\hat{V}(X)$x, which contain the relevant $k$-factors
-associated with the target transformation. 
-$V(X)$ contains the \textit{positive evidence}, namely all
-$k$-factors in which the target transformation takes place
-from the input to the output. In contrast,
-$\hat{V}(X)$ contains all \textit{negative evidence} where
-the target transformation does not take place, that is,
-where the relevant property remains unchanged between
-the input and output structures. 
-
-\citet{yolyan2025logical} demonstrates how to learn a 
+in a partially ordered space and updates hypotheses 
+about the smallest contextual environments that trigger 
+a featural change (a 
 string-based input-output mapping that can be written as
- $A \rightarrow B \,/\, C \_ D$, where the goal
-of learning is to infer the contextual environment
-under which the transformation applies. She defines
+$A \rightarrow B \,/\, C \_ D$).
 
-\begin{definition}
-For every $X \in \{\Phi_F,\varphi_F\}_{F \in \mathcal{F}}$,
-the corresponding hypothesis space is defined as
+Several aspects of this framework are particularly important for the present
+work. First, phonological processes are represented as logical formulas
+over model-theoretic representations. Second, the learning procedure relies on
+grammatical entailment relations within a partially ordered hypothesis space,
+with more general structures at the bottom and more specific structures higher
+up \citep{chandleeBufia2019,rawski2021structure}. If an environment (which itself 
+is a structure, thereafter we call it environment) is sufficient to trigger a
+transformation, then any superfactor containing it also entails that
+transformation. On the other hand, if an environment fails to trigger the
+change, then all of its subfactors are likewise insufficient to trigger the
+change. In other words, given a hypothesized environment, all data satisfying
+this condition are expected to undergo the transformation (positive evidence),
+while all data not satisfying this condition are expected not to undergo the
+transformation (negative evidence). If some positive data fail to undergo the
+transformation, then the hypothesis is too restrictive. Conversely, if some
+negative data nevertheless undergo the transformation, then the hypothesis is
+too general. The goal of learning is therefore to identify the smallest common 
+environment that are contained in all positive evidence, but absent in all negative 
+evidence. For example, post-nasal voicing can be written as 
+\([-\mathrm{voi}] \rightarrow [+ \mathrm{voi}] \,/\, [+\mathrm{nasal}, -\mathrm{cont}] \_\),
+meaning that whenever a segment specified as \([-\mathrm{voi}]\) occurs after a 
+\([+\mathrm{nasal}, -\mathrm{cont}]\) segment, its voicing feature changes to 
+\([+\mathrm{voi}]\). 
+
+In autosegmental phonology, however, such contextual 
+environments are not expressed linearly as \(A \rightarrow B \,/\, C \_ D\), 
+but instead as structural relations over graphs. Nevertheless, because the 
+learning framework applies generally to model-theoretic representations, it 
+can naturally be extended to graph-based representations as well. 
+
+As discussed previously, the learning problem reduces to identifying two types 
+of structural changes: deassociation, where a matrix entry changes from 
+\(1 \rightarrow 0\), and reassociation, where a matrix entry changes from 
+\(0 \rightarrow 1\). The corresponding learning goal is therefore to identify 
+the minimal environment around the changing cell that is both sufficient 
+and exclusive in triggering the change observed in the positive evidence.
+
+
 \[
-\mathcal{H}(X) :=
-\bigcup_{x \in V(X)} \downarrow x
-\;-\;
-\bigcup_{x \in \hat{V}(X)} \downarrow x .
-\]
-\end{definition}
-
-In autosegmental phonology, such
-processes are not always easy to express linearly, since the relevant
-structure involves relations rather than simple strings. However, the
-learning question remains the same: what environment triggers the
-change from \(1\) to \(0\), and what environment triggers the change
-from \(0\) to \(1\)?
-
-
-
-
-
-
-
-With only a single UR--SR pair, there are infinitely many possible
-hypotheses. For example, one might hypothesize that all \(H\) tones
-delete their associations, or that all vowels do. However, once more
-data points are observed, counterexamples eliminate incorrect
-generalizations.
-
-The learning task, therefore, is to determine the surrounding
-environment of a particular cell value—either \(1\) or \(0\)—that
-triggers the change.
-
-\[
+0 \rightarrow 1 \;/\;
 \begin{array}{ccc}
 	? & ? & ? \\
-	? & \colorbox{pink}{0} & ? \\
+	? & {\_} & ? \\
 	? & ? & ?
 \end{array}
-\quad \rightarrow \quad
+\quad \text{or} \quad 
+1 \rightarrow 0 \;/\;
 \begin{array}{ccc}
 	? & ? & ? \\
-	? & \colorbox{pink}{1} & ? \\
+	? & {\_} & ? \\
 	? & ? & ?
 \end{array}
 \]
+To learn ASGs, we adapt the bottom-up factor inference framework of
+\citet{chandleeBufia2019} and the logical learning framework of
+\citet{yolyan2025logical} to graph-based autosegmental representations
+\refs. At the beginning of learning, the learner first
+identifies changing association sites by comparing the input and output
+association matrices. If an association value changes from
+\(1 \rightarrow 0\), the change is classified as deassociation; if it
+changes from \(0 \rightarrow 1\), it is classified as reassociation.
+The learner then initializes the search with the corresponding most
+general logical hypothesis: $\neg \alpha(x,y)$ for reassociation and
+$\exists x \exists y \alpha(x,y)$ for deassociation \footnote{We treat deassociation and
+	reassociation as two separate learning problems and combine the
+	resulting hypotheses through disjunction.}.
 
 \begin{algorithm}[th!]
-\small
-\KwIn{
-	$
-	D = \{(I_1,O_1),\dots,(I_n,O_n)\}
-	$
-}
-\KwOut{
-	A hypothesis $H$
-}
-
-$H,V^+,V^-,P \gets \emptyset$\;
-
-$Q \gets \{\alpha(x,y)\}$\;
-
-\ForEach{$(I,O)\in D$}{
+	\small
+	\LinesNumbered
 	
-	$V^+ \gets V^+ \cup (\alpha_I \setminus \alpha_O)$\;
+	\KwData{
+		$
+		D	=	\{(I_1,O_1),\dots,(I_n,O_n)\},
+		k, V^+ = \{\, I_n \mid I_n \neq O_n \,\},
+		V^- = \{\, I_n \mid I_n = O_n \,\} $
+	}
+%	
+%	\KwOut{
+%		minimal structural environment $c$
+%	}
 	
-	$V^- \gets V^- \cup (\alpha_I \cap \alpha_O)$\;
-}
+	$P \gets \emptyset$\;
+%	\tcp*{pruned set}
 
-\While{$Q \neq \emptyset$}{
-	
-	$c \gets Q.\mathrm{Dequeue}()$\;
-	
-	\If{$\forall g\in V^+,\; c\sqsubseteq g$}{
+	$Q \gets \{\alpha(x,y)\}$ or 	$Q \gets \{\neg \alpha(x,y)\}$\; 	
+
+	\While{$Q \neq \emptyset$}{
 		
-		\If{$\forall g\in V^-,\; c\not\sqsubseteq g$}{
+		$c \gets Q.\mathrm{Dequeue}()$\;
+	
+		\If{$\forall g \in V^+,\; c \sqsubseteq g$}{
 			
-			$H \gets H \cup \{c\}$\;
-		}
-		
-		\Else{
-			
-			\ForEach{$s\in \textsc{NextSupFact}(c)$}{
+			\If{$\forall g \in V^-,\; c \not\sqsubseteq g$}{
 				
-				\If{$\forall p\in P,\; s\not\sqsubseteq p$}{
+				\Return{$c$}\;
+			}
+			
+			\Else{
+				
+				\ForEach{$s \in \textsc{NextSupFact}(c) \land |s| < k \land \forall p \in P,\; s \not\sqsubseteq p$}{
 					
-					$Q.\mathrm{Enqueue}(s)$\;
+				
+						
+						$Q.\mathrm{Enqueue}(s)$\;
+					
 				}
 			}
 		}
-	}
-	
-	\Else{
 		
-		$P \gets P \cup \{c\}$\;
+		\Else{
+		
+			$P \gets P \cup \{c\}$\;
+		}
 	}
-}
-
-\Return{$H$}\;
-
+	\Return{$\bot$}\;
+	
+	\caption{Learning Association Changes}
 \end{algorithm}
+
+
+% explain the algo ! fix Q? 
+The input data consists of a finite set of input-output ASG pairs,
+which can be partitioned into positive and negative evidence, denoted
+$V^+$ and $V^-$ respectively. It also requires a bound $k$ that limits
+the graph size. 
+
+The algorithm conducts a breadth-first search over a partially ordered
+hypothesis space. At each step, a candidate hypothesis $c$ is tested 
+against the positive evidence: if $c$ is not contained in
+all positive examples, then the current hypothesis is incompatible with the
+observed transformation and thus is pruned. Otherwise, the learner checks
+ $c$ against all negative examples: if none of data contains c, then
+ we return the current structure, otheewise,  it
+is considered too general. The learner therefore generates more
+specific superfactors using \textsc{NextSupFact}.
+Because each application of \textsc{NextSupFact} strictly increases the
+size of the hypothesis and the search is bounded by $k$, the hypothesis
+space is finite and the algorithm terminates. Moreover, since
+hypotheses are explored breadth-first, the first valid hypothesis
+returned by the learner is guaranteed to be the minimal structural
+environment consistent with all positive and negative evidence.
+One crucial component of the learning procedure is
+\textsc{NextSupFact}. There are many possible ways to generate
+superfactors while still covering the same hypothesis space. Here, we
+propose one possible method that explicitly connects graph-theoretic
+representations with their logical counterparts.
+
+From a graph-theoretic perspective, the default first step is to expand
+the domain by introducing neighboring nodes. Such neighboring nodes may
+be added on either tier in any successor relation to existing
+nodes. Table~\ref{tab:nextsupfact} presents a non-exhaustive set of examples
+illustrating the generation of \textsc{NextSupFact} hypotheses starting
+from an initial deassociation hypothesis. By adding neighbor, one can 
+expect a possible candidate with an additional node \(z\) following \(x\). 
+Other possible configurations include \(x\) following \(z\),
+\(z\) following \(x\), \(z\) following \(y\), or \(y\) following \(z\).
+Once additional nodes are introduced and valid association docking sites
+become available, new association lines may be added between nodes.
+Finally, the learner may further specialize the hypothesis by specifying
+node labels or feature values~\footnote{For a more detailed description of \textsc{NextSupFact} operations over ASGs, see \refs.}.
+
+
+
+\begin{table}[ht!]
+	\centering
+	\small
+	\begin{tabular}{p{2.8cm}p{2.5cm}p{2.5cm}p{6cm}} 
+		\toprule
+		\textbf{Operation} & \textbf{Matrix} & \textbf{Graph} & \textbf{Logic} \\
+		\midrule
+		Initial hypothesis 
+		&
+		$
+		\begin{array}{c|c}
+			& x  \\
+			\hline
+			y & 1 
+		\end{array}
+		$
+		&
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\draw[fill=black] (0,0) circle (2pt);
+			\draw[fill=black] (0,1) circle (2pt);
+			
+			\draw (0,0) -- (0,1);
+			
+			\node[right] at (0,0) {$x$};
+			\node[right] at (0,1) {$y$};
+		\end{tikzpicture}
+		&
+		$\alpha(x,y)$
+		\\[2em]
+		
+		Add neighbor
+		&
+		$\begin{array}{c|cc}
+			& x & z \\
+			\hline
+			y & 1 & 
+		\end{array}$		&
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (1,0) {};
+			
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw[dashed] (x) -- (z);
+			
+			\node[right] at (x) {$x$};
+			\node[right] at (y) {$y$};
+			\node[right] at (z) {$z$};
+		\end{tikzpicture}
+		&
+		$
+		\alpha(x,y) \land \exists z \lhd(x,z)$
+		\\[2em]
+		
+		Add association
+		&
+		$
+		\begin{array}{c|cc}
+			& x & z \\
+			\hline
+			y & 1 & 1
+		\end{array}
+		$
+		&
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (1,0) {};
+			
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw (x) -- (z);
+			\draw[dashed] (y) -- (z);			
+			\node[right] at (x) {$x$};
+			\node[right] at (y) {$y$};
+			\node[right] at (z) {$z$};
+		\end{tikzpicture}
+		&
+		$		\alpha(x,y) \land \exists z\,\big(\lhd(x,z) \land \alpha(y,z)\, \big)$
+		\\[2em]
+		Add label
+		&
+		$
+		\begin{array}{c|cc}
+			& H & z \\
+			\hline
+			y & 1 & 1
+		\end{array}
+		$
+		&
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (1,0) {};
+			
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw (x) -- (z);
+			\draw[] (y) -- (z);			
+			\node[left] at (x) {H};
+			\node[right] at (y) {$y$};
+			\node[right] at (z) {$z$};
+		\end{tikzpicture}
+		&
+		$		\alpha(x,y) \land \exists z\,\big(\lhd(x,z) \land \alpha(y,z)\, \land H(x)\big)$
+		\\[2em]
+		\bottomrule
+	\end{tabular}
+	
+	\caption{Examples of operations used in generating 
+		\textsc{NextSupFact} hypotheses across matrix, graph, and logical 
+		representations. }
+	\label{tab:nextsupfact}
+\end{table}
+
+As can be seen, this provides a clear correspondence between
+graph-theoretic and logical representations. New quantifiers are
+introduced through successor relations, corresponding to the addition of
+neighboring nodes in the graph structure. Within the same quantifier
+scope, the learner may further specialize the hypothesis through
+conjunction, including adding association relations (corresponding to
+changing matrix cells) or specifying node labels and feature values.
 
 \section{Case Study}
 \subsection{Contour Formation}
-We begin with an idealized assumption: the tonal process involves no
-change to the segmental string, and the only modifications between the
-underlying representation (UR) and the surface representation (SR) are
-changes in association lines, namely \textsc{deassociation} and
-\textsc{reassociation}. Although many phonological processes also
-involve segmental deletion, insertion, or feature changes, we restrict
-the current discussion to association-line modifications in order to
-isolate the learning problem.
-
-The first step is to identify exactly what structural modification has
-taken place between the UR and the SR. Since the segmental and tonal
-tiers remain constant, the comparison is made directly over the
-association relation matrix.
-
-For each cell in the association matrix:
-
-
-That is, if an association present in the UR disappears in the SR, the
-operation is classified as deassociation; if a new association appears
-in the SR that was absent in the UR, the operation is classified as
-reassociation.
-
-In Estoko, both operations are attested: one association line is
-removed while another is added. Therefore, the learner must infer both
-the deassociation environment and the reassociation environment
-separately. (maybe not maybe they can start together)
-\paragraph{Hypothesis space for deassociation.}
-
-Given a set of observed deassociation sites, the learner constructs
-candidate hypotheses describing the structural environments in which an
-association changes from $1$ to $0$. Each hypothesis corresponds to a
-local structural condition under which $\alpha(x,y)$ is removed.
-
-The search proceeds from simple to more complex descriptions. At each
-step, the learner considers increasingly rich local configurations
-(factors) until a hypothesis is found that captures all and only the
-observed deassociation sites.
-
-The most general hypothesis removes all associations:
-\[
-\text{Hypothesis 1: } 1 \rightarrow 0
-\]
-This hypothesis is immediately rejected if there exist associations in
-the data that remain unchanged.
-
 
 \section{Conclusion} This paper has argued that vowel-deletion–induced 
 tonal processes can be uniformly captured as logical transductions 
@@ -910,6 +1047,6 @@ representations can facilitate grammar inference.
 
 
 \bibliographystyle{apalike}
-\bibliography{pmlr-sample}
+\bibliography{ref}
 
 \end{document}

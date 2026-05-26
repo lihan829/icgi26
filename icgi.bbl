@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{12}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -22,24 +22,12 @@ Jane Chandlee, R{\'e}mi Eyraud, Jeffrey Heinz, Adam Jardine, and Jonathan
 \bibitem[Goldsmith(1976)]{goldsmith1976autosegmental}
 John~Anton Goldsmith.
 \newblock \emph{Autosegmental phonology}.
-\newblock PhD thesis, MIT, 1976.
+\newblock PhD thesis, Massachusetts Institute of Technology, 1976.
 
 \bibitem[Hayes(1980)]{hayes1980metrical}
 Bruce~Philip Hayes.
 \newblock \emph{A metrical theory of stress rules}.
-\newblock PhD thesis, MIT, 1980.
-
-\bibitem[Hyman(2009)]{hyman2009representation}
-Larry Hyman.
-\newblock The {{Representation}} of {{Tone}}.
-\newblock \emph{UC Berkeley Phonology Lab Annual Report}, 2009.
-
-\bibitem[Jardine(2016)]{jardineComputationallyTone2016}
-Adam Jardine.
-\newblock Computationally, {{Tone Is Different}}.
-\newblock \emph{Phonology}, 33\penalty0 (2):\penalty0 247--283, 2016.
-\newblock ISSN 0952-6757, 1469-8188.
-\newblock \doi{10.1017/S0952675716000129}.
+\newblock PhD thesis, Massachusetts Institute of Technology, 1980.
 
 \bibitem[Jardine(2017)]{jardine2017local}
 Adam Jardine.
@@ -55,7 +43,7 @@ Jonathan Rawski.
 Elizabeth~Caroline Sagey.
 \newblock \emph{The representation of features and relations in non-linear
   phonology}.
-\newblock PhD thesis, MIT, 1986.
+\newblock PhD thesis, Massachusetts Institute of Technology, 1986.
 
 \bibitem[Strother-Garcia(2019)]{strother2019diss}
 Kristina Strother-Garcia.

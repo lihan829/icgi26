@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.22)  20 MAY 2026 00:22
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.22)  26 MAY 2026 01:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**pmlr-sample.tex
-(./pmlr-sample.tex
+**icgi.tex
+(./icgi.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/local/texlive/2026/texmf-dist/tex/latex/jmlr/jmlr.cls
@@ -841,36 +841,47 @@ Package subcaption Info: The counter `subtable' was already defined by
 (subcaption)             an unknown document class or package on input line 238
 .
 )
+(/usr/local/texlive/2026/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2024/10/29 v1.0k Color table columns (DPC)
+\everycr=\toks39
+\minrowclearance=\skip93
+\rownum=\count370
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/todonotes/todonotes.sty
+Package: todonotes 2024/01/05 v1.1.7 Todonotes source and documentation.
+Package: todonotes 2024/01/05
+\c@@todonotes@numberoftodonotes=\count371
+)
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 92.
+h' as default language. on input line 101.
 
-(./pmlr-sample.aux)
-\openout1 = `pmlr-sample.aux'.
+(./icgi.aux)
+\openout1 = `icgi.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-Package hyperref Info: Link coloring ON on input line 92.
- (./pmlr-sample.out) (./pmlr-sample.out)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 101.
+LaTeX Font Info:    ... okay on input line 101.
+Package hyperref Info: Link coloring ON on input line 101.
+ (./icgi.out) (./icgi.out)
 \@outlinefile=\write4
-\openout4 = `pmlr-sample.out'.
+\openout4 = `icgi.out'.
 
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/translations/translations-basic-d
@@ -879,69 +890,87 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 92.
+or `english'. on input line 101.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
 
+Package todonotes Warning: The length marginparwidth is less than 2cm and will 
+most likely cause issues with the appearance of inserted todonotes. The issue c
+an be solved by adding a line like \setlength {\marginparwidth }{2cm} prior to 
+loading the todonotes package. on input line 101.
+
+
 LaTeX Warning: No \author given.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 128
+LaTeX Font Info:    Trying to load font information for U+msa on input line 137
 .
 (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 128
+LaTeX Font Info:    Trying to load font information for U+msb on input line 137
 .
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+)
 
-] [2]
-
-Package natbib Warning: Citation `goldsmith1976' on page 3 undefined on input l
-ine 392.
+Package natbib Warning: Citation `hyman2009representation' on page 1 undefined 
+on input line 202.
 
 
-Package natbib Warning: Citation `oakden2020notation' on page 3 undefined on in
-put line 399.
+Package natbib Warning: Citation `jardineComputationallyTone2016' on page 1 und
+efined on input line 206.
+
+[1
+
+]
+Overfull \hbox (0.4754pt too wide) in paragraph at lines 365--371
+[][]\TU/lmr/m/it/10.95 Given an ASG $\OMS/cmsy/m/n/10.95 A \OT1/cmr/m/n/10.95 =
+ \OMS/cmsy/m/n/10.95 h\OML/cmm/m/it/10.95 D; \OMS/cmsy/m/n/10.95 T\OML/cmm/m/it
+/10.95 ; ^^K; \U/msa/m/n/10.95 C\OMS/cmsy/m/n/10.95 i$ \TU/lmr/m/it/10.95 and t
+wo tiers $\OML/cmm/m/it/10.95 T[]; T[] \OMS/cmsy/m/n/10.95 2
+ []
+
+[2]
+Overfull \hbox (6.34358pt too wide) in paragraph at lines 382--390
+[][][]  \TU/lmr/m/it/10.95 Let
+ []
 
 
-LaTeX Warning: Reference `tab.transduction' on page 3 undefined on input line 4
-19.
+Overfull \hbox (7.31781pt too wide) in paragraph at lines 479--546
+ [][] 
+ []
 
+[3] [4] [5]
 
 LaTeX Font Warning: Font shape `TU/lmr/m/scit' undefined
-(Font)              using `TU/lmr/m/scsl' instead on input line 498.
+(Font)              using `TU/lmr/m/scsl' instead on input line 848.
 
-[3]
-Underfull \vbox (badness 6063) has occurred while \output is active []
+[6]
+Overfull \hbox (7.02809pt too wide) in paragraph at lines 900--1015
+ [][] 
+ []
 
- [4]
-[5] (./pmlr-sample.bbl)
+[7] (./icgi.bbl [8])
 
 Package natbib Warning: There were undefined citations.
 
-[6] (./pmlr-sample.aux)
+[9] (./icgi.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-Package rerunfilecheck Info: File `pmlr-sample.out' has not changed.
-(rerunfilecheck)             Checksum: BA9C68EA2C88B46FF6575D98D125D2D9;1049.
+Package rerunfilecheck Info: File `icgi.out' has not changed.
+(rerunfilecheck)             Checksum: 810581ECBFF33C1831882F212AC2B821;1049.
  ) 
 Here is how much of TeX's memory you used:
- 28782 strings out of 468168
- 584753 string characters out of 5432815
- 968824 words of memory out of 5000000
- 57054 multiletter control sequences out of 15000+600000
- 636197 words of font info for 101 fonts, out of 8000000 for 9000
+ 29286 strings out of 468168
+ 595290 string characters out of 5432815
+ 984311 words of memory out of 5000000
+ 57545 multiletter control sequences out of 15000+600000
+ 636221 words of font info for 104 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 87i,19n,131p,460b,1007s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 87i,18n,131p,453b,1051s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on pmlr-sample.pdf (6 pages).
+Output written on icgi.pdf (9 pages).
