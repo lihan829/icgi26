@@ -43,8 +43,7 @@
     }
 \usepackage[table]{xcolor}
 \usepackage{enumitem}
-
-
+%\usepackage{gb4e}
 
 
 \title{Association Transformations in Multi-tier Structures}
@@ -116,17 +115,32 @@ This paper presents a method for learning transformations over
 multi-tier representations, with a particular focus on modifications 
 of cross-tier relations (i.e., associations between tiers). The 
 multi-tiered structures are widely attested in linguistics and are 
-known as \textit{Autosegmental Representations} \citep{CG1984autosegmental,goldsmith1976autosegmental,hayes1980metrical,sagey1986representation}, which
+known as \textit{Autosegmental Representations} \citep{CG1984autosegmental,goldsmith1976autosegmental,hayes1980metrical,sagey1986representation,jardine2017local}, which
 are graph structures of temporally-ordered 
 tiers and cross-tier association lines. This work focuses on a 
 specific but important type of transformation where the elements
 on each tier remain unchanged from input to output, while the 
-association lines are modified, as shown in Figure~\ref{IOpair}.
+association lines are modified. %, as shown in Figure~\ref{IOpair}.
 We formalize these transformations as graph model structures \citep{strother2019diss,jardine2015concatenation} 
 and use a bottom-up factor inference method 
 \citep{chandleeBufia2019,rawski2021structure} to infer which 
 association lines are preserved, deleted, or newly introduced from 
 observed input-output pairs. 
+
+
+Such multi-tiered structures have been widely used in linguistic
+theory, most notably in autosegmental phonology, to represent relations such as tone--syllable associations
+\citep{goldsmith1976autosegmental}, prosodic structure
+\citep{hayes1980metrical}, and feature geometry
+\citep{sagey1986representation}.
+The core idea behind autosegmental phonology is that linguistic
+information can be organized into multiple tiers. Elements on different
+tiers are synchronized via association lines. The input-output 
+mappings are in fact more naturally characterized by rearranging 
+those association lines across tiers, rather than randomly changing 
+features or properties of the elements themselves. An example is
+given in Figure~\ref{fig:hiatus}.
+
  
 \begin{figure}[ht!]
 	\centering
@@ -188,17 +202,7 @@ observed input-output pairs.
 	\label{IOpair}
 \end{figure}
 
-Such multi-tiered structures have been widely used in linguistic 
-theory, such as tone-syllable associations in autosegmental 
-phonology \citep{goldsmith1976autosegmental}
-prosodic or syllable structure \citep{hayes1980metrical,
-	sagey1986representation}. 
-The core idea behind autosegmental phonology is that linguistic
-information can be organized into multiple tiers. Elements on different
-tiers are being synchronized via association lines. The input-output 
-mappings are in fact more naturally characterized by rearranging 
-those association lines across tiers rather than randomly changing 
-features or properties of the elements themselves.
+
 A large body of theoretical work on African tonal 
 processes has demonstrated the advantages of autosegmental graphs 
 \citep{CG1984autosegmental, odden2013introducing,hyman2009representation}.  
@@ -206,22 +210,24 @@ Computationally, using multi-tiered structures has been shown to
 reduce the complexity of tonal patterns \citep{jardine2016computationally,Chandlee-jardine2021input}.
 Previous work has modeled these structures using finite-state 
 approaches \citep{wiebe1992modelling,bird1994one,yli2013finite,
-	yli2015three}. These approaches typically convert structured 
+	yli2015three,rawski2020multi}. These approaches typically convert structured 
 representations into strings or synchronized tapes to leverage 
-finite-state machinery, or rely on hard-coded mechanisms to 
-represent different types of associations.
-
+finite-state machinery, or rely on hardcoding different 
+types of associations into strings.
 In contrast, we propose an approach that learns association-line 
 transformations directly over autosegmental graphs using model theory 
 and formal logic, following \citet{yolyan2025logical}. 
+\todo{explain more}
+
+
 As a preliminary study, we restrict our attention to tonal processes 
 involving a single deassociation and/or reassociation operation, while 
 the segmental content remains unchanged from the underlying 
 representation (UR) to the surface representation (SR).
 
 We formalize such transformations as logical transductions, where output 
-association relations are defined in terms of the input structure\citep{strother2019diss}. Under 
-this view, the goal of learning processes is to discover the minimal 
+association relations are defined in terms of the input structure \citep{strother2019diss}. Under 
+this view, the goal of learning processes is to discover a minimal 
 structure (which itself can also be translated as a logic formula) that 
 distinguishes contexts where a transformation applies from 
 those where it does not. We demonstrate this goal can be acchieved 
@@ -491,7 +497,7 @@ Now that we can determine whether a matrix \(A\) is a submatrix of
 \(B\), we can also determine whether \(A\) is contained in \(B\).
 If so, \(A\) is a subfactor of \(B\), while \(B\) is a
 superfactor of \(A\). Furthermore, if the size difference between
-a superfactor and its subfactor is exactly one, then the superfactor
+a superfactor and its s ubfactor is exactly one, then the superfactor
 is called the \textit{next superfactor} of that subfactor.
 
 This containment relation is important because it provides a
@@ -629,12 +635,9 @@ $\alpha'(x,y)$
 &
 $:=$
 &
-$\bigl(
-\alpha(x,y)\land
-\neg \textsf{deassoc}(x,y)
-\bigr)
-\lor
-\textsf{reassoc}(x,y)$
+$\bigl(\alpha(x,y)\land\neg\textsf{deassoc}(x,y)\bigr)
+\;\lor\;
+\bigl(\neg\alpha(x,y)\land\textsf{reassoc}(x,y)\bigr)$
 &
 Update association relations
 \\
@@ -660,28 +663,13 @@ change is the association relation \(\alpha\):
 an association line holds in the output iff 
 it is (i) present in the input and not removed by \textsf{deassoc}, or 
 (ii) introduced by \textsf{reassoc}. 
-\[
-\begin{array}{rclclcl}
-\alpha'(x,y)
-&:=&
-\bigl(
-\alpha(x,y)
-&\land&
-\neg \textsf{deassoc}(x,y)
-\bigr)
-&\lor
-&
-\textsf{reassoc}(x,y)
-\\[0.5em]
 
-\text{output}
-&=&
-\text{unchanged}
-&-&
-\text{delinked}
-&+&
-\text{newly added}
-\end{array}
+\[
+\alpha'(x,y)
+=
+\bigl(\alpha(x,y)\land\neg\textsf{deassoc}(x,y)\bigr)
+\;\lor\;
+\bigl(\neg\alpha(x,y)\land\textsf{reassoc}(x,y)\bigr)
 \]
 
 In this way, the problem of learning association-line 
