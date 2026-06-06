@@ -43,10 +43,11 @@
     }
 \usepackage[table]{xcolor}
 \usepackage{enumitem}
+\usepackage{phonrule}
 %\usepackage{gb4e}
 
 
-\title{Association Transformations in Multi-tier Structures}
+\title{Learning Association-Line Transformations over Autosegmental Graphs}
 
 %\title[Short Title]{Full Title of Article\titlebreak This Title Has
 %A Line Break\titletag{\thanks{sample footnote}}}
@@ -115,7 +116,9 @@ This paper presents a method for learning transformations over
 multi-tier representations, with a particular focus on modifications 
 of cross-tier relations (i.e., associations between tiers). The 
 multi-tiered structures are widely attested in linguistics and are 
-known as \textit{Autosegmental Representations} \citep{CG1984autosegmental,goldsmith1976autosegmental,hayes1980metrical,sagey1986representation,jardine2017local}, which
+known as \textit{Autosegmental Representations} 
+\citep{CG1984autosegmental,goldsmith1976autosegmental,
+hayes1980metrical,sagey1986representation,jardine2017local}, which
 are graph structures of temporally-ordered 
 tiers and cross-tier association lines. This work focuses on a 
 specific but important type of transformation where the elements
@@ -129,79 +132,97 @@ observed input-output pairs.
 
 
 Such multi-tiered structures have been widely used in linguistic
-theory, most notably in autosegmental phonology, to represent relations such as tone--syllable associations
+theory, most notably in autosegmental phonology, to represent
+relations such as tone--syllable associations
 \citep{goldsmith1976autosegmental}, prosodic structure
 \citep{hayes1980metrical}, and feature geometry
 \citep{sagey1986representation}.
-The core idea behind autosegmental phonology is that linguistic
+The core idea behind non-linear theory is that linguistic
 information can be organized into multiple tiers. Elements on different
 tiers are synchronized via association lines. The input-output 
 mappings are in fact more naturally characterized by rearranging 
 those association lines across tiers, rather than randomly changing 
-features or properties of the elements themselves. An example is
-given in Figure~\ref{fig:hiatus}.
+features or properties of the elements themselves. 
+An example from Estako reduplication is shown in Figure~\ref{fig:IOpair}. 
+In autosegmental representations, segmental and tonal information are 
+represented on separate tiers and connected by association lines, which 
+specify the alignment between tones and the segments that bear them.
+When reduplication creates a sequence of adjacent vowels, the final vowel 
+of the first stem is deleted. Its 
+associated L tone is then delinked from the deleted vowel and 
+reassociated to the following vowel, producing a contour tone in the 
+output.
 
- 
 \begin{figure}[ht!]
-	\centering
-	
-	\begin{tikzpicture}[
-		node/.style={inner sep=1.5pt, minimum size=16pt},
-		assoc/.style={thick},
-		scale=0.9
-		]
-		
-		% ================= INPUT =================
-		
-		% top tier
-		\node[node] (a1) at (0,1.5) {$a_1$};
-		\node[node] (a2) at (1.2,1.5) {$a_2$};
-		\node[node] (a3) at (2.4,1.5) {$a_3$};
-		
-		% bottom tier
-		\node[node] (b1) at (0,0) {$b_1$};
-		\node[node] (b2) at (1.2,0) {$b_2$};
-		\node[node] (b3) at (2.4,0) {$b_3$};
-		
-		% associations
-		\draw[assoc] (a1) -- (b1);
-		\draw[assoc] (a2) -- (b2);
-		\draw[assoc] (a3) -- (b3);
-		
-		% subcaption
-		\node at (1.2,-0.8) {Input};
-		
-		% ================= ARROW =================
-		
-		\draw[->, thick] (3.5,0.75) -- (4.7,0.75);
-		
-		% ================= OUTPUT =================
-		
-		% top tier
-		\node[node] (c1) at (5.8,1.5) {$a_1$};
-		\node[node] (c2) at (7.0,1.5) {$a_2$};
-		\node[node] (c3) at (8.2,1.5) {$a_3$};
-		
-		% bottom tier
-		\node[node] (d2) at (7.0,0) {$b_2$};
-		\node[node] (d3) at (8.2,0) {$b_3$};
-		
-		% associations
-		\draw[assoc] (c1) -- (d2);
-		\draw[assoc] (c2) -- (d3);
-		\draw[assoc] (c3) -- (d3);
-		
-		% subcaption
-		\node at (7.0,-0.8) {Output};
-		
-	\end{tikzpicture}
-	
-	\caption{
-		Learning association transformations between tiers.
-	}
-	\label{IOpair}
-\end{figure}
+\centering
 
+\begin{tikzpicture}[
+    node/.style={inner sep=1.5pt, minimum size=16pt},
+    assoc/.style={thick},
+    scale=0.9
+]
+
+% ================= INPUT =================
+
+% vowel tier
+\node[node] (v1) at (0,0) {ó};
+\node[node] (v2) at (1.5,0) {wà};
+\node[node] (plus) at (3.0,0) {$+$};
+\node[node] (v3) at (4.5,0) {ó};
+\node[node] (v4) at (6.0,0) {wà};
+
+% tone tier
+\node[node] (t1) at (0,1.2) {H};
+\node[node] (t2) at (1.5,1.2) {L};
+\node[node] (t3) at (4.5,1.2) {H};
+\node[node] (t4) at (6.0,1.2) {L};
+
+% associations
+\draw[assoc] (t1) -- (v1);
+\draw[assoc] (t2) -- (v2);
+\draw[assoc] (t3) -- (v3);
+\draw[assoc] (t4) -- (v4);
+
+% input label
+\node at (3.0,-0.8) {Input: /ówà/ + /ówà/};
+
+% ================= ARROW =================
+
+\draw[->, thick] (7.0,0.75) -- (8,0.75);
+
+% ================= OUTPUT =================
+
+% tone tier
+\node[node] (s1) at (9.0,1.2) {H};
+\node[node] (s2) at (10.2,1.2) {L};
+\node[node] (s3) at (11.4,1.2) {H};
+\node[node] (s4) at (12.6,1.2) {L};
+
+% vowel tier
+\node[node] (o1) at (9.0,0) {ó};
+\node[node] (o2) at (10.8,0) {wǒ};
+\node[node] (o3) at (12.6,0) {wà};
+
+% associations
+\draw[assoc] (s1) -- (o1);
+\draw[assoc] (s2) -- (o2);
+\draw[assoc] (s3) -- (o2);
+\draw[assoc] (s4) -- (o3);
+
+% associations
+\draw[assoc] (s1) -- (o1);
+\draw[assoc] (s2) -- (o2);
+\draw[assoc] (s3) -- (o2);
+\draw[assoc] (s4) -- (o3);
+
+% output label
+\node at (11.3,-0.8) {Output: [ówǒwà]};
+
+\end{tikzpicture}
+
+\caption{Association transformation in /ówà/ `house' + /ówà/ `house' $\rightarrow$ [ówǒwà] `every house'. Deletion of the first stem-final vowel triggers association change.}
+\label{fig:IOpair}
+\end{figure}
 
 A large body of theoretical work on African tonal 
 processes has demonstrated the advantages of autosegmental graphs 
@@ -212,42 +233,51 @@ Previous work has modeled these structures using finite-state
 approaches \citep{wiebe1992modelling,bird1994one,yli2013finite,
 	yli2015three,rawski2020multi}. These approaches typically convert structured 
 representations into strings or synchronized tapes to leverage 
-finite-state machinery, or rely on hardcoding different 
+finite-state machines, or rely on hardcoding different 
 types of associations into strings.
+
 In contrast, we propose an approach that learns association-line 
-transformations directly over autosegmental graphs using model theory 
-and formal logic, following \citet{yolyan2025logical}. 
-\todo{explain more}
-
-
+transformations directly over autosegmental graphs.
 As a preliminary study, we restrict our attention to tonal processes 
 involving a single deassociation and/or reassociation operation, while 
 the segmental content remains unchanged from the underlying 
 representation (UR) to the surface representation (SR).
 
-We formalize such transformations as logical transductions, where output 
-association relations are defined in terms of the input structure \citep{strother2019diss}. Under 
-this view, the goal of learning processes is to discover a minimal 
-structure (which itself can also be translated as a logic formula) that 
-distinguishes contexts where a transformation applies from 
-those where it does not. We demonstrate this goal can be acchieved 
-directly over autosegmental graphs using a model-theoretic learner such 
-as the Bottom-Up Factor Inference Algorithm (BUFIA) 
-\citep{chandleeBufia2019,rawski2021structure}. BUFIA exploits the 
-containment relation among graph structures, which forms a partially 
-ordered hypothesis space. Given input–output pairs, the learner outputs a 
-logical formula, or equivalently a model-theoretic structure, that is 
-sufficient to trigger the observed transformation in positive examples 
-(i.e., data in which the transformation applies) and absent from negative 
-examples (i.e., data in which the transformation does not apply).
+We demonstrate that this type of representation can be modeled using
+model theory and formal logic (sometimes referred to as an
+``unconventional model'' of phonology; \citealt{strother2019diss}).
+Following \citet{yolyan2025logical}, we assume a one-to-one
+correspondence between elements in the input and output structures:
+an output element $x$ is the surface realization of the
+corresponding input element. Transformations between input and output
+are represented as logical transductions, where output association
+relations are defined in terms of the input structure.
 
-It should be noted that although our demonstration is rooted in tonal 
-phonology, the same learning approach can in principle be applied 
-to other multi-tiered representations defined model-theoretically. 
-To our knowledge, the problem of learning transformations of 
-association relations between tiers has not previously been addressed 
-previously. 
+\citet{yolyan2025logical} further show that phonological mappings over
+string-based representations can be learned as logical transductions.
+The learner searches over a partially ordered space of model-theoretic
+structures to identify a minimal structure---or equivalently, a logical
+formula---that distinguishes contexts in which a transformation applies
+from those in which it does not. This learning paradigm can be implemented
+by model-theoretic learners such as the Bottom-Up Factor Inference
+Algorithm (BUFIA; \citealt{chandleeBufia2019,rawski2021structure,li2025learning,LiHeinzPhO2026}).
+BUFIA exploits the containment relation among structures, which induces
+a partially ordered hypothesis space. Given positive and negative
+examples, the learner searches for a minimal structure that is present
+in all positive examples, absent from all negative examples, and
+sufficient to characterize the observed transformation.
 
+This work brings together these representational and learning
+perspectives. Using a case study of contour formation
+(Figure~\ref{fig:IOpair}), we show how logical transductions over
+autosegmental graphs can be learned using a BUFIA-style search over
+enriched structures. In contrast to previous work on string-based
+representations, the target of learning is a transformation of
+association relations between tiers. Although our demonstration is
+drawn from tonal phonology, the same approach can in principle be
+extended to other model-theoretically defined multi-tiered
+representations. To our knowledge, the learnability of association-line
+transformations has not previously been investigated.
 
 \section{Preliminaries}
 \subsection{Autosegmental graphs}
@@ -461,7 +491,7 @@ Figure~\ref{fig:armodel}.
 The motivation for adopting matrices is to establish a framework
 corresponding to string-based learning. Concepts such as substrings,
 subfactors, and superfactors are well developed and widely used in
-grammar inference \refs, but have not been deeply explored in terms of
+grammar inference \citep{Vu+2018,lambert2021typology}, but have not been deeply explored in terms of
 ASGs. To make these concepts applicable to ASGs, we follow the notions of
 \textit{restriction} and \textit{containment} proposed in
 \citet{chandleeBufia2019}, adapting them to graph-based
@@ -470,18 +500,20 @@ containment.}\citep{LiHeinzPhO2026}
 
 \begin{definition}[Submatrix]
 \label{def.submatrix}
-\textit{
 Let matrix \(A\) be an \(m \times n\) matrix.
 A matrix \(B\) is a \emph{submatrix} of \(A\) if it is formed by taking
 \(k\ (1 \leq k \leq m)\) contiguous rows and
-\(v\ (1 \leq v \leq n)\) contiguous columns from \(A\).
-}
-\end{definition}
+\(v\ (1 \leq v \leq n)\) contiguous columns from \(A\)\footnote{The term ``submatrix" is
+generally defined by deleting arbitrary rows and/or columns from the original
+matrix. However, in our case, we require the remaining rows and columns must be
+\textit{contiguous} in the original matrix, which is related to the 
+notion of \textit{connectedness} in \citet{chandleeBufia2019}.}.
+\end{definition} 
 
 \begin{definition}[Containment]
 \textit{
 An \(m \times n\) matrix \(A=[a_{ij}]\) is contained
-in a matrix \(B\) (written \(A \sqsubseteq B\))
+in a matrix \(B\) (\(A \sqsubseteq B\))
 if there exists an \(m \times n\) submatrix of \(B\),
 denoted \(B'=[b'_{ij}]\),
 such that for all
@@ -491,75 +523,75 @@ b'_{ij} \geq a_{ij}.
 \)
 }
 \end{definition}
-\subsection{Bottom Up Learning in a Partial Order Space}
+%\subsection{Bottom Up Learning in a Partial Order Space}
 
-Now that we can determine whether a matrix \(A\) is a submatrix of
-\(B\), we can also determine whether \(A\) is contained in \(B\).
-If so, \(A\) is a subfactor of \(B\), while \(B\) is a
-superfactor of \(A\). Furthermore, if the size difference between
-a superfactor and its s ubfactor is exactly one, then the superfactor
-is called the \textit{next superfactor} of that subfactor.
+A matrix \(A\) is a \emph{subfactor} of \(B\) if and only if \(A\) is 
+contained in \(B\). Conversely, \(B\) is a \emph{superfactor} of \(A\).
+Furthermore, if the size difference between a superfactor and its
+subfactor is exactly one, the superfactor is called the
+\emph{next superfactor} of that subfactor.
 
 This containment relation is important because it provides a
-\textit{partial ordering} over the space of ASG factors, which
-enables the learner to infer entailment relations among structures.
-The idea is simple: grammaticality is downward entailing and 
-ungrammatical is upward entailing \citep{yolyan2025logical}. In
-particular, if a factor is ungrammatical, then all factors that
-contain it, i.e., its superfactors, are likewise ungrammatical;
-if a factor is grammatical, then all factors contained
-within it, i.e., its subfactors, are likewise well formed.
-Readers are referred to other related work \citep{chandleeBufia2019,rawski2021structure,
+\textit{partial ordering}, which enables the learner to infer 
+entailment relations among structures. We illustrate this partial 
+order using the toy string examples in
+Figure~\ref{fig:hasse}. A superfactor is connected to its subfactors, 
+which are positioned below it in the diagram and are contained within it.
+This structure facilitates the learner to infer entailment relations 
+among factors. In particular,
+if a factor is ungrammatical, all of its superfactors are likewise
+ungrammatical; conversely, if a factor is grammatical, all of its
+subfactors are grammatical as well.
+Readers are referred to 
+other related work \citep{chandleeBufia2019,rawski2021structure,
 swanson2025learning,Swanson+2025,payne2024generalized,li2025learning} 
 for a more detailed discussion of the
 partial ordering itself. Here, we emphasize that this partial order
 forms the foundation of bottom-up learning algorithms, since it
 provides a principled way to navigate the hypothesis space through
 entailment relations between factors.
-\todo[inline]{this section propbably needs more content, maybe move the 
-next sup factor to this subsection?}
 
-%
-%
-%\begin{figure}
-%\centering
-%\begin{tikzpicture}[
-%	every node/.style={inner sep=1pt, font=\small\itshape},
-%	edge/.style={},
-%	]
-%	\matrix (m) [matrix of nodes,
-%	row sep=6mm,
-%	column sep=10mm,
-%	nodes={anchor=center},
-%	]{
-%%   \node (aaa) {aaa}; &\node (llb1) {...};&   \node (llb2) {...}; & \node (llb3) {...};&\node (llb4) {...};&\node (llb5) {...};&    \node (bbb) {bbb}; \\
-%   &\node (aa) {aa}; & \node (ab) {ab}; && \node (ba) {ba}; & \node (bb) {bb}; \\
-%	 && \node (a) {a}; & & \node (b) {b}; &  \\
-%	 &&& \node (z) {$\epsilon$}; && \\};
-%
-%	\draw[edge] (z) -- (a);
-%
-%	\draw[edge] (z) -- (b);
-%	
-%	\draw[edge] (a) -- (aa) ;
-%	\draw[edge] (a) -- (ab);
-%	\draw[edge] (a) -- (ba);
-%	
-%	\draw[edge] (b) -- (bb) ;
-%	\draw[edge] (b) -- (ab);
-%	\draw[edge] (b) -- (ba);
-%	\draw[edge, dotted] (aa) -- ++(0,1.5em);
-%%	\draw[edge, dotted] (aa) -- ++(1,1.5em);
-%	\draw[edge, dotted] (ab) -- ++(0,1.5em);
-%%	\draw[edge, dotted] (ab) -- ++(1,1.5em);	
-%%	\draw[edge, dotted] (bb) -- ++(-1,1.5em);	
-%	\draw[edge, dotted] (ba) -- ++(0,1.5em);
-%	\draw[edge, dotted] (bb) -- ++(0,1.5em);
-%	\end{tikzpicture}
-%\caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
-%\label{fig.string.contain}
-%\end{figure}
-%
+
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+	every node/.style={inner sep=1pt, font=\small\itshape},
+	edge/.style={},
+	]
+	\matrix (m) [matrix of nodes,
+	row sep=6mm,
+	column sep=10mm,
+	nodes={anchor=center},
+	]{
+%   \node (aaa) {aaa}; &\node (llb1) {...};&   \node (llb2) {...}; & \node (llb3) {...};&\node (llb4) {...};&\node (llb5) {...};&    \node (bbb) {bbb}; \\
+   &\node (aa) {aa}; & \node (ab) {ab}; && \node (ba) {ba}; & \node (bb) {bb}; \\
+	 && \node (a) {a}; & & \node (b) {b}; &  \\
+	 &&& \node (z) {$\epsilon$}; && \\};
+
+	\draw[edge] (z) -- (a);
+
+	\draw[edge] (z) -- (b);
+	
+	\draw[edge] (a) -- (aa) ;
+	\draw[edge] (a) -- (ab);
+	\draw[edge] (a) -- (ba);
+	
+	\draw[edge] (b) -- (bb) ;
+	\draw[edge] (b) -- (ab);
+	\draw[edge] (b) -- (ba);
+	\draw[edge, dotted] (aa) -- ++(0,1.5em);
+%	\draw[edge, dotted] (aa) -- ++(1,1.5em);
+	\draw[edge, dotted] (ab) -- ++(0,1.5em);
+%	\draw[edge, dotted] (ab) -- ++(1,1.5em);	
+%	\draw[edge, dotted] (bb) -- ++(-1,1.5em);	
+	\draw[edge, dotted] (ba) -- ++(0,1.5em);
+	\draw[edge, dotted] (bb) -- ++(0,1.5em);
+	\end{tikzpicture}
+\caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
+\label{fig:hasse}
+\end{figure}
+
 
 
 \section{Logical Transduction}
@@ -574,8 +606,8 @@ over any model-theoretic representations.
 In this framework, we use a set of logic formula to derive
 the output signature with reference to the input signature. 
 Recall from the previous section that we defined an ASG 
-signature as $\mathcal{A} = \langle D, \mathcal{T}, \alpha, \lhd \rangle$.
-Given an input model with this signature, the output 
+signature as $\mathcal{A} = \langle \mathcal{T}, \alpha, \lhd \rangle$.
+Given an input and output models with this signature, the output 
 signature can be defined in terms of the input structure.
 \begin{table}[ht!]
 \centering
@@ -613,7 +645,7 @@ $\exists y\, \alpha(x,y)$
 Preserve only associated elements
 \\[0.5em]
 
-$T'(x)$
+$\phi_{T}$
 &
 $:=$
 &
@@ -622,7 +654,7 @@ $T(x)$
 Preserve elements and their labels
 \\[0.5em]
 
-$\lhd'(x,y)$
+$\phi_{\lhd'(x,y)}$
 &
 $\approx$
 &
@@ -631,13 +663,14 @@ $\lhd(x,y)$
 Preserve linear order within tiers
 \\[0.5em]
 
-$\alpha'(x,y)$
+$\phi_{\alpha'(x,y)}$
 &
 $:=$
 &
-$\bigl(\alpha(x,y)\land\neg\textsf{deassoc}(x,y)\bigr)
-\;\lor\;
-\bigl(\neg\alpha(x,y)\land\textsf{reassoc}(x,y)\bigr)$
+$\begin{aligned}
+&\bigl(\alpha(x,y)\land\neg\textsf{deassoc}(x,y)\bigr)\lor\\
+&\bigl(\neg\alpha(x,y)\land\textsf{reassoc}(x,y)\bigr)
+\end{aligned}$
 &
 Update association relations
 \\
@@ -665,7 +698,7 @@ it is (i) present in the input and not removed by \textsf{deassoc}, or
 (ii) introduced by \textsf{reassoc}. 
 
 \[
-\alpha'(x,y)
+\phi_{\alpha'(x,y)}
 =
 \bigl(\alpha(x,y)\land\neg\textsf{deassoc}(x,y)\bigr)
 \;\lor\;
@@ -830,13 +863,21 @@ negative data nevertheless undergo the transformation, then the hypothesis is
 too general. The goal of learning is therefore to identify the smallest common 
 environment that are contained in all positive evidence, but absent in all negative 
 evidence. For example, post-nasal voicing can be written as 
-\([-\mathrm{voi}] \rightarrow [+ \mathrm{voi}] \,/\, [+\mathrm{nasal}, -\mathrm{cont}] \_\_\),
-meaning that whenever a segment specified as \([-\mathrm{voi}]\) occurs after a 
-\([+\mathrm{nasal}, -\mathrm{cont}]\) segment, its voicing feature changes to 
-\([+\mathrm{voi}]\). 
+\phonc
+  {\phonfeat{-voi}}
+  {\phonfeat{+voi}}
+  {\phonfeat{
+      +nasal,\;
+      -cont
+   }\phold}, 
+meaning that whenever a segment specified as \phonfeat{-voi} occurs after a 
+\phonfeat{
+      +nasal,\;
+      -cont
+   } segment, its voicing feature changes to \phonfeat{+voi}.
 
 In autosegmental phonology, however, such contextual 
-environments are not expressed linearly as \(A \rightarrow B \,/\, C \_ D\), 
+environments are not expressed linearly as \phonl{A}{B}{C}{D}
 but instead as structural relations over graphs. Nevertheless, because the learning framework applies generally to
 model-theoretic representations, it can naturally be extended to
 graph-based representations, which are equivalent to logical formulas
@@ -877,8 +918,8 @@ is found, then the learner starts with  $
 \textsf{reassoc} = \neg \alpha(x,y)$\footnote{We treat deassociation and
 	reassociation as two independent processes and combine the
 	resulting hypotheses through disjunction.}. The procedure is shown in Algorithm~\ref{algo}.
-\todo[inline]{Jeff: can you proofread the these logic:  1. should we add $\exists x, \exists y$ 2. Should we define deassoc(x,y) or just deassoc } 
-\begin{algorithm}[th!]
+	
+	\begin{algorithm}[th!]
 	\small
 	\LinesNumbered
 	
@@ -933,6 +974,7 @@ is found, then the learner starts with  $
 	\label{algo}
 \end{algorithm}
 
+\todo[inline]{Change the algo}
 The input data consists of a finite set of input-output ASG pairs,
 which can be partitioned into positive and negative evidence, denoted
 $V^+$ and $V^-$ respectively. It also requires a bound $k$ that limits
@@ -1492,23 +1534,18 @@ The learner eventually converges on the following hypothesis:
 We combine the two operations into the final transformation.
 
 \[
-\begin{array}{rclclcl}
-	\alpha'(x,y)
-	&:=&
-	\bigl(
-	\alpha(x,y)
-	&\land&
-	\neg \textsf{deassoc}(x,y)
-	\bigr)
-	&\lor
-	&
-	\textsf{reassoc}(x,y)
-	\\[0.5em]
-	
-\end{array}
+\begin{aligned}
+\phi_{\alpha'(x,y)} :=\;&
+\alpha(x,y)\land V(x)
+\land \exists z\big((x\lhd z)\land V(z)\big)
+\\
+&\lor\;
+\neg\alpha(x,y)\land V(x)
+\land \exists z\big((z\lhd x)\land V(z)\land \alpha(z,y)\big)
+\end{aligned}
 \]
 
-\todo[inline]{we need to discuss - maybe deassoc and reassoc do not need to have alpha (x,y) in the formula??? }
+
 
 Lastly, the licensing function \(\phi_{\textsf{license}}\) filters
 out elements that are not associated in the surface representation.

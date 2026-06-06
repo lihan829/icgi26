@@ -3,7 +3,7 @@
 \begin{table}[ht!]
 	\centering
 	\small
-	\begin{tabular}{p{2cm}p{2cm}p{2cm}p{5cm}p{1cm}} 
+	\begin{tabular}{p{2.5cm}p{1.8cm}p{1.8cm}p{6cm}p{0.5cm}} 
 		\toprule
 		\textbf{Operation} & \textbf{Matrix} & \textbf{Graph} & \textbf{Logic} & \textbf{Size} \\
 		\midrule
@@ -23,13 +23,13 @@
 			
 			\draw (0,0) -- (0,1);
 			
-			\node[right] at (0,0) {$x$};
-			\node[right] at (0,1) {$y$};
+			\node[left] at (0,0) {$x$};
+			\node[left] at (0,1) {$y$};
 		\end{tikzpicture}
 		&
 		$\alpha(x,y)$		&3
 		\\[2em]
-Label
+Add Label
 		&
 		$
 		\begin{array}{c|c}
@@ -45,16 +45,16 @@ Label
 			\draw[fill=black] (x) circle (2pt);
 			\draw[fill=black] (y) circle (2pt);
 			\draw (x) -- (y);
-			\node[right] at (x) {$x$};
-			\node[right] at (y) {H};
+			\node[left] at (x) {$x$};
+			\node[left] at (y) {H};
 		\end{tikzpicture}
 		&
 		$		\alpha(x,y) \land H(x)$&3
 		\\[2em]
-Nodes
+Add Nodes
 		&
 		$\begin{array}{c|cc}
-			& x & z \\
+			& H & z \\
 			\hline
 			y & 1 & 
 		\end{array}$		&
@@ -70,20 +70,20 @@ Nodes
 			\draw (x) -- (y);
 			\draw[dashed] (x) -- (z);
 			
-			\node[right] at (x) {$x$};
-			\node[right] at (y) {$y$};
+			\node[left] at (x) {$x$};
+			\node[left] at (y) {H};
 			\node[right] at (z) {$z$};
 		\end{tikzpicture}
 		&
 		$
-		\alpha(x,y) \land \exists z \lhd(x,z)$&4
+		\alpha(x,y) \land H(x) \land \exists z \lhd(x,z)$&4
 		\\[2em]
 		
-		Association
+		Add Association
 		&
 		$
 		\begin{array}{c|cc}
-			& x & z \\
+			& H & z \\
 			\hline
 			y & 1 & 1
 		\end{array}
@@ -101,12 +101,13 @@ Nodes
 			\draw (x) -- (y);
 			\draw (x) -- (z);
 			\draw[dashed] (y) -- (z);			
-			\node[right] at (x) {$x$};
-			\node[right] at (y) {$y$};
+			
+			\node[left] at (x) {$x$};
+			\node[left] at (y) {H};
 			\node[right] at (z) {$z$};
 		\end{tikzpicture}
 		&
-		$		\alpha(x,y) \land \exists z\,\big(\lhd(x,z) \land \alpha(y,z)\, \big)$&5
+		$		\alpha(x,y) \land H(x) \land  \exists z\,\big(\lhd(x,z) \land \alpha(y,z)\, \big)$&5
 		\\[2em]
 	
 		\bottomrule
