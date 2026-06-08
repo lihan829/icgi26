@@ -691,8 +691,7 @@ the within-tier order relation is preserved. The only
 change is the association relation \(\alpha\): 
 an association line holds in the output iff 
 it is (i) present in the input and not removed by \textsf{deassoc}, or 
-(ii) introduced by \textsf{reassoc}. 
-
+(ii) absent in the input but newly introduced by \textsf{reassoc}. 
 \[
 \phi_{\alpha'(x,y)}
 =
@@ -700,22 +699,20 @@ it is (i) present in the input and not removed by \textsf{deassoc}, or
 \;\lor\;
 \bigl(\neg\alpha(x,y)\land\textsf{reassoc}(x,y)\bigr)
 \]
-
 In this way, the problem of learning association-line 
 transformations can be reduced to learning the logical 
 formulas for \textsf{deassoc} and/or \textsf{reassoc}. 
+When no transformation occurs between the input and 
+output representations, neither \textsf{deassoc} nor 
+\textsf{reassoc} takes place (i.e., both have the value of
+false). The association relation therefore remains unchanged, 
+and all input associations are faithfully preserved in the output.
 Since these two predicates are combined through disjunction, 
-two parallel learning processes take place simultaneously, 
+two parallel learning processes apply simultaneously, 
 and their outputs are combined to define the final 
 association relation $\alpha'$.
 
-Consider a common phenomenon in tone languages
-known as \textit{contour formation}. When two vowels become 
-adjacent, the first vowel, V$_1$, may be deleted. The tone 
-originally associated with V$_1$, T$_1$, is delinked from 
-V$_1$ and reassociates with the following vowel, V$_2$.
-As a result, V$_2$ bears both tones in their original order,
-which together surface as a contour tone. Figure~\ref{fig:hiatus} visualizes this process in both graph-theoretic and matrix representations.
+
 \begin{figure}[ht!]
 	\centering
 	
@@ -786,22 +783,34 @@ which together surface as a contour tone. Figure~\ref{fig:hiatus} visualizes thi
 		\end{tabular}
 		
 	\end{minipage}
-	
-	\caption{
-		%		Vowel hiatus resolution and the corresponding adjacency matrices.
-	}
-	\label{fig:hiatus}
-	
+\caption{Contour formation in both graph-theoretic and matrix representations.}
+\label{fig:hiatus}
 \end{figure}
 
-From a logical perspective, this transformation is captured by three operations: \textsf{deassoc}, \textsf{reassoc}, and
-$\phi_{\textsf{license}}$. The \textsf{deassoc} function removes the
-association between T$_1$ and the deleted vowel V$_1$, 
-(the crossed-out line in Figure~\ref{fig:hiatus}). The \textsf{reassoc}
-function then links T$_1$ to the surviving vowel V$_2$
-(the dotted line). Consequently, V$_1$ in the delinked pair (T$_1$, V$_1$) is 
-still not associated and is therefore not licensed by
-$\phi_{\textsf{license}}$ (shown in gray).
+Consider a common phenomenon, contour formation,
+as shown in Figure~\ref{fig:IOpair}. %When two vowels become 
+%adjacent, the first vowel, V$_1$, is deleted. The tone T$_1$,
+%originally associated with V$_1$, is delinked from 
+%V$_1$ and reassociates with the following vowel V$_2$.
+%As a result, V$_2$ bears both tones in their original order,
+%which surface together as a contour tone. 
+Figure~\ref{fig:hiatus} visualizes this process in both 
+graph-theoretic and matrix representations.
+From a logical perspective, this transformation is captured 
+by three operations: \textsf{deassoc}, \textsf{reassoc}, and 
+$\phi_{\textsf{license}}$. The \textsf{deassoc} function 
+identifies the association to be broken between T$_1$ and 
+the deleted vowel V$_1$ (the crossed-out line). The conjunction 
+$\alpha(x,y)\land\neg\textsf{deassoc}(x,y)$ removes 
+this association $(T_1,V_1)$ while preserving all unaffected associations, 
+that is, $(T_2,V_2)$. The \textsf{reassoc} function then links T$_1$ to 
+the surviving vowel V$_2$ (the dotted line). As a result, V$_1$ is no longer
+associated with any element on the opposite tier and therefore fails to 
+satisfy the licensing condition $\phi_{\textsf{license}}$ in the output. 
+Consequently, V$_1$ is not licensed and is omitted from 
+the surface form (shown in gray).
+
+
 % Thus, $T_1, T_2$ and $V_2$ remain in the
 %surface representation. If we define the relevant context as
 %$\textsf{hiatus}(x,y) := V(x) \land V(y) \land \lhd(x,y)$,
@@ -819,11 +828,10 @@ $\phi_{\textsf{license}}$ (shown in gray).
 
 The \textsf{deassoc} and \textsf{reassoc} operations are
 equivalently reflected in the adjacency matrices in
-Figure~\ref{fig:hiatus}. The value
-corresponding to the association between T$_1$ and V$_1$
-changes from $1$ in the input to $0$ in the output,
+Figure~\ref{fig:hiatus}. The value for $(T_1,V_1)$ 
+changes from $1$ (in the input) to $0$ (in the output),
 which indicates delinking; the value corresponding
-to $T_1$ and $V_2$ changes from $0$ to $1$,
+to $(T_1,V_2)$  changes from $0$ to $1$,
 which indicates reassociation.  Formally, \textsf{deassoc} and \textsf{reassoc}
 can also be identified by  $ \textsf{deassoc}
 = \{(i,j) \mid \mathrm{UR}_{ij}=1 \land \mathrm{SR}_{ij}=0\}$
@@ -838,7 +846,7 @@ in a partially ordered space and updates hypotheses
 about the smallest contextual environments that trigger 
 a featural change (a 
 string-based input-output mapping that can be written as
-$A \rightarrow B \,/\, C \_ D$).
+\phonl{A}{B}{C}{D}).
 
 Several aspects of this framework are particularly important for the present
 work. First, phonological processes are represented as logical formulas
@@ -847,8 +855,9 @@ grammatical entailment relations within a partially ordered hypothesis space,
 with more general structures at the bottom and more specific structures higher
 up \citep{chandleeBufia2019,rawski2021structure}. If an environment (which itself 
 is a structure, thereafter we call it environment) is sufficient to trigger a
-transformation, then any superfactor containing it also entails that
-transformation. On the other hand, if an environment fails to trigger the
+transformation, then any superfactor containing that environment
+is likewise sufficient to trigger the same transformation.
+On the other hand, if an environment fails to trigger the
 change, then all of its subfactors are likewise insufficient to trigger the
 change. In other words, given a hypothesized environment, all data satisfying
 this condition are expected to undergo the transformation (positive evidence),
@@ -859,32 +868,18 @@ negative data nevertheless undergo the transformation, then the hypothesis is
 too general. The goal of learning is therefore to identify the smallest common 
 environment that are contained in all positive evidence, but absent in all negative 
 evidence. For example, post-nasal voicing can be written as 
-\phonc
-  {\phonfeat{-voi}}
-  {\phonfeat{+voi}}
-  {\phonfeat{
-      +nasal,\;
-      -cont
-   }\phold}, 
-meaning that whenever a segment specified as \phonfeat{-voi} occurs after a 
-\phonfeat{
-      +nasal,\;
-      -cont
-   } segment, its voicing feature changes to \phonfeat{+voi}.
+\phonl{-voi}{+voi}{+nasal,-cont}{}. This rule states that whenever
+ a segment specified as [-voi] occurs after a segment with features [+nasal,-cont], 
+ its voicing feature changes to [+voi].
 
-In autosegmental phonology, however, such contextual 
-environments are not expressed linearly as \phonl{A}{B}{C}{D}
-but instead as structural relations over graphs. Nevertheless, because the learning framework applies generally to
-model-theoretic representations, it can naturally be extended to
-graph-based representations, which are equivalent to logical formulas
-under the correspondence between graphs and logical structures.
+In autosegmental phonology, however, contextual environments are not 
+expressed linearly as \phonl{A}{B}{C}{D}, but rather as structural 
+relations over graphs. Because the learning framework applies 
+generally to model-theoretic representations, it extends naturally to 
+graph-based representations. Equivalently, transformations can be 
+viewed as changes to the graph's adjacency matrix, where an entry 
+changes from $1\rightarrow0$ or $1\rightarrow0$.
 
-As discussed previously, the learning problem reduces to identifying two types 
-of structural changes: deassociation, where a matrix entry changes from 
-\(1 \rightarrow 0\), and reassociation, where a matrix entry changes from 
-\(0 \rightarrow 1\). The corresponding learning goal is therefore to identify 
-the minimal environment around the changing site that is both sufficient 
-and exclusive in triggering the change observed in the positive evidence.
 
 
 \[
@@ -902,16 +897,18 @@ and exclusive in triggering the change observed in the positive evidence.
 	? & ? & ?
 \end{array}
 \]
+
 To learn ASGs, we adapt the bottom-up factor inference framework of
 \citet{chandleeBufia2019} and the logical learning framework of
-\citet{yolyan2025logical} to graph-based autosegmental representations\citep{LiHeinzPhO2026}. At the beginning of learning, the learner first
-identifies changing association sites by comparing the input and output
-association matrices. If a deassociation is found,
+\citet{yolyan2025logical} to graph-based autosegmental 
+representations \citep{LiHeinzPhO2026}. Initially,
+the learner identifies changing association sites by comparing the 
+input and output association matrices. If a deassociation is found,
 the learner then initializes the search with the corresponding most
 general logical hypothesis:
-$ \textsf{deassoc} = \exists x \exists y \alpha(x,y)$; if a reassociation
-is found, then the learner starts with  $
-\textsf{reassoc} = \neg \alpha(x,y)$\footnote{We treat deassociation and
+$\alpha(x,y)$
+if a reassociation
+is found, then the learner starts with  $neg \alpha(x,y)$\footnote{We treat deassociation and
 	reassociation as two independent processes and combine the
 	resulting hypotheses through disjunction.}. The procedure is shown in Algorithm~\ref{algo}.
 	
@@ -924,7 +921,9 @@ is found, then the learner starts with  $
 		D	=	\{(I_1,O_1),\dots,(I_n,O_n)\},
 		V^+ = \{\, I_n \mid I_n \neq O_n \,\},
 		V^- = \{\, I_n \mid I_n = O_n \,\},
-		k $
+		k,
+		type 
+		$
 	}
 %	
 %	\KwOut{
