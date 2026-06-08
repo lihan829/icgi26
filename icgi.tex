@@ -117,43 +117,57 @@
 
 \section{Introduction}
 This paper presents a method for learning transformations over 
-multi-tier representations, with a particular focus on modifications 
-of cross-tier relations (i.e., associations between tiers). The 
-multi-tiered structures are widely attested in linguistics and are 
-known as \textit{Autosegmental Representations} 
-\citep{CG1984autosegmental,goldsmith1976autosegmental,
-hayes1980metrical,sagey1986representation,jardine2017local}, which
-are graph structures of temporally-ordered 
-tiers and cross-tier association lines. This work focuses on a 
-specific but important type of transformation where the elements
-on each tier remain unchanged from input to output, while the 
-association lines are modified. %, as shown in Figure~\ref{IOpair}.
-We formalize these transformations as graph model structures \citep{strother2019diss,jardine2015concatenation} 
+multi-linear structures, with a particular focus on those structures
+are synchronized in time. 
+Multi-linear structures are widely used in linguistics
+in phonological theory in particular, and are known as
+\textit{Autosegmental Representations} 
+\citep[ARs][]{CG1984autosegmental, goldsmith1976autosegmental,
+  hayes1980metrical, sagey1986representation, jardine2017local}.
+ARs are graph structures which consist of one or more sequences called `tiers'
+and cross-tier association relations. This work focuses on a 
+specific but important type of transformation where the 
+association lines are modified. 
+We formalize these transformations as graph transductions
+\citep{Courcelle1994, EngelfrietHoogeboom2001,
+  CourcelleEngelfriet2012}  over ARs \citep{jardine2015concatenation, jardine2017local, strother2019diss}
 and use a bottom-up factor inference method 
-\citep{chandleeBufia2019,rawski2021structure} to infer which 
+\citep{chandleeBufia2019, rawski2021structure, yolyan2025logical} to infer which 
 association lines are preserved, deleted, or newly introduced from 
 observed input-output pairs. 
 
-
-Such multi-tiered structures have been widely used in linguistic
+Multi-linear structures have been widely used in linguistic
 theory, most notably in autosegmental phonology, to represent
-relations such as tone--syllable associations
-\citep{goldsmith1976autosegmental}, prosodic structure
-\citep{hayes1980metrical}, and feature geometry
-\citep{sagey1986representation}.
-The core idea behind non-linear theory is that linguistic
-information can be organized into multiple tiers. Elements on different
-tiers are synchronized via association lines. The input-output 
-mappings are in fact more naturally characterized by rearranging 
-those association lines across tiers, rather than randomly changing 
-features or properties of the elements themselves \citep{goldsmith1976autosegmental,clements1984autosegmental,odden2013introducing,hyman2009representation}.
- 
-An example from Estako reduplication is shown in Figure~\ref{fig:IOpair}, where segmental and tonal information is 
-represented on separate tiers and connected by association lines.
-When reduplication creates a sequence of adjacent vowels/ówà/ + /ówà/ $\rightarrow$ /ów\textbf{àó}wà/, the final vowel 
-of the first stem à is deleted. Its 
-associated L tone is then delinked from the deleted vowel and 
-reassociated to the following vowel ó. As a result, the output is ów\textbf{ǒ}wà.
+different levels of representations that are coordinated in time,
+including tone,\footnote{Tone
+  refers to the pitch level of a vowel or syllable.
+  Languages which use pitch to mark lexical contrasts are called tonal languages.
+  English is not a tonal language, but EXAMPLE OF PITCH CONTRAST here.}
+\citep{goldsmith1976autosegmental}, syllable structure \citep{ck83},
+prosodic structure \citep{hayes1980metrical}, and
+feature geometry \citep{sagey1986representation}.
+The core idea is that elements on different tiers are temporally synchronized via
+an association relation. Many input-output mappings are
+naturally characterized by rearranging those association lines across
+tiers \citep{goldsmith1976autosegmental, clements1984autosegmental, odden2013introducing, hyman2009representation}.
+
+For example, one instance of reduplication in Estako, a Niger-Congo language,
+is shown in Figure~\ref{fig:IOpair}.
+The word for `house` in Estako is pronounced [ówà] with a high tone
+on the first vowel and a low tone on the second vowel.
+To say `every X`, the base word is duplicated.
+Thus `every house' in Estako is pronounced [ówǒwà],
+with a high, rising, and low tones on the first,
+second, and third vowels, respectively.
+
+In ARs, segmental and tonal information are represented on separate tiers,
+but are coordinated in time by the association relation
+(shown in figures in this paper as lines).
+When reduplication creates a sequence of
+adjacent vowels V\(_1\)V\(_2\), the first vowel V\(_1\) delete. Its
+associated tone, however, does not.
+Instead, it reassociates to the following vowel.
+In the example below, this produces a rising tone on V\(_2\) in the output.
 
 \begin{figure}[ht!]
 \centering
@@ -230,50 +244,35 @@ A large body of theoretical work on African tonal
 processes has demonstrated the advantages of autosegmental graphs 
 \citep{CG1984autosegmental, odden2013introducing,hyman2009representation}.  
 Computationally, using multi-tiered structures has been shown to 
-reduce the complexity of tonal patterns \citep{jardine2016computationally,Chandlee-jardine2021input}.
+reduce the complexity of tonal patterns \citep{jardine2016computationally, Chandlee-jardine2021input}.
 Previous work has modeled these structures using finite-state 
-approaches \citep{wiebe1992modelling,bird1994one,yli2013finite,
-	yli2015three,rawski2020multi}. These approaches typically convert structured 
+approaches \citep{wiebe1992modelling, bird1994one, yli2013finite, yli2015three,rawski2020multi}.
+These approaches typically convert structured 
 representations into strings or synchronized tapes to leverage 
 finite-state machines, or rely on hardcoding different 
 types of associations into strings.
 
-In contrast, we model tonal processes directly as transformations 
-over autosegmental graphs. As a preliminary study, we focus on 
-processes involving a single deassociation and/or reassociation 
-operation, while the segmental content can be viewed unchanged between 
-the underlying representation (UR) and the surface representation (SR).
+In contrast, we propose an approach that learns how the association relation
+transforms directly over autosegmental graphs.
+As a preliminary study, we restrict our attention to tonal processes 
+involving a single deassociation and/or reassociation operation.
 
-We adopt the logical-transduction framework of 
-\citet{yolyan2025logical}, which assumes a one-to-one 
-correspondence between elements in the input and output 
-structures. Each output element is interpreted as the surface 
-realization of a corresponding input element, and phonological 
-mappings are expressed by defining output association relations 
-as functions of the input structure. This logical characterization 
-also provides a model-theoretic framework for learning \citep{strother2019diss} \hijeff{is this accurate???}.
-
-This learning paradigm has proven effective in phonotactic learning 
-from positive data using the Bottom-Up Factor Inference Algorithm (BUFIA; 
-\citealt{chandleeBufia2019,rawski2021structure,li2025learning,LiHeinzPhO2026}). 
+We adopt the model-theoretic logical transduction framework of
+\citet{yolyan2025logical}. Yolyan synthesizes insights from from graph transductions \citep{Courcelle1994, EngelfrietHoogeboom2001,
+  CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, chandleeBufia2019}. The transductions specify, via a collection of logical formulas, how to construct an output structure from a given an input structure. The learning approach, known as Bottom-Up Factor Inference Algorithm (BUFIA; 
+\citealt{rawski2021structure, li2025learning, Swanson+2025, LiHeinzPhO2026}). 
 BUFIA searches a partially ordered space of model-theoretic structures to 
 identify a minimal hypothesis consistent with the data. For transformation 
-learning, \citet{yolyan2025logical,yolyan2025phonological} show that the target 
-structure should distinguish positive from negative examples: it must be 
-present in all positive examples and absent from all negative examples. 
-Such a structure defines a minimal structural environment in which the 
-transformation applies. 
+learning, \citet{yolyan2025logical, yolyan2025phonological} uses this idea to find a minimal structure which changes: it distinguishs positive examples (those that undergo the change) from negative examples (those that do not).
 
 This work brings together these representational and learning
 perspectives. Using a case study of contour formation
 (as shown in Figure~\ref{fig:IOpair}), we show how logical transductions over
-autosegmental graphs can be learned using a BUFIA-style learner. In contrast to previous work on string-based
-representations, the target of learning is a transformation of
-association relations between tiers. Although our demonstration is
+autosegmental graphs can be learned using a BUFIA-style learner. In contrast to Yoltan's previous work on string-based representations, the target of learning is a transformation of association relations between tiers.
+Although our demonstration is
 drawn from tonal phonology, the same approach can in principle be
-extended to other model-theoretically defined multi-tiered
-representations. To our knowledge, the learnability of association-line
-transformations has not previously been investigated.
+extended to other multi-linear structures.
+To our knowledge, the learnability of such transformations has not previously been investigated.
 
 \section{Preliminaries}
 \subsection{Autosegmental graphs}
