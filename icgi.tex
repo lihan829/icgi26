@@ -35,15 +35,19 @@
 
 % Han's packages
 \usepackage{tikz}
-\usepackage{todonotes}
 \usetikzlibrary{arrows.meta, positioning, matrix, tikzmark}
 \usepackage{subcaption}
 \newcommand{\refs}{%
     \textcolor{red}{\textbf{[NEED REF]}}%
     }
+
+\newcommand{\hijeff}[1]{%
+    	\textcolor{violet}{\textbf{[#1]}}%
+    }
 \usepackage[table]{xcolor}
 \usepackage{enumitem}
 \usepackage{phonrule}
+\usepackage{todonotes}
 %\usepackage{gb4e}
 
 
@@ -142,16 +146,14 @@ information can be organized into multiple tiers. Elements on different
 tiers are synchronized via association lines. The input-output 
 mappings are in fact more naturally characterized by rearranging 
 those association lines across tiers, rather than randomly changing 
-features or properties of the elements themselves. 
-An example from Estako reduplication is shown in Figure~\ref{fig:IOpair}. 
-In autosegmental representations, segmental and tonal information are 
-represented on separate tiers and connected by association lines, which 
-specify the alignment between tones and the segments that bear them.
-When reduplication creates a sequence of adjacent vowels, the final vowel 
-of the first stem is deleted. Its 
+features or properties of the elements themselves \citep{goldsmith1976autosegmental,clements1984autosegmental,odden2013introducing,hyman2009representation}.
+ 
+An example from Estako reduplication is shown in Figure~\ref{fig:IOpair}, where segmental and tonal information is 
+represented on separate tiers and connected by association lines.
+When reduplication creates a sequence of adjacent vowels/ówà/ + /ówà/ $\rightarrow$ /ów\textbf{àó}wà/, the final vowel 
+of the first stem à is deleted. Its 
 associated L tone is then delinked from the deleted vowel and 
-reassociated to the following vowel, producing a contour tone in the 
-output.
+reassociated to the following vowel ó. As a result, the output is ów\textbf{ǒ}wà.
 
 \begin{figure}[ht!]
 \centering
@@ -236,42 +238,36 @@ representations into strings or synchronized tapes to leverage
 finite-state machines, or rely on hardcoding different 
 types of associations into strings.
 
-In contrast, we propose an approach that learns association-line 
-transformations directly over autosegmental graphs.
-As a preliminary study, we restrict our attention to tonal processes 
-involving a single deassociation and/or reassociation operation, while 
-the segmental content remains unchanged from the underlying 
-representation (UR) to the surface representation (SR).
+In contrast, we model tonal processes directly as transformations 
+over autosegmental graphs. As a preliminary study, we focus on 
+processes involving a single deassociation and/or reassociation 
+operation, while the segmental content can be viewed unchanged between 
+the underlying representation (UR) and the surface representation (SR).
 
-We demonstrate that this type of representation can be modeled using
-model theory and formal logic (sometimes referred to as an
-``unconventional model'' of phonology; \citealt{strother2019diss}).
-Following \citet{yolyan2025logical}, we assume a one-to-one
-correspondence between elements in the input and output structures:
-an output element $x$ is the surface realization of the
-corresponding input element. Transformations between input and output
-are represented as logical transductions, where output association
-relations are defined in terms of the input structure.
+We adopt the logical-transduction framework of 
+\citet{yolyan2025logical}, which assumes a one-to-one 
+correspondence between elements in the input and output 
+structures. Each output element is interpreted as the surface 
+realization of a corresponding input element, and phonological 
+mappings are expressed by defining output association relations 
+as functions of the input structure. This logical characterization 
+also provides a model-theoretic framework for learning \citep{strother2019diss} \hijeff{is this accurate???}.
 
-\citet{yolyan2025logical} further show that phonological mappings over
-string-based representations can be learned as logical transductions.
-The learner searches over a partially ordered space of model-theoretic
-structures to identify a minimal structure---or equivalently, a logical
-formula---that distinguishes contexts in which a transformation applies
-from those in which it does not. This learning paradigm can be implemented
-by model-theoretic learners such as the Bottom-Up Factor Inference
-Algorithm (BUFIA; \citealt{chandleeBufia2019,rawski2021structure,li2025learning,LiHeinzPhO2026}).
-BUFIA exploits the containment relation among structures, which induces
-a partially ordered hypothesis space. Given positive and negative
-examples, the learner searches for a minimal structure that is present
-in all positive examples, absent from all negative examples, and
-sufficient to characterize the observed transformation.
+This learning paradigm has proven effective in phonotactic learning 
+from positive data using the Bottom-Up Factor Inference Algorithm (BUFIA; 
+\citealt{chandleeBufia2019,rawski2021structure,li2025learning,LiHeinzPhO2026}). 
+BUFIA searches a partially ordered space of model-theoretic structures to 
+identify a minimal hypothesis consistent with the data. For transformation 
+learning, \citet{yolyan2025logical,yolyan2025phonological} show that the target 
+structure should distinguish positive from negative examples: it must be 
+present in all positive examples and absent from all negative examples. 
+Such a structure defines a minimal structural environment in which the 
+transformation applies. 
 
 This work brings together these representational and learning
 perspectives. Using a case study of contour formation
-(Figure~\ref{fig:IOpair}), we show how logical transductions over
-autosegmental graphs can be learned using a BUFIA-style search over
-enriched structures. In contrast to previous work on string-based
+(as shown in Figure~\ref{fig:IOpair}), we show how logical transductions over
+autosegmental graphs can be learned using a BUFIA-style learner. In contrast to previous work on string-based
 representations, the target of learning is a transformation of
 association relations between tiers. Although our demonstration is
 drawn from tonal phonology, the same approach can in principle be
