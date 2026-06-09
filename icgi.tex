@@ -275,44 +275,42 @@ extended to other multi-linear structures.
 To our knowledge, the learnability of such transformations has not previously been investigated.
 
 \section{Preliminaries}
-\subsection{Autosegmental graphs}
 
-ASGs represent the idea that different aspects of linguistic structure
-are organized on distinct tiers while progressing simultaneously over time.
-Each tier encodes a particular type of information,
-such as tone (pitch information), segmental (tongue shape), syllabic
-(metrical) structure. 
-Note that there may be multiple tiers in ASGs, provided that the 
-elements on different tiers are disjoint. In most phonological 
-applications, ASGs typically involve two or three tiers. In this 
+This section provides background on autosegmental graphs, matrix and logical representations thereof. We assume familiarity with first order logic.
+
+\subsection{Autosegmental representations}
+
+ARs represent the idea that different aspects of linguistic structure
+are organized on distinct levels while progressing simultaneously over time.
+Each tier encodes a particular type of information. In this 
 work, we assume a two-tiered structure, though the definition 
-remains the same in the general case. In addition, ASGs are subject 
-to the No Crossing Constraint (NCC), which enforces temporal 
-alignment between associations.
+remains the same in the general case. 
 
-\begin{definition}[Autosegmental Graph]
-	An autosegmental graph (ASG) is a labeled $\mathcal{T}$-partite graph
-	whose vertices are partitioned into $\mathcal{T}$ disjoint sets, with 
-	each tier linearly-ordered. Equivalently, it can be defined
-	model-theoretically as a relational structure
-	$\mathcal{A} = \langle D, \mathcal{T}, \alpha, \lhd \rangle$
-	where $D$ is a finite domain of elements; $\mathcal{T} = \{T_1,\dots,T_n\}$ is a 
-	collection of tiers such that
-	$T_1 \cup T_2 \cup \dots \cup T_n = D$ and $T_i \cap T_j = \emptyset$
-	for all $i \neq j$. 
-	$\lhd$ is a binary successor relation defined between nodes within tiers;
-	$\alpha \subseteq D \times D$ is a set of non-crossing association relations across tiers. 
-\end{definition}
-
-\begin{definition}[No Crossing Constraint (NCC)]
-	An ASG needs to obey No Crossing Constraint. Formally,
-	For all $(x,y), (x',y') \in \alpha$,
-	\(
-	x \lhd x' \Rightarrow (y \lhd y') \vee (y = y').
-	\) and vice versa.
-\end{definition}
-
-
+We define autosegmental representations using model-theoretic
+relational structures \citep{jardine2017local}. A relational structure
+contains a domain \(D\) and instantiates a set of relations over that
+domain. The set of relations is called the \emph{signature} of the
+model. In this paper, the signature of the model contains the unary
+relations \{L, H, C, V\} indicating which domain elements are low
+tones, high tones, consonant and vowels. The low and high tones make
+up one tier and consonant and vowels make up the other tier. The
+signature also contains two binary relations: \(<\) is the precedence
+relation and \(\alpha\) is the association relation. Well-formed
+autosegmental representations obey the following constraints.
+\begin{itemize}
+\item The domain is partitioned into two sets: T (tonal tier) and S (segmental tier).
+\item Every element in T satisfies exactly one of L or H and nothing else.
+\item Every element in S satisfies exactly one of C or V and nothing else.
+\item If \(<(x,y)\) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\). Also, for each tier, the precedence relation produces a total ordering over it.
+\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\). The association relation is symmetric (though symmetry will not be shown in Figures for readability).
+\item For all
+  \((x, y), (x', y') ∈ α, x < x' \doublerightarrow (y < y') ∨ (y =
+  y')\).
+\end{itemize}
+In short, an AR is a $\mathcal{T}$-partite graph whose vertices are
+partitioned into $\mathcal{T}$ disjoint sets, with each tier
+linearly-ordered, whose elements are coordinated via a temporally
+well-behaved association relation. Figure~\ref{fig:armodel} shows an AR on the left, its corresponding model-theoretic structure on the right, and the graph of the model in the center. Henceforth, we use the words `node' and `domain element' interchangeably.
 \begin{figure}[ht]
 	\centering
 	
@@ -321,8 +319,8 @@ alignment between associations.
 		\centering
 		
 		\begin{tikzpicture}
-			\node (v1) at (0,0) {$\sigma$};
-			\node (v2) at (1,0) {$\sigma$};
+			\node (v1) at (0,0) {V};
+			\node (v2) at (1,0) {V};
 			\node (t1) at (0,1) {L};
 			\node (t2) at (1,1) {H};
 			
@@ -346,15 +344,15 @@ alignment between associations.
 			\node[node] (t1) at (0,2) {1\textsubscript{L}};
 			\node[node] (t2) at (2,2) {2\textsubscript{H}};
 			
-			\node[node] (s1) at (0,0) {3\textsubscript{$\sigma$}};
-			\node[node] (s2) at (2,0) {4\textsubscript{$\sigma$}};
+			\node[node] (s1) at (0,0) {3\textsubscript{V}};
+			\node[node] (s2) at (2,0) {4\textsubscript{V}};
 			
 			\draw (t1) -- node[midway, left] {$\alpha$} (s1);
 			\draw (t2) -- node[midway, right] {$\alpha$} (s2);
 			\draw (t2) -- node[midway, right] {$\alpha$} (s1);	
 			
-			\draw (t1) -- node[midway, above] {$\lhd$} (t2);
-			\draw (s1) -- node[midway, above] {$\lhd$} (s2);
+			\draw (t1) -- node[midway, above] {$<$} (t2);
+			\draw (s1) -- node[midway, above] {$<$} (s2);
 			
 		\end{tikzpicture}
 		
@@ -368,7 +366,8 @@ alignment between associations.
 		\[
 		\begin{aligned}
 			D &= \{1,2,3,4\} \\
-			T &= \{1,2\}\quad L = \{1\}\quad H = \{2\} \\
+			L = \{1\}\quad H = \{2\} \\
+			C = \varnothing\quad  = \{3,4\} \\
 			\sigma &= \{3,4\} \\
 			\lhd &= \{
 			\langle 1,2 \rangle,
@@ -390,89 +389,24 @@ alignment between associations.
 	\label{fig:armodel}	
 \end{figure}
 
-Figure~\ref{fig:armodel} shows a tone--syllable structure and its
-corresponding model. In this example, the first syllable is associated
-with both a Low (L) tone and a following High (H) tone, while the second
-syllable is associated with the H tone (often
-represented as LH.H in linguistic literature).
-The model consists of four labeled nodes, numbered \(1,2,3,4\), each
-representing a linguistic unit with its corresponding property. There
-are two tiers: the tone tier \(T\), containing the L and H tones, and the
-syllable tier \(\sigma\), containing the two syllables. The successor
-relation, denoted by \(\lhd\), represents the linear order within tiers.
-In this example, the successor relation is
-$\lhd = \{\langle 1,2 \rangle,\ \langle 3,4 \rangle\}$.
-The association relation, denoted by \(\alpha\), represents cross-tier
-associations:
-$
-\alpha =
-\{\langle 1,3 \rangle,\ \langle 2,3 \rangle,\ \langle 2,4 \rangle\}.
-$.
-Together, the tuple
-$\langle D,T,\sigma,L,H,\lhd,\alpha\rangle$
-constitutes the \textit{signature} of this ASG model.
+The \emph{size} of an AR is defined as the \(|D| + |\alpha|/2\).
+We divide by two because \(alpha\) is symmetric.
+Thus, The size of the AR in Figure~\ref{fig:armodel} is 7.
 
-
-\begin{definition}[Size of ASG]
-Given $\mathcal{A}=\langle D, \mathcal{T},\alpha,\lhd\rangle$, 
-the size of \(\mathcal{A}\), denoted by \(|\mathcal{A}|\), 
-is defined as $\mathcal{A} = |D| + |\alpha|$.
-\label{def.size}
+The successor relation \(\lhd\) is the transitive reduction of \(<\):
+\(x\lhd y\) if and only if
+\(x<y \wedge \neg (\exists z)[ x< z < y] \). Two nodes \(x,y\) are
+\emph{neighbors} if $x \lhd y \lor y \lhd x$.
 \end{definition}
 
-The size of an autosegmental graph is defined as the sum
-of both node and association counts, excluding successor relations,
-since successor count is implicitly determined by the count
-of nodes on each tier. Note that node labels are not counted toward 
-structure size, but instead serve only as refinements of already existing
-variables. For example, the simplest association structure connecting 
-two nodes has size \(3\). The size of the ASG in Figure 
-\ref{fig:armodel} is 7.
-
-Lastly, for convenience, we also define the notion of neighbors in an ASG.
-Two nodes are considered neighbors if they are connected by a
-successor relation.
-\begin{definition}[Neighbor]
-Given $\mathcal{A}=\langle D, \mathcal{T},\alpha,\lhd\rangle$, 
-a node \(n\) is a neighbor of a node \(m\) iff
-$m \lhd n \lor n \lhd m$.
-\end{definition}
-
-\subsection{Matrix Representation}
-In addition to representing model-theoretic relational structures 
-with graphs, one can use \textit{adjacency matrices} which use binary values to
-denote whether there is an edge between two nodes. Two nodes
-are considered \textit{adjacent} if there is an edge connecting
-them. For example, the ASG shown in Figure~\ref{fig:armodel}
-can be equivalently represented as in Table \ref{tab:matx}.
-
-\begin{definition}[Adjacency matrices]
-Given an ASG
-\(
-\mathcal{A}=\langle D,\mathcal{T},\alpha,\lhd\rangle
-\)
-with \(t\) tiers, the association relation \(\alpha\) can be represented
-by \(t-1\) adjacency matrices, each corresponding to the
-association relation between two adjacent tiers
-\(T_i,T_j \in \mathcal{T}\).
-The adjacency matrix
-\(M_{\alpha}^{(i,j)}\)
-is defined such that
-\[
-M_{\alpha}^{(i,j)}[k,\ell] =
-\begin{cases}
-1 & \text{if } (x_k,y_\ell)\in\alpha, \\
-0 & \text{otherwise},
-\end{cases}
-\]
-where \(x_k \in T_i\) and \(y_\ell \in T_j\).
-\end{definition}
+Just as it is convenient to view ARs as graphs, it is also useful to represent them with \textit{adjacency matrices}, which use binary values to
+denote whether there is an edge between two nodes. For example, the AR shown in Figure~\ref{fig:armodel} can be equivalently represented as in Table \ref{tab:matx}.
 \begin{table}[ht!] \centering
 $\begin{array}{c|cc}
 	& L & H \\
 	\hline
-	\sigma_1 & 1 & 1 \\
-	\sigma_2 & 0 & 1 \\
+	V_1 & 1 & 1 \\
+	V_2 & 0 & 1 \\
 \end{array}$
 
 \caption{
@@ -483,42 +417,44 @@ Figure~\ref{fig:armodel}.
 
 \end{table}
 
-The motivation for adopting matrices is to establish a framework
-corresponding to string-based learning. Concepts such as substrings,
+Formally, an AR \(\mathcal{A}=\langle D,L,H,C,V,\alpha,\lhd\rangle %
+\) can be represented by 
+\[
+M_{\alpha}[k,\ell] =
+\begin{cases}
+1 & \text{if } (x,y)\in\alpha, \\
+0 & \text{otherwise},
+\end{cases}
+\]
+The motivation for adopting matrices is convenience. In what follows it is important to identify structures contained within other structures. When working with strings, notions of subsequence and substring are well-defined. \citet{chandleeBufia2019} and \citet{rogers-lambert-2019-classes} define parallel notions for arbitrary relational structures, which can also be applied to ARs. However, we find it simpler to develop these notions for ARs in the context of matrices. If \(A\) is an \(m \times n\) matrix then \(B\) is a \emph{submatrix} of \(A\) if it is formed by taking\(k\ (1 \leq k \leq m)\) contiguous rows and
+\(v\ (1 \leq v \leq n)\) contiguous columns from \(A\).\footnote{The term ``submatrix" is
+generally defined by deleting arbitrary rows and/or columns from the original
+matrix. However, in our case, we require the remaining rows and columns must be
+\textit{contiguous} in the original matrix, which is related to the 
+notion of \textit{connectedness} in \citet{chandleeBufia2019}.}
+
+An \(m \times n\) matrix \(A\) is contained in a matrix \(B\), denoted
+\(A \sqsubseteq B\) if there exists an \(m \times n\) submatrix of
+\(B\), denoted \(B'\), such that for all \(i \in [1,m]\) and
+\(j \in [1,n]\), \( b'_{ij} \geq a_{ij}. \)
+
+For example, consider the structure given by \(\alpha(1,2) \wedge H(1) \wedge V(2)\). This structure is contained within the Figure~\ref{armodel}
+
+Finally, it is
+
+I AM HERE. LETS GO KNICKS!!!
+
+
+Concepts such as substrings,
 subfactors, and superfactors are well developed and widely used in
-grammar inference \citep{Vu+2018,lambert2021typology}, but have not been deeply explored in terms of
+grammar inference \citep{Vu+2018, lambert2021typology}, but have not been deeply explored in terms of
 ASGs. To make these concepts applicable to ASGs, we follow the notions of
 \textit{restriction} and \textit{containment} proposed in
 \citet{chandleeBufia2019}, adapting them to graph-based
 representations through the notions of \textit{submatrices} and \textit{matrix
-containment.}\citep{LiHeinzPhO2026}
+  containment}\citep{LiHeinzPhO2026}.
 
-\begin{definition}[Submatrix]
-\label{def.submatrix}
-Let matrix \(A\) be an \(m \times n\) matrix.
-A matrix \(B\) is a \emph{submatrix} of \(A\) if it is formed by taking
-\(k\ (1 \leq k \leq m)\) contiguous rows and
-\(v\ (1 \leq v \leq n)\) contiguous columns from \(A\)\footnote{The term ``submatrix" is
-generally defined by deleting arbitrary rows and/or columns from the original
-matrix. However, in our case, we require the remaining rows and columns must be
-\textit{contiguous} in the original matrix, which is related to the 
-notion of \textit{connectedness} in \citet{chandleeBufia2019}.}.
-\end{definition} 
 
-\begin{definition}[Containment]
-\textit{
-An \(m \times n\) matrix \(A=[a_{ij}]\) is contained
-in a matrix \(B\) (\(A \sqsubseteq B\))
-if there exists an \(m \times n\) submatrix of \(B\),
-denoted \(B'=[b'_{ij}]\),
-such that for all
-\(i \in [1,m]\) and \(j \in [1,n]\),
-\(
-b'_{ij} \geq a_{ij}.
-\)
-}
-\end{definition}
-%\subsection{Bottom Up Learning in a Partial Order Space}
 
 A matrix \(A\) is a \emph{subfactor} of \(B\) if and only if \(A\) is 
 contained in \(B\). Conversely, \(B\) is a \emph{superfactor} of \(A\).
