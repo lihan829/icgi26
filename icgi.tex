@@ -44,7 +44,11 @@
 \newcommand{\hijeff}[1]{%
     	\textcolor{violet}{\textbf{[#1]}}%
     }
-\usepackage[table]{xcolor}
+\newcommand{\hihan}[1]{%
+    	\textcolor{orange}{\textbf{[#1]}}%
+    }
+
+    \usepackage[table]{xcolor}
 \usepackage{enumitem}
 \usepackage{phonrule}
 \usepackage{todonotes}
@@ -155,19 +159,14 @@ For example, one instance of reduplication in Estako, a Niger-Congo language,
 is shown in Figure~\ref{fig:IOpair}.
 The word for `house` in Estako is pronounced [ówà] with a high tone
 on the first vowel and a low tone on the second vowel.
-To say `every X`, the base word is duplicated.
-Thus `every house' in Estako is pronounced [ówǒwà],
+To say `every X,' the base word is duplicated.
+However, instead of [ówàówà], `every house' in Estako is pronounced [ówǒwà],
 with a high, rising, and low tones on the first,
-second, and third vowels, respectively.
-
-In ARs, segmental and tonal information are represented on separate tiers,
-but are coordinated in time by the association relation
-(shown in figures in this paper as lines).
-When reduplication creates a sequence of
-adjacent vowels V\(_1\)V\(_2\), the first vowel V\(_1\) delete. Its
+second, and third vowels, respectively. When reduplication creates a sequence of
+adjacent vowels V\(_1\)V\(_2\), vowel V\(_1\) deletes. Its
 associated tone, however, does not.
 Instead, it reassociates to the following vowel.
-In the example below, this produces a rising tone on V\(_2\) in the output.
+As shown in Figure~\ref{fig:IOpair}, this produces a rising tone on V\(_2\) in the output. More generally, segmental and tonal information in ARs are represented on separate tiers, but are coordinated in time by the association relation (shown in figures in this paper as lines).
 
 \begin{figure}[ht!]
 \centering
@@ -236,7 +235,7 @@ In the example below, this produces a rising tone on V\(_2\) in the output.
 
 \end{tikzpicture}
 
-\caption{Association transformation in /ówà/ `house' + /ówà/ `house' $\rightarrow$ [ówǒwà] `every house'. Deletion of the first stem-final vowel triggers association change.}
+\caption{Association transformation in /ówà/ `house' + /ówà/ `house' $\rightarrow$ [ówǒwà] `every house'. Deletion of the stem-final vowel triggers association change.}
 \label{fig:IOpair}
 \end{figure}
 
@@ -259,20 +258,22 @@ involving a single deassociation and/or reassociation operation.
 
 We adopt the model-theoretic logical transduction framework of
 \citet{yolyan2025logical}. Yolyan synthesizes insights from from graph transductions \citep{Courcelle1994, EngelfrietHoogeboom2001,
-  CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, chandleeBufia2019}. The transductions specify, via a collection of logical formulas, how to construct an output structure from a given an input structure. The learning approach, known as Bottom-Up Factor Inference Algorithm (BUFIA; 
+  CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, chandleeBufia2019} to learn a class of string-to-string functions. The transductions specify, via a collection of logical formulas, how to construct an output structure from a given an input structure. Yolyan searches for a minimal distinguishing structure based on the Bottom-Up Factor Inference Algorithm (BUFIA; 
 \citealt{rawski2021structure, li2025learning, Swanson+2025, LiHeinzPhO2026}). 
 BUFIA searches a partially ordered space of model-theoretic structures to 
 identify a minimal hypothesis consistent with the data. For transformation 
-learning, \citet{yolyan2025logical, yolyan2025phonological} uses this idea to find a minimal structure which changes: it distinguishs positive examples (those that undergo the change) from negative examples (those that do not).
+learning, \citet{yolyan2025logical, yolyan2025phonological} uses this idea to find a minimal structure which distinguishs positive examples (those that undergo the change) from negative examples (those that do not).
 
 This work brings together these representational and learning
-perspectives. Using a case study of contour formation
-(as shown in Figure~\ref{fig:IOpair}), we show how logical transductions over
-autosegmental graphs can be learned using a BUFIA-style learner. In contrast to Yoltan's previous work on string-based representations, the target of learning is a transformation of association relations between tiers.
-Although our demonstration is
-drawn from tonal phonology, the same approach can in principle be
-extended to other multi-linear structures.
-To our knowledge, the learnability of such transformations has not previously been investigated.
+perspectives. Using a case study of tonal contour formation (as shown
+in Figure~\ref{fig:IOpair}), we show how logical transductions over
+autosegmental graphs can be learned using a BUFIA-style learner. In
+contrast to Yolyan's previous work on string functions, the target of
+learning here is how association relations change.  While the case
+study is drawn from tonal phonology, the same approach can in
+principle be extended to other multi-linear structures.  To our
+knowledge, the learnability of such transformations has not previously
+been investigated.
 
 \section{Preliminaries}
 
@@ -297,14 +298,14 @@ up one tier and consonant and vowels make up the other tier. The
 signature also contains two binary relations: \(<\) is the precedence
 relation and \(\alpha\) is the association relation. Well-formed
 autosegmental representations obey the following constraints.
-\begin{itemize}
+\begin{itemize}\itemsep-0.5ex
 \item The domain is partitioned into two sets: T (tonal tier) and S (segmental tier).
-\item Every element in T satisfies exactly one of L or H and nothing else.
-\item Every element in S satisfies exactly one of C or V and nothing else.
+\item Every element in T satisfies may only specify one of L or H and nothing else.
+\item Every element in S satisfies may only specify one of C or V and nothing else.
 \item If \(<(x,y)\) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\). Also, for each tier, the precedence relation produces a total ordering over it.
 \item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\). The association relation is symmetric (though symmetry will not be shown in Figures for readability).
 \item For all
-  \((x, y), (x', y') ∈ α, x < x' \doublerightarrow (y < y') ∨ (y =
+  \((x, y), (x', y') \in\alpha,\; x < x' \Rightarrow (y < y') \vee (y =
   y')\).
 \end{itemize}
 In short, an AR is a $\mathcal{T}$-partite graph whose vertices are
@@ -366,8 +367,8 @@ well-behaved association relation. Figure~\ref{fig:armodel} shows an AR on the l
 		\[
 		\begin{aligned}
 			D &= \{1,2,3,4\} \\
-			L = \{1\}\quad H = \{2\} \\
-			C = \varnothing\quad  = \{3,4\} \\
+			L &= \{1\}\quad H = \{2\} \\
+			C &= \varnothing\quad\quad  V= \{3,4\} \\
 			\sigma &= \{3,4\} \\
 			\lhd &= \{
 			\langle 1,2 \rangle,
@@ -390,17 +391,18 @@ well-behaved association relation. Figure~\ref{fig:armodel} shows an AR on the l
 \end{figure}
 
 The \emph{size} of an AR is defined as the \(|D| + |\alpha|/2\).
-We divide by two because \(alpha\) is symmetric.
-Thus, The size of the AR in Figure~\ref{fig:armodel} is 7.
-
-The successor relation \(\lhd\) is the transitive reduction of \(<\):
+We divide by two because \(\alpha\) is symmetric.
+Thus, the size of the AR in Figure~\ref{fig:armodel} is 7.
+The successor relation \(\lhd\) is the transitive reduction of precedence:
 \(x\lhd y\) if and only if
 \(x<y \wedge \neg (\exists z)[ x< z < y] \). Two nodes \(x,y\) are
 \emph{neighbors} if $x \lhd y \lor y \lhd x$.
-\end{definition}
 
-Just as it is convenient to view ARs as graphs, it is also useful to represent them with \textit{adjacency matrices}, which use binary values to
-denote whether there is an edge between two nodes. For example, the AR shown in Figure~\ref{fig:armodel} can be equivalently represented as in Table \ref{tab:matx}.
+Just as it is convenient to view ARs as graphs, it is also useful to
+represent them with \textit{adjacency matrices}, which use binary
+values to denote whether there is an edge between two nodes. For
+example, Table \ref{tab:matx} shows an adjacency matrix equivalent to
+the AR in Figure~\ref{fig:armodel}.
 \begin{table}[ht!] \centering
 $\begin{array}{c|cc}
 	& L & H \\
@@ -420,69 +422,45 @@ Figure~\ref{fig:armodel}.
 Formally, an AR \(\mathcal{A}=\langle D,L,H,C,V,\alpha,\lhd\rangle %
 \) can be represented by 
 \[
-M_{\alpha}[k,\ell] =
+M_{\alpha}[x,y] =
 \begin{cases}
 1 & \text{if } (x,y)\in\alpha, \\
 0 & \text{otherwise},
 \end{cases}
 \]
-The motivation for adopting matrices is convenience. In what follows it is important to identify structures contained within other structures. When working with strings, notions of subsequence and substring are well-defined. \citet{chandleeBufia2019} and \citet{rogers-lambert-2019-classes} define parallel notions for arbitrary relational structures, which can also be applied to ARs. However, we find it simpler to develop these notions for ARs in the context of matrices. If \(A\) is an \(m \times n\) matrix then \(B\) is a \emph{submatrix} of \(A\) if it is formed by taking\(k\ (1 \leq k \leq m)\) contiguous rows and
-\(v\ (1 \leq v \leq n)\) contiguous columns from \(A\).\footnote{The term ``submatrix" is
+The motivation for adopting matrices is convenience. It will be important to identify structures contained within other structures. When working with strings, notions of subsequence and substring are well-defined. While \citet{chandleeBufia2019} and \citet{rogers-lambert-2019-classes} define parallel notions for arbitrary relational structures, which can also be applied to ARs, we find it simpler to develop these notions for ARs in the context of matrices. If \(A\) is an \(m \times n\) matrix then \(B\) is a \emph{submatrix} of \(A\) if it is formed by taking \((1 \leq k \leq m)\) contiguous rows and
+\(\ell\ (1 \leq \ell \leq n)\) contiguous columns from \(A\).\footnote{The term ``submatrix" is
 generally defined by deleting arbitrary rows and/or columns from the original
 matrix. However, in our case, we require the remaining rows and columns must be
 \textit{contiguous} in the original matrix, which is related to the 
 notion of \textit{connectedness} in \citet{chandleeBufia2019}.}
 
 An \(m \times n\) matrix \(A\) is contained in a matrix \(B\), denoted
-\(A \sqsubseteq B\) if there exists an \(m \times n\) submatrix of
+\(A \sqsubseteq B\), if there exists an \(m \times n\) submatrix of
 \(B\), denoted \(B'\), such that for all \(i \in [1,m]\) and
-\(j \in [1,n]\), \( b'_{ij} \geq a_{ij}. \)
-
-For example, consider the structure given by \(\alpha(1,2) \wedge H(1) \wedge V(2)\). This structure is contained within the Figure~\ref{armodel}
-
-Finally, it is
-
-I AM HERE. LETS GO KNICKS!!!
-
-
-Concepts such as substrings,
-subfactors, and superfactors are well developed and widely used in
-grammar inference \citep{Vu+2018, lambert2021typology}, but have not been deeply explored in terms of
-ASGs. To make these concepts applicable to ASGs, we follow the notions of
-\textit{restriction} and \textit{containment} proposed in
-\citet{chandleeBufia2019}, adapting them to graph-based
-representations through the notions of \textit{submatrices} and \textit{matrix
-  containment}\citep{LiHeinzPhO2026}.
-
-
+\(j \in [1,n]\), \( b'_{ij} \geq a_{ij}\). \hihan{don't the labels have to match too?}
+For example, consider the structure given by \(\alpha(1,2) \wedge H(1) \wedge V(2)\). This structure is contained within the Figure~\ref{fig:armodel}.
 
 A matrix \(A\) is a \emph{subfactor} of \(B\) if and only if \(A\) is 
 contained in \(B\). Conversely, \(B\) is a \emph{superfactor} of \(A\).
 Furthermore, if the size difference between a superfactor and its
 subfactor is exactly one, the superfactor is called the
-\emph{next superfactor} of that subfactor.
+\emph{next superfactor} of that subfactor. \hihan{Not quite, right? Adding a label is a super factor too, see Table 3.}
 
-This containment relation is important because it provides a
-\textit{partial ordering}, which enables the learner to infer 
-entailment relations among structures. We illustrate this partial 
-order using the toy string examples in
-Figure~\ref{fig:hasse}. A superfactor is connected to its subfactors, 
-which are positioned below it in the diagram and are contained within it.
-This structure facilitates the learner to infer entailment relations 
-among factors. In particular,
-if a factor is ungrammatical, all of its superfactors are likewise
-ungrammatical; conversely, if a factor is grammatical, all of its
-subfactors are grammatical as well.
-Readers are referred to 
-other related work \citep{chandleeBufia2019,rawski2021structure,
-swanson2025learning,Swanson+2025,payne2024generalized,li2025learning} 
-for a more detailed discussion of the
-partial ordering itself. Here, we emphasize that this partial order
-forms the foundation of bottom-up learning algorithms, since it
-provides a principled way to navigate the hypothesis space through
-entailment relations between factors.
-
-
+This containment relation provides a \textit{partial ordering} over
+the space of ARs. We illustrate this partial order with strings in
+Figure~\ref{fig:hasse}. A superfactor is connected to its subfactors,
+which are positioned below it in the diagram. The partial ordering in
+turn leads to entailment relations. If a string contains some factor
+\(s\), then it contains all subfactors of \(s\). Similarly, if it does
+not contain \(s\), then it does not contain any superfactor of
+\(s\). Readers are referred to related work
+\citep{chandleeBufia2019,rawski2021structure,
+  swanson2025learning,Swanson+2025,payne2024generalized,li2025learning}
+for a more detailed discussion of the partial ordering itself. Here,
+we emphasize that this partial order forms the foundation of bottom-up
+learning algorithms, since it provides a principled way to navigate
+the hypothesis space through entailment relations between factors.
 
 \begin{figure}
 \centering
@@ -523,6 +501,8 @@ entailment relations between factors.
 \label{fig:hasse}
 \end{figure}
 
+
+\hihan{I'm thinking Table 3 should replace the string example here. It also shows how each structure corresponds to a logical formula. Finally, I think an overview of Courcellian transductions belongs in the prelims too.}
 
 
 \section{Logical Transduction}
@@ -1486,7 +1466,7 @@ This opens up more discussions about how linguistically meaningful
 representations can facilitate grammar inference.
 
 
-\bibliographystyle{apalike}
+%\bibliographystyle{apalike}
 \bibliography{ref}
 
 \end{document}
