@@ -971,82 +971,61 @@ through conjunction, including adding association relations
 and feature values.
 
 \section{Case Study: Contour Formation}
-To demonstrate both the logical transduction framework and
-BUFIA-style learning over ASGs, we consider a textbook example of
-tonal contour formation, a phenomenon that has long served as
-one of the primary motivations for adopting autosegmental
-graphs.
-
+We use the contour formation to demonstrate both the logical 
+transduction framework and BUFIA-style learning over ASGs.
 We assume a model $\mathcal{M}= \{H,L,C,V,\alpha,\lhd\}$.
 where \(H\) and \(L\) are tonal elements on the tone tier \(T\),
 while \(C\) and \(V\) belong to the segmental tier \(S\).
 Table~\ref{tab.toy} gives five input-output pairs, and cells 
-marked with a dash indicate the same otuput as the input. 
-The headers gives eom shorthand notations. 
-In the mapping from CVV-LH to CVV-HL, the first vowel is deleted,
-and both tones become associated with the second vowel.
-Consequently, two level tones are realized as a contour tone
-while preserving their original left-to-right ordering. This is
-the same process illustrated in Figure~\ref{fig:hiatus}.
-One can see tonal identities themselves are
-irrelevant to the de-/reassociation process: both
-CVV-LH and CVV-HL undergo contour formation when the two
-tones become associated with the same vowel. 
-The LH sequence may or may not surface as a contour depending
-on whether the associated vowels are adjacent (cf. 
-VCV-LH and CVV-LH). 
+marked with a dash indicate the same output as the input. 
+The headers provide shorthand notations for each pair. 
+The contour formation process can be observed in the CVV-LH 
+and CVV-HL examples, where both tones become associated with 
+the same vowel. This transformation can equivalently be 
+represented as a change in the association matrix. Notably, 
+tonal identities themselves are irrelevant to the deassociation 
+and reassociation process: both CVV-LH and CVV-HL undergo contour 
+formation once the two tones are linked to a single vowel. 
+By contrast, an LH sequence does not necessarily surface as 
+a contour; whether it does depends on the structural 
+configuration of the vowels. For example, the LH sequence 
+surfaces as a contour in CVV-LH, where the vowels are adjacent, 
+but not in VCV-LH, where they are separated.
 
 \input{tab.toy}
-
-Under the adjacency matrix representation introduced earlier,
-the transformation can be represented directly as a change
-in association relations (highlighted), which is what the learner
-aims to infer.
+\begin{table}[t]
+\small
+\centering
 \[
 A_i =
 \begin{array}{c|cc}
-	& 	{\color{gray!60} T}  & {\color{gray!60} T}\\ 
-	\hline
-	{\color{gray!60} C} 
-	& {\color{gray!60} 0} 
-	& {\color{gray!60} 0}
-	\\
-	
-V
-	& 1
-	& {\color{gray!60} 0} 
-	\\
-	
-V
-	& 0
-	& 1
+    & {\color{gray!60} T} & {\color{gray!60} T} \\
+\hline
+{\color{gray!60} C}
+    & {\color{gray!60} 0}
+    & {\color{gray!60} 0} \\
+V   & 1 & {\color{gray!60} 0} \\
+V   & 0 & 1
 \end{array}
-\qquad
+\quad
 \Rightarrow
-\qquad
+\quad
 A_o =
 \begin{array}{c|cc}
-	& 	{\color{gray!60} T}  & {\color{gray!60} T}\\ 
-	\hline
-	
-	{\color{gray!60} C} 
-	& {\color{gray!60} 0} 
-	& {\color{gray!60} 0}
-	\\
-	
-V
-	& 0
-	& {\color{gray!60} 0} 
-	\\
-	
-V
-	& 1
-	& 1
+    & {\color{gray!60} T} & {\color{gray!60} T} \\
+\hline
+{\color{gray!60} C}
+    & {\color{gray!60} 0}
+    & {\color{gray!60} 0} \\
+V   & 0 & {\color{gray!60} 0} \\
+V   & 1 & 1
 \end{array}
 \]
+\caption{Input-output matrices ($A_i$) and ($A_o$) contour formation. The highlighted entries indicate changes in association relations.}
+\label{tab:contour-matrix}
+\end{table}
 
 
-%\subsubsection*{Initialization}
 
 The learner first partitions the data into positive evidence
 \(V^{+}\) and negative evidence \(V^{-}\). In this toy example,
@@ -1062,9 +1041,7 @@ present in the input is deleted in the output.
 \[
 H_0:
 \quad
-\textsf{deassoc}
-=
-\alpha(x,y)\; \text{or equivalently in matrix terms: \;} 1 \rightarrow 0.
+\phi_{\alpha'(x,y)} = \alpha(x,y)
 \]
 
 The following step is to test H$_0$ against both positive
@@ -1085,9 +1062,11 @@ superfactors by specializing the hypothesis through node
 labeling. Naively, the learner iterates over all symbols
 available on two corresponding tiers and substitutes them
 into the existing unlabeled nodes. The resulting factors 
-are shown in Table~\ref{tab.h1abcd}, where (\ref{tab.h1abcd}a-\ref{tab.h1abcd}b) are labels
-onto the tone tier; (\ref{tab.h1abcd}c-\ref{tab.h1abcd}d) onto the segment tier.
-
+are shown in Table~\ref{tab.h1abcd}: (\ref{tab.h1abcd}a) 
+and (\ref{tab.h1abcd}b) label $y$ as $H$ or $L$ on the tone tier, while
+(\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}d) label $x$ as 
+$V$ or $C$ on the
+segment tier.
 
 \begin{table}[ht!]
 	\centering
@@ -1104,8 +1083,8 @@ Label Nodes		&
 			\draw[fill=black] (y) circle (2pt);
 			
 			\draw (x) -- (y);
-			\node[left] at (y) {H};
-			\node[right] at (x) {$x$};
+			\node[left] at (y) {$H(y)$};
+			\node[left] at (x) {$x$};
 		\end{tikzpicture}
 		&
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
@@ -1116,8 +1095,8 @@ Label Nodes		&
 			\draw[fill=black] (y) circle (2pt);
 			
 			\draw (x) -- (y);
-			\node[left] at (y) {L};
-			\node[right] at (x) {$x$};
+			\node[left] at (y) {$L(y)$};;
+			\node[left] at (x) {$x$};
 		\end{tikzpicture}
 		&
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
@@ -1128,8 +1107,8 @@ Label Nodes		&
 			\draw[fill=black] (y) circle (2pt);
 			
 			\draw (x) -- (y);
-			\node[left] at (y) {y};
-			\node[right] at (x) {$V$};
+			\node[left] at (y) {$y$};
+			\node[left] at (x) {$V(x)$};
 		\end{tikzpicture}
 		&
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
@@ -1140,14 +1119,14 @@ Label Nodes		&
 			\draw[fill=black] (y) circle (2pt);
 			
 			\draw (x) -- (y);
-			\node[left] at (y) {y};
-			\node[right] at (x) {$C$};
+			\node[left] at (y) {$y$};
+			\node[left] at (x) {$C(x)$};
 		\end{tikzpicture}
 		
 		\\
 		\midrule
 		
-		Contained in $V^+$
+		Contained by all $V^+$
 		& $\times$ & $\times$ & $\checkmark$ & $\times$
 		\\
 		
@@ -1161,35 +1140,35 @@ Label Nodes		&
 	\caption{Next Superfactors of H$_0$}
 	\label{tab.h1abcd}
 \end{table}
-To evaluate the candidate hypotheses in Table~\ref{tab.h1abcd},
-the learner tests each factor against both the positive and
-negative evidence. On the tonal tier, neither (\ref{tab.h1abcd}a) nor (\ref{tab.h1abcd}b)
-accounts for all positive examples. This indicates that tonal
+
+When evaluating the candidate hypotheses in Table~\ref{tab.h1abcd},
+we find that neither (\ref{tab.h1abcd}a) nor (\ref{tab.h1abcd}b)
+covers all positive examples. This indicates that tonal
 identity does not contribute to the transformation, and the
 learner therefore backtracks to the underspecified node.
-Likewise, on the segmental tier, (\ref{tab.h1abcd}d) fails to account for all
-positive evidence and is rejected.
-Only factor (\ref{tab.h1abcd}c) is consistent with all positive examples.
-The learner therefore refines
-the hypothesis as follows:
-\[
+Likewise, on the segmental tier, (\ref{tab.h1abcd}d) is
+inconsistent with the positive evidence and is rejected,
+whereas (\ref{tab.h1abcd}c) remains consistent with all
+positive examples. The learner therefore refines the
+hypothesis as follows:\[
 H_1:
 \quad
-\textsf{deassoc}
-=
-\alpha(x,y) \land V(x)
+\phi_{\alpha'(x,y)} = \alpha(x,y) \land V(x)
 \]
 
-However, because factor (\ref{tab.h1abcd}c) is also attested in negative
+However, since (\ref{tab.h1abcd}c) is also attested in negative
 examples, it fails to distinguish contexts in which the
 transformation applies from those in which it does not. The
 learner therefore generates the next superfactors of (\ref{tab.h1abcd}c) by
-introducing adjacent nodes on both tiers. As the previous
+introducing adjacent nodes on either tier. As the previous
 step established that tonal identity is not relevant to the
 transformation, node \(y\) remains underspecified rather than
-being assigned a tonal label. The resulting factors 
-are shown in Table~\ref{tab.h2}, where (\ref{tab.h2}a-\ref{tab.h2}b) are new
-nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone tier.
+being assigned a tonal label. 
+The resulting factors are shown in Table~\ref{tab.h2}, where
+(\ref{tab.h2}a)--(\ref{tab.h2}b) introduce a new node that
+immediately precedes or follows the existing node on the
+segment tier, while (\ref{tab.h2}c)--(\ref{tab.h2}d) do so
+on the tone tier.
 
 \begin{table}[ht!]
 	\centering
@@ -1201,7 +1180,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
 			\node (x) at (0,0) {};
 			\node (y) at (0,1) {};
-			\node (z) at (1,0) {};
+			\node (z) at (0.8,0) {};
 			
 			\draw[fill=black] (x) circle (2pt);
 			\draw[fill=black] (y) circle (2pt);
@@ -1210,7 +1189,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 			\draw (x) -- (y);
 			\draw[dashed] (x) -- (z);
 			
-			\node[left] at (x) {V};
+			\node[left] at (x) {$V(x)$};
 			\node[right] at (y) {$y$};
 			\node[right] at (z) {$z$};
 		\end{tikzpicture}
@@ -1218,7 +1197,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 			\begin{tikzpicture}[baseline=(current bounding box.center)]
 			\node (x) at (0,0) {};
 			\node (y) at (0,1) {};
-			\node (z) at (-1,0) {};
+			\node (z) at (-0.8,0) {};
 			
 			\draw[fill=black] (x) circle (2pt);
 			\draw[fill=black] (y) circle (2pt);
@@ -1227,7 +1206,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 			\draw (x) -- (y);
 			\draw[dashed] (x) -- (z);
 			
-			\node[right] at (x) {V};
+			\node[right] at (x) {$V(x)$};
 			\node[right] at (y) {$y$};
 			\node[left] at (z) {$z$};
 		\end{tikzpicture}
@@ -1235,7 +1214,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 	\begin{tikzpicture}[baseline=(current bounding box.center)]
 		\node (x) at (0,0) {};
 		\node (y) at (0,1) {};
-		\node (z) at (-1,1) {};
+		\node (z) at (-.8,1) {};
 		
 		\draw[fill=black] (x) circle (2pt);
 		\draw[fill=black] (y) circle (2pt);
@@ -1244,7 +1223,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 		\draw (x) -- (y);
 		\draw[dashed] (y) -- (z);
 		
-		\node[right] at (x) {V};
+		\node[right] at (x) {$V(x)$};
 		\node[right] at (y) {$y$};
 		\node[left] at (z) {$z$};
 	\end{tikzpicture}
@@ -1252,7 +1231,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
 			\node (x) at (0,0) {};
 			\node (y) at (0,1) {};
-			\node (z) at (1,1) {};
+			\node (z) at (.8,1) {};
 			
 			\draw[fill=black] (x) circle (2pt);
 			\draw[fill=black] (y) circle (2pt);
@@ -1261,7 +1240,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 			\draw (x) -- (y);
 			\draw[dashed] (y) -- (z);
 			
-			\node[left] at (x) {V};
+			\node[left] at (x) {$V(x)$};
 			\node[left] at (y) {$y$};
 			\node[right] at (z) {$z$};
 		\end{tikzpicture}
@@ -1273,7 +1252,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 		& $\checkmark$ & $\times$ & $\times$ & $\checkmark$
 		\\
 		
-		Absent in $V^-$
+		Absent in all $V^-$
 		& $\times$ & $\times$ & $\times$ & $\times$
 		\\
 		
@@ -1281,7 +1260,7 @@ nodes added onto the segment tier; (\ref{tab.h2}c-\ref{tab.h2}d) onto the tone t
 	\end{tabular}
 	
 
-	\caption{Next Superfactors of H1}
+	\caption{Next Superfactors of (\ref{tab.h1abcd}c) in H$_1$}
 	\label{tab.h2}
 \end{table}
 
@@ -1305,32 +1284,29 @@ updated hypotheses:
 \[
 H_{2a}:
 \quad
-\textsf{deassoc}
-=
-\alpha(x,y) \land V(x) \land \exists z (x \lhd z)
+\phi_{\alpha'(x,y)} = \alpha(x,y) \land V(x) \land \exists z (x \lhd z)
 \]
 \[
 H_{2d}:
 \quad
-\textsf{deassoc}
+\phi_{\alpha'(x,y)}
 =
 \alpha(x,y) \land V(x) \land \exists z (y \lhd z)
 \]
 
-However, both remaining candidates are still compatible with
-some negative examples and therefore remain too general,
-requiring further refinement. At this stage, the learner
+However, both remaining candidates are still present in
+some negative examples and therefore remain too general and need
+ further refinement. At this stage, the learner
 could introduce additional nodes or add associations
 between \(z\) and a node on the opposite tier, but either
 operation would increase the size of the hypothesis.
 Labeling, by contrast, does not increase complexity.
 Consequently, the learner specializes the newly introduced
 node \(z\). The resulting factors are shown in Table~\ref{tab.h3}.
-(\ref{tab.h3}a -\ref{tab.h3}b) are the
-superfactors of H$_{2a}$ which label \(z\) on the
-segmental tier, while (\ref{tab.h3}c -\ref{tab.h3}d) 
-are superfactors of H$_{2d}$ obtained by labeling \(z\) on
-the tonal tier.
+Factors (\ref{tab.h3}a)--(\ref{tab.h3}b) refine H$_{2a}$ by
+labeling \(z\) as \(V\) or \(C\) on the segmental tier,
+whereas (\ref{tab.h3}c)--(\ref{tab.h3}d)
+label \(z\) as \(H\) or \(L\) on the tonal tier.
 
 
 
@@ -1344,7 +1320,7 @@ the tonal tier.
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
 			\node (x) at (0,0) {};
 			\node (y) at (0,1) {};
-			\node (z) at (1,0) {};
+			\node (z) at (.6,0) {};
 			
 			\draw[fill=black] (x) circle (2pt);
 			\draw[fill=black] (y) circle (2pt);
@@ -1353,15 +1329,15 @@ the tonal tier.
 			\draw (x) -- (y);
 			\draw[dashed] (x) -- (z);
 			
-			\node[left] at (x) {V};
+			\node[left] at (x) {$V(x)$};
 			\node[right] at (y) {$y$};
-			\node[right] at (z) {V};
+			\node[right] at (z) {$V(z)$};
 		\end{tikzpicture}
 		&
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
 			\node (x) at (0,0) {};
 			\node (y) at (0,1) {};
-			\node (z) at (1,0) {};
+			\node (z) at (.6,0) {};
 			
 			\draw[fill=black] (x) circle (2pt);
 			\draw[fill=black] (y) circle (2pt);
@@ -1370,15 +1346,15 @@ the tonal tier.
 			\draw (x) -- (y);
 			\draw[dashed] (x) -- (z);
 			
-			\node[left] at (x) {V};
+			\node[left] at (x) {$V(x)$};
 			\node[right] at (y) {$y$};
-			\node[right] at (z) {C};
+			\node[right] at (z) {$C(z)$};
 		\end{tikzpicture}
 		&
 	\begin{tikzpicture}[baseline=(current bounding box.center)]
 		\node (x) at (0,0) {};
 		\node (y) at (0,1) {};
-		\node (z) at (1,1) {};
+		\node (z) at (0.6,1) {};
 		
 		\draw[fill=black] (x) circle (2pt);
 		\draw[fill=black] (y) circle (2pt);
@@ -1387,15 +1363,15 @@ the tonal tier.
 		\draw (x) -- (y);
 		\draw[dashed] (y) -- (z);
 		
-		\node[left] at (x) {V};
-		\node[left] at (y) {$y$};
-		\node[right] at (z) {H};
+	\node[right] at (x) {$V(x)$};
+			\node[left] at (y) {$y$};
+			\node[right] at (z) {$H(z)$};
 	\end{tikzpicture}
 		&
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
 			\node (x) at (0,0) {};
 			\node (y) at (0,1) {};
-			\node (z) at (1,1) {};
+		\node (z) at (0.6,1) {};
 			
 			\draw[fill=black] (x) circle (2pt);
 			\draw[fill=black] (y) circle (2pt);
@@ -1404,9 +1380,9 @@ the tonal tier.
 			\draw (x) -- (y);
 			\draw[dashed] (y) -- (z);
 			
-			\node[left] at (x) {V};
+			\node[right] at (x) {$V(x)$};
 			\node[left] at (y) {$y$};
-			\node[right] at (z) {L};
+			\node[right] at (z) {$L(z)$};
 		\end{tikzpicture}
 		\\
 		\midrule
@@ -1427,36 +1403,38 @@ the tonal tier.
 	
 \end{table}
 Only candidate (\ref{tab.h3}a) is both contained in all positive
-evidence and absent from all negative evidence. The learner
-therefore converges on this hypothesis as the minimal
-structural description of the transformation.
+evidence and absent from all negative evidence. 
+The learner therefore converges on this hypothesis as a
+minimal structure that triggers the transformation and is
+consistent with both positive and negative evidence.
+This formula encodes the same structural condition illustrated
+in Figure~\ref{fig:hiatus}. 
 \[
-\textsf{deassoc}
+\phi_{\alpha'(x,y)}
 =
 \alpha(x,y) \land V(x) \land \exists z \big((x \lhd z) \land V(z)\big)
 \]
 
-This formula encodes the same structural condition illustrated
-in Figure~\ref{fig:hiatus}. Importantly, one may observe that
+Importantly, one may observe that
 triggering deassociation does not require T$_2$ to be associated
 with V$_2$. The learned hypothesis therefore predicts that
 deassociation applies whenever two vowels are adjacent,
 regardless of whether the following vowel is associated with
-a tone.
+a tone. \hijeff{delete or stay??}
 
 The \textsf{reassoc} inference follows the same process but with a different starting hypothesis
 \[
-\textsf{reassoc}
+\phi_{\alpha'(x,y)} \hijeff{we need to have two diff predicate names }
 =
 \neg \alpha(x,y)
 \]
 In this process, the triggering context lies to the left of the
 reassociation site, in contrast to the deassociation case.
-For brevity, we omit the step-by-step learning procedure and
-refer interested readers to the appendix for details MAYBE OR MAYBE NOT. 
+%For brevity, we omit the step-by-step learning procedure and
+%refer interested readers to the appendix for details MAYBE OR MAYBE NOT. 
 The learner eventually converges on the following hypothesis:
 \[
-\textsf{reassoc}
+\phi_{\alpha'(x,y)}
 =
 \neg \alpha(x,y) \land V(x) \land \exists z \big((z \lhd x) \land V(z) \land \alpha (z,y)\big)
 \]
@@ -1469,7 +1447,7 @@ We combine the two operations into the final transformation.
 \alpha(x,y)\land V(x)
 \land \exists z\big((x\lhd z)\land V(z)\big)
 \\
-&\lor\;
+\lor\; &
 \neg\alpha(x,y)\land V(x)
 \land \exists z\big((z\lhd x)\land V(z)\land \alpha(z,y)\big)
 \end{aligned}
