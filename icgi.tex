@@ -55,7 +55,7 @@
 %\usepackage{gb4e}
 
 
-\title{Learning Association-Line Transformations over Autosegmental Graphs}
+\title{Learning Association Relations over Autosegmental Graphs}
 
 %\title[Short Title]{Full Title of Article\titlebreak This Title Has
 %A Line Break\titletag{\thanks{sample footnote}}}
@@ -166,7 +166,9 @@ second, and third vowels, respectively. When reduplication creates a sequence of
 adjacent vowels V\(_1\)V\(_2\), vowel V\(_1\) deletes. Its
 associated tone, however, does not.
 Instead, it reassociates to the following vowel.
-As shown in Figure~\ref{fig:IOpair}, this produces a rising tone on V\(_2\) in the output. More generally, segmental and tonal information in ARs are represented on separate tiers, but are coordinated in time by the association relation (shown in figures in this paper as lines).
+As shown in Figure~\ref{fig:IOpair}, this produces a rising tone on V\(_2\) in the output.
+More generally, segmental and tonal information in ARs are represented on separate tiers,
+but are coordinated in time by the association relation (shown in figures in this paper as lines).
 
 \begin{figure}[ht!]
 \centering
@@ -235,7 +237,8 @@ As shown in Figure~\ref{fig:IOpair}, this produces a rising tone on V\(_2\) in t
 
 \end{tikzpicture}
 
-\caption{Association transformation in /ówà/ `house' + /ówà/ `house' $\rightarrow$ [ówǒwà] `every house'. Deletion of the stem-final vowel triggers association change.}
+\caption{Association transformation in /ówà/ `house' + /ówà/ `house' $\rightarrow$ [ówǒwà] `every house'.
+  Deletion of the stem-final vowel triggers association change.}
 \label{fig:IOpair}
 \end{figure}
 
@@ -302,8 +305,10 @@ autosegmental representations obey the following constraints.
 \item The domain is partitioned into two sets: T (tonal tier) and S (segmental tier).
 \item Every element in T may only satisfy one of L or H and nothing else.
 \item Every element in S may only satisfy one of C or V and nothing else.
-\item If \(<(x,y)\) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\). Also, for each tier, the precedence relation produces a total ordering over it.
-\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\). The association relation is symmetric (though symmetry will not be shown in Figures for readability).
+\item If \(<(x,y)\) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\).
+  Also, for each tier, the precedence relation produces a total ordering over it.
+\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\).
+  The association relation is symmetric (though symmetry will not be shown in Figures for readability).
 \item For all
   \((x, y), (x', y') \in\alpha,\; x < x' \Rightarrow (y < y') \vee (y =
   y')\).
@@ -311,7 +316,9 @@ autosegmental representations obey the following constraints.
 In short, an AR is a $\mathcal{T}$-partite graph whose vertices are
 partitioned into $\mathcal{T}$ disjoint sets, with each tier
 linearly-ordered, whose elements are coordinated via a temporally
-well-behaved association relation. Figure~\ref{fig:armodel} shows an AR on the left, its corresponding model-theoretic structure on the right, and the graph of the model in the center. Henceforth, we use the words `node' and `domain element' interchangeably.
+well-behaved association relation. Figure~\ref{fig:armodel} shows an AR on the left,
+its corresponding model-theoretic structure on the right, and the graph of the model in the center.
+Henceforth, we use the words `node' and `domain element' interchangeably.
 \begin{figure}[ht]
 	\centering
 	
@@ -428,7 +435,15 @@ M_{\alpha}[x,y] =
 0 & \text{otherwise},
 \end{cases}
 \]
-The motivation for adopting matrices is convenience. It will be important to identify structures contained within other structures. When working with strings, notions of subsequence and substring are well-defined. While \citet{chandleeBufia2019} and \citet{rogers-lambert-2019-classes} define parallel notions for arbitrary relational structures, which can also be applied to ARs, we find it simpler to develop these notions for ARs in the context of matrices. If \(A\) is an \(m \times n\) matrix then \(B\) is a \emph{submatrix} of \(A\) if it is formed by taking \((1 \leq k \leq m)\) contiguous rows and
+The motivation for adopting matrices is convenience.
+It will be important to identify structures contained within other structures.
+When working with strings, notions of subsequence and substring are well-defined.
+While \citet{chandleeBufia2019} and \citet{rogers-lambert-2019-classes}
+define parallel notions for arbitrary relational structures,
+which can also be applied to ARs,
+we find it simpler to develop these notions for ARs in the context of matrices.
+If \(A\) is an \(m \times n\) matrix then \(B\) is a \emph{submatrix} of \(A\)
+if it is formed by taking \((1 \leq k \leq m)\) contiguous rows and
 \(\ell\ (1 \leq \ell \leq n)\) contiguous columns from \(A\).\footnote{The term ``submatrix" is
 generally defined by deleting arbitrary rows and/or columns from the original
 matrix. However, in our case, we require the remaining rows and columns must be
@@ -439,13 +454,15 @@ An \(m \times n\) matrix \(A\) is contained in a matrix \(B\), denoted
 \(A \sqsubseteq B\), if there exists an \(m \times n\) submatrix of
 \(B\), denoted \(B'\), such that for all \(i \in [1,m]\) and
 \(j \in [1,n]\), \( b'_{ij} \geq a_{ij}\). \hihan{don't the labels have to match too?}
-For example, consider the structure given by \(\alpha(1,2) \wedge H(1) \wedge V(2)\). This structure is contained within the Figure~\ref{fig:armodel}.
+For example, consider the structure given by \(\alpha(1,2) \wedge H(1) \wedge V(2)\).
+This structure is contained within the Figure~\ref{fig:armodel}.
 
 A matrix \(A\) is a \emph{subfactor} of \(B\) if and only if \(A\) is 
 contained in \(B\). Conversely, \(B\) is a \emph{superfactor} of \(A\).
 Furthermore, if the size difference between a superfactor and its
 subfactor is exactly one, the superfactor is called the
-\emph{next superfactor} of that subfactor. \hihan{Not quite, right? Adding a label is a super factor too, see Table 3.}
+\emph{next superfactor} of that subfactor. \hihan{Not quite, right?
+  Adding a label is a super factor too, see Table 3.}
 
 This containment relation provides a \textit{partial ordering} over
 the space of ARs. We illustrate this partial order with strings in
@@ -776,91 +793,88 @@ and $\textsf{reassoc} =
 \{(i,j) \mid \mathrm{UR}_{ij}=0 \land \mathrm{SR}_{ij}=1\}$.
 
 \section{Association Learning}
- This section follows the framework of using logical transductions
-to learn phonological mappings in \citet{yolyan2025logical},
-which leverages the entailment relation
-in a partially ordered space and updates hypotheses 
-about the smallest contextual environments that trigger 
-a featural change (a 
-string-based input-output mapping that can be written as
-\phonl{A}{B}{C}{D}).
+This section follows the ideas of using logical transductions to learn
+phonological mappings in \citet{yolyan2025logical}, who in turn
+leveraged the entailment relation in the partially ordered space
+crucial to \citet{chandleeBufia2019} 
+to find a smallest environment that triggers a change.
 
-Several aspects of this framework are particularly important for the present
-work. First, phonological processes are represented as logical formulas
-over model-theoretic representations. Second, the learning procedure relies on
-grammatical entailment relations within a partially ordered hypothesis space,
-with more general structures at the bottom and more specific structures higher
-up \citep{chandleeBufia2019,rawski2021structure}. If an environment (which itself 
-is a structure, thereafter we call it environment) is sufficient to trigger a
-transformation, then any superfactor containing that environment
-is likewise sufficient to trigger the same transformation.
-On the other hand, if an environment fails to trigger the
-change, then all of its subfactors are likewise insufficient to trigger the
-change. In other words, given a hypothesized environment, all data satisfying
-this condition are expected to undergo the transformation (positive evidence),
-while all data not satisfying this condition are expected not to undergo the
-transformation (negative evidence). If some positive data fail to undergo the
-transformation, then the hypothesis is too restrictive. Conversely, if some
-negative data nevertheless undergo the transformation, then the hypothesis is
-too general. The goal of learning is therefore to identify the smallest common 
-environment that are contained in all positive evidence, but absent in all negative 
-evidence. For example, post-nasal voicing can be written as 
-\phonl{-voi}{+voi}{+nasal,-cont}{}. This rule states that whenever
- a segment specified as [-voi] occurs after a segment with features [+nasal,-cont], 
- its voicing feature changes to [+voi].
+Importantly, if an environment (which itself is a structure,
+henceforth we call it `environment') is sufficient to trigger a
+transformation, then any superfactor containing that environment will
+likewise exhibit the same transformation.  On the other
+hand, if an environment fails to trigger the change, then all of its
+subfactors are likewise insufficient to trigger the change. In other
+words, given a hypothesized environment, all data satisfying this
+condition are expected to undergo the transformation (positive
+evidence), while all data not satisfying this condition are expected
+not to undergo the transformation (negative evidence). If some
+positive data fail to undergo the transformation, then the hypothesis
+is too restrictive. Conversely, if some negative data nevertheless
+undergo the transformation, then the hypothesis is too general. The
+goal of learning is therefore to identify the smallest common
+environment that is contained in all positive evidence, but absent in
+all negative evidence. 
 
-In autosegmental phonology, however, contextual environments are not 
-expressed linearly as \phonl{A}{B}{C}{D}, but rather as structural 
-relations over graphs. Because the learning framework applies 
-generally to model-theoretic representations, it extends naturally to 
-graph-based representations. Equivalently, transformations can be 
+\citet{yolyan2025logical} worked with string-to-string functions.
+However, in autosegmental phonology, environments are
+expressed as structural relations over graphs.
+Because model-theoretic representations generally form a partial order \citet{chandleeBufia2019},
+the same ideas apply to ARs. Equivalently, transformations can be 
 viewed as changes to the graph's adjacency matrix, where an entry 
 changes from $1\rightarrow0$ or $1\rightarrow0$.
 
+% To learn ASGs, we adapt the bottom-up factor inference framework of
+% \citet{chandleeBufia2019} and the logical learning framework of
+% \citet{yolyan2025logical} to graph-based autosegmental 
+% representations \citep{LiHeinzPhO2026}.
+
+% \begin{figure}[t!]
+%   \centering
+%   \[
+%     0 \rightarrow 1 \;/\;
+%     \begin{array}{ccc}
+%       ? & ? & ? \\
+%       ? & {\_} & ? \\
+%       ? & ? & ?
+%     \end{array}
+%     \quad \text{or} \quad 
+%     1 \rightarrow 0 \;/\;
+%     \begin{array}{ccc}
+%       ? & ? & ? \\
+%       ? & {\_} & ? \\
+%       ? & ? & ?
+%     \end{array}
+%   \]
+%   \caption{What contexts determine whether an association relation is inserted or removed.}
+%   \label{fig:10rules}
+% \end{figure}
 
 
-\[
-0 \rightarrow 1 \;/\;
-\begin{array}{ccc}
-	? & ? & ? \\
-	? & {\_} & ? \\
-	? & ? & ?
-\end{array}
-\quad \text{or} \quad 
-1 \rightarrow 0 \;/\;
-\begin{array}{ccc}
-	? & ? & ? \\
-	? & {\_} & ? \\
-	? & ? & ?
-\end{array}
-\]
 
-To learn ASGs, we adapt the bottom-up factor inference framework of
-\citet{chandleeBufia2019} and the logical learning framework of
-\citet{yolyan2025logical} to graph-based autosegmental 
-representations \citep{LiHeinzPhO2026}. Initially,
+The learning algorithm is shown in Algorithm~\ref{algo}. 
+Initially,
 the learner identifies changing association sites by comparing the 
-input and output association matrices. If a deassociation is found,
+input and output association matrices.
+If a deassociation is found,
 the learner then initializes the search with the corresponding most
-general logical hypothesis:
-$\alpha(x,y)$
-if a reassociation
-is found, then the learner starts with  $neg \alpha(x,y)$\footnote{We treat deassociation and
-	reassociation as two independent processes and combine the
-	resulting hypotheses through disjunction.}. The procedure is shown in Algorithm~\ref{algo}.
-	
-	\begin{algorithm}[th!]
-	\small
-	\LinesNumbered
-	
-	\KwData{
-		$
-		D	=	\{(I_1,O_1),\dots,(I_n,O_n)\},
-		V^+ = \{\, I_n \mid I_n \neq O_n \,\},
-		V^- = \{\, I_n \mid I_n = O_n \,\},
-		k,
-		type 
-		$
+general logical hypothesis: $\alpha(x,y)$.
+If instead a reassociation
+is found, then the learner starts with  $neg \alpha(x,y)$.
+We treat deassociation and
+reassociation as two independent processes and combine the
+resulting hypotheses through disjunction.
+
+
+\begin{algorithm}[t!]
+\small
+\LinesNumbered
+
+\KwData{$D=     \{(I_1,O_1),\dots,(I_n,O_n)\},
+	D^+ = \{\, I_n \mid I_n \neq O_n \,\},
+	D^- = \{\, I_n \mid I_n = O_n \,\},
+	k
+	$
 	}
 %	
 %	\KwOut{
@@ -870,7 +884,8 @@ is found, then the learner starts with  $neg \alpha(x,y)$\footnote{We treat deas
 	$P \gets \emptyset$\;
 %	\tcp*{pruned set}
 
-	$Q \gets \{\alpha(x,y)\}$ or 	$Q \gets \{\neg \alpha(x,y)\}$\; 	
+	$Q_d \gets \{\alpha(x,y)\}$
+        $Q_r \gets \{\neg \alpha(x,y)\}$\; 	
 
 	\While{$Q \neq \emptyset$}{
 		
@@ -909,27 +924,30 @@ is found, then the learner starts with  $neg \alpha(x,y)$\footnote{We treat deas
 \todo[inline]{Change the algo}
 The input data consists of a finite set of input-output ASG pairs,
 which can be partitioned into positive and negative evidence, denoted
-$V^+$ and $V^-$ respectively. It also requires a bound $k$ that limits
+$D^+$ and $D^-$ respectively. It also requires a bound $k$ that limits
 the graph size. 
 
 The algorithm conducts a breadth-first search over a partially ordered
 hypothesis space. At each step, a candidate hypothesis $c$ is first tested 
 against the positive evidence: if $c$ is not contained in
 all positive examples, then the current hypothesis is incompatible with the
-observed transformation and thus is added to the pruning set $P$. Otherwise, the learner checks
- $c$ against all negative examples: if c is NOT contained in any datum in $V^-$, then the current environment is output as it is consistent
- with all data. Otherwise,  the hypothesis is considered too general, and
- will be updated minimally using \textsc{NextSupFact}. Meanwhile, the 
- learner filters out candidate environments that contain
- pruned structures or exceed the predetermined complexity bound \(k\),
- so as to keep the search space tractable.
+observed transformation and thus is added to the pruning set $P$.
+Otherwise, the learner checks
+$c$ against all negative examples:
+if c is NOT contained in any datum in $V^-$,
+then the current environment is output as it is consistent
+with all data. Otherwise,  the hypothesis is considered too general, and
+will be updated minimally using \textsc{NextSupFact}. Meanwhile, the 
+learner filters out candidate environments that contain
+pruned structures or exceed the predetermined complexity bound \(k\),
+so as to keep the search space tractable.
 Since hypotheses are explored breadth-first, the first valid hypothesis
 returned by the learner is guaranteed to be the minimal structural
 environment consistent with all positive and negative evidence.
 
 In terms of  \textsc{NextSupFact}, there are many possible ways to generate
 superfactors while still covering the same hypothesis space. Here, we
-propose one possible method that explicitly connects graph-theoretic
+propose one method that explicitly connects graph-theoretic
 representations with their logical counterparts.
 
 Recall Definition~\ref{def.size} defines the size of an
@@ -941,9 +959,9 @@ in size can only arise through the introduction of new
 elements or new association relations.
 
 Therefore, when generating next superfactors, the learner
-follows Occam's Razor by preferring the smallest possible
-structure and expanding the domain only when required by
-the data. Specifically, see the following order:
+preferrs the smallest possible structure
+and expands the domain only when required by the data.
+Specifically, see the following order:
 
 \begin{enumerate}[label=(\roman*),noitemsep]
 	\item labeling unspecified nodes; if labeling 
