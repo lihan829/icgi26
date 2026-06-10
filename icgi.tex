@@ -277,9 +277,9 @@ been investigated.
 
 \section{Preliminaries}
 
-This section provides background on autosegmental graphs, matrix and logical representations thereof. We assume familiarity with first order logic.
-
-\subsection{Autosegmental representations}
+This section provides background on autosegmental graphs,
+matrix and logical representations thereof.
+We assume familiarity with first order logic.
 
 ARs represent the idea that different aspects of linguistic structure
 are organized on distinct levels while progressing simultaneously over time.
@@ -300,8 +300,8 @@ relation and \(\alpha\) is the association relation. Well-formed
 autosegmental representations obey the following constraints.
 \begin{itemize}\itemsep-0.5ex
 \item The domain is partitioned into two sets: T (tonal tier) and S (segmental tier).
-\item Every element in T satisfies may only specify one of L or H and nothing else.
-\item Every element in S satisfies may only specify one of C or V and nothing else.
+\item Every element in T may only satisfy one of L or H and nothing else.
+\item Every element in S may only satisfy one of C or V and nothing else.
 \item If \(<(x,y)\) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\). Also, for each tier, the precedence relation produces a total ordering over it.
 \item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\). The association relation is symmetric (though symmetry will not be shown in Figures for readability).
 \item For all
@@ -507,20 +507,56 @@ the hypothesis space through entailment relations between factors.
 
 \section{Logical Transduction}
 
-Using model theory \citep{strother2019diss,yolyan2025logical,jardine2017local}, 
-we model a phonological process as a 
-relation between input and output structures $\mathcal{A}_i \rightarrow \mathcal{A}_o$. 
-There have been work adopting the same fashion on 
-string-to-string transduction \refs, but the essentially 
-the logic is not restricted to strings and can operate 
-over any model-theoretic representations.
-In this framework, we use a set of logic formula to derive
-the output signature with reference to the input signature. 
-Recall from the previous section that we defined an ASG 
-signature as $\mathcal{A} = \langle \mathcal{T}, \alpha, \lhd \rangle$.
-Given an input and output models with this signature, the output 
-signature can be defined in terms of the input structure.
-\begin{table}[ht!]
+We model a phonological process with graph transductions
+from input structures to output structures
+\citep{Courcelle1994, EngelfrietHoogeboom2001, CourcelleEngelfriet2012}.
+Such transductions have been used to model phonological processes
+\citep{Strother-Garcia-2018, Dolatian-2020-diss, chandleejardine21bmrs},
+as well as to study different representations
+\citep{strother2019diss, oakdenNotationalEquivalenceTonal2020,
+jardineetal20qtheoryAP, Danis2025}.
+
+In this framework, a set of logic formulas define a function from ARs to ARs.
+The formulas are always evaluated with respect to the input structure.
+Whether they evaluate to true or false has consequences
+for the structure of the output.
+
+\begin{itemize}\itemsep-0.5ex
+\item The domain formula $\phi_{\textsf{Domain}}$ determines
+  which ARs are in the domain of the function.
+  Here, we set this value to True, indicating this function is total.
+\item The copy set helps determine the size of the output structures.
+  Here, we set it to 1, which means every node in the output
+  corresponds to one element in the input. 
+\item For each unary relation $P\in\{L, H, C, V\}$, the formula \(\phi_{P}(x)\)
+  determines whether node \(x\) in the output has property \(P\).
+  Here, nodes in the output have the same properties
+  as their corresponding nodes in the input.
+\item The formula  \(\phi_{<}(x,y)\) determines which pairs of nodes
+  in the output structure stand in the precedence relation.
+  Here, pairs of nodes in the output stand in the precedence relation
+  only if their corresponding nodes in the input are in the precedence relation.
+\item The formula  \(\phi_{\alpha}(x,y)\) determines which pairs of nodes
+  in the output structure stand in the association relation.
+  Here pairs of nodes stand in the association relation provided
+  (i) they were associated in the input and they do not satisfy
+  \textsf{deassoc} (deassociation), or 
+  (ii) they were not associated in the input and they do satisfy
+  \textsf{reassoc} (reassociation).
+  The predicates \textsf{deassoc} and \textsf{reassoc} are
+  the logical predicates that vary on a language specific basis.
+  These are the parameters that have to be learned.
+\item The licensing formula $\phi_{\textsf{license}}(x)$
+  determines which nodes in the output are liscensed.
+  According to the semantics of graph transductions,
+  unlicensed nodes disappear,
+  along with any relations associated with them.
+  Here, only output nodes that stand
+  in an association relation in the output are liscensed.
+  
+\end{itemize}
+Table~\ref{tab.transduction} summarizes these formulas.
+\begin{table}[t!]
 \centering
 \footnotesize
 \begin{tabular}{lcll}
@@ -546,26 +582,16 @@ $:=$
 Define Output domain the same size as Input
 \\[0.5em]
 
-
-$\phi_{\textsf{license}}(x)$
+$\phi_{P}(x)$
 &
 $:=$
 &
-$\exists y\, \alpha(x,y)$
-&
-Preserve only associated elements
-\\[0.5em]
-
-$\phi_{T}$
-&
-$:=$
-&
-$T(x)$
+$P(x)$
 &
 Preserve elements and their labels
 \\[0.5em]
 
-$\phi_{\lhd'(x,y)}$
+$\phi_{\lhd}(x,y)$
 &
 $\approx$
 &
@@ -574,7 +600,7 @@ $\lhd(x,y)$
 Preserve linear order within tiers
 \\[0.5em]
 
-$\phi_{\alpha'(x,y)}$
+$\phi_{\alpha}(x,y)$
 &
 $:=$
 &
@@ -584,6 +610,14 @@ $\begin{aligned}
 \end{aligned}$
 &
 Update association relations
+\\[0.5em]
+$\phi_{\textsf{license}}(x)$
+&
+$:=$
+&
+$\exists y\, \phi_\alpha(x,y)$
+&
+Preserve only associated elements
 \\
 
 \bottomrule
@@ -597,23 +631,10 @@ As shown in Table~\ref{tab.transduction}, the transduction
 defines an output model with the same domain as the input 
 structure, while filtering out unassociated elements by
 $\phi_{\textsf{license}}(x)$. All 
-unary predicates \(T(x)\) in the input signature are 
-preserved in the corresponding output predicates \(T'(x)\), 
-meaning that an element \(x\) has property \(T\) in the 
-output iff it has property \(T\) in the input. Similarly,
-$\lhd'(x,y) \approx \lhd(x,y)$ indicates
-the within-tier order relation is preserved. The only 
-change is the association relation \(\alpha\): 
-an association line holds in the output iff 
-it is (i) present in the input and not removed by \textsf{deassoc}, or 
-(ii) absent in the input but newly introduced by \textsf{reassoc}. 
-\[
-\phi_{\alpha'(x,y)}
-=
-\bigl(\alpha(x,y)\land\neg\textsf{deassoc}(x,y)\bigr)
-\;\lor\;
-\bigl(\neg\alpha(x,y)\land\textsf{reassoc}(x,y)\bigr)
-\]
+unary relations \(P(x)\) in the input signature are 
+preserved in the corresponding output. Similarly,
+precedence relations are preserved. The only 
+change is the association relation \(\alpha\).
 In this way, the problem of learning association-line 
 transformations can be reduced to learning the logical 
 formulas for \textsf{deassoc} and/or \textsf{reassoc}. 
@@ -622,13 +643,36 @@ output representations, neither \textsf{deassoc} nor
 \textsf{reassoc} takes place (i.e., both have the value of
 false). The association relation therefore remains unchanged, 
 and all input associations are faithfully preserved in the output.
+
 Since these two predicates are combined through disjunction, 
 two parallel learning processes apply simultaneously, 
 and their outputs are combined to define the final 
 association relation $\alpha'$.
 
+To illustrate, consider contour formation
+as shown in Figure~\ref{fig:IOpair}. %When two vowels become 
+%adjacent, the first vowel, V$_1$, is deleted. The tone T$_1$,
+%originally associated with V$_1$, is delinked from 
+%V$_1$ and reassociates with the following vowel V$_2$.
+%As a result, V$_2$ bears both tones in their original order,
+%which surface together as a contour tone. 
+Figure~\ref{fig:hiatus} visualizes this process in both 
+graph-theoretic and matrix representations.
+From a logical perspective, this transformation is captured 
+by three predicates: \textsf{deassoc}, \textsf{reassoc}, and 
+$\phi_{\textsf{license}}$. The \textsf{deassoc} function 
+identifies the association to be broken between T$_1$ and 
+the deleted vowel V$_1$ (the crossed-out line). The conjunction 
+$\alpha(x,y)\land\neg\textsf{deassoc}(x,y)$ removes 
+this association $(T_1,V_1)$ while preserving all unaffected associations, 
+that is, $(T_2,V_2)$. The \textsf{reassoc} function then links T$_1$ to 
+the surviving vowel V$_2$ (the dotted line). As a result, V$_1$ is no longer
+associated with any element on the opposite tier and therefore fails to 
+satisfy the licensing condition $\phi_{\textsf{license}}$ in the output. 
+Consequently, V$_1$ is not licensed and is omitted from 
+the surface form (shown in gray).
 
-\begin{figure}[ht!]
+\begin{figure}[t!]
 	\centering
 	
 	\begin{minipage}[t]{0.48\textwidth}
@@ -702,28 +746,6 @@ association relation $\alpha'$.
 \label{fig:hiatus}
 \end{figure}
 
-Consider a common phenomenon, contour formation,
-as shown in Figure~\ref{fig:IOpair}. %When two vowels become 
-%adjacent, the first vowel, V$_1$, is deleted. The tone T$_1$,
-%originally associated with V$_1$, is delinked from 
-%V$_1$ and reassociates with the following vowel V$_2$.
-%As a result, V$_2$ bears both tones in their original order,
-%which surface together as a contour tone. 
-Figure~\ref{fig:hiatus} visualizes this process in both 
-graph-theoretic and matrix representations.
-From a logical perspective, this transformation is captured 
-by three operations: \textsf{deassoc}, \textsf{reassoc}, and 
-$\phi_{\textsf{license}}$. The \textsf{deassoc} function 
-identifies the association to be broken between T$_1$ and 
-the deleted vowel V$_1$ (the crossed-out line). The conjunction 
-$\alpha(x,y)\land\neg\textsf{deassoc}(x,y)$ removes 
-this association $(T_1,V_1)$ while preserving all unaffected associations, 
-that is, $(T_2,V_2)$. The \textsf{reassoc} function then links T$_1$ to 
-the surviving vowel V$_2$ (the dotted line). As a result, V$_1$ is no longer
-associated with any element on the opposite tier and therefore fails to 
-satisfy the licensing condition $\phi_{\textsf{license}}$ in the output. 
-Consequently, V$_1$ is not licensed and is omitted from 
-the surface form (shown in gray).
 
 
 % Thus, $T_1, T_2$ and $V_2$ remain in the
