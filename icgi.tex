@@ -54,8 +54,7 @@
 \usepackage{todonotes}
 %\usepackage{gb4e}
 
-
-\title{Learning Association Relations over Autosegmental Graphs}
+\title{Learning Association-Line Transformations over Autosegmental Graphs}
 
 %\title[Short Title]{Full Title of Article\titlebreak This Title Has
 %A Line Break\titletag{\thanks{sample footnote}}}
@@ -146,7 +145,9 @@ different levels of representations that are coordinated in time,
 including tone,\footnote{Tone
   refers to the pitch level of a vowel or syllable.
   Languages which use pitch to mark lexical contrasts are called tonal languages.
-  English is not a tonal language, but EXAMPLE OF PITCH CONTRAST here.}
+  English is not a tonal language, whereas Mandarin contrasts words such as
+  \textit{mā} `mother' and \textit{mǎ} `horse' solely by tone.}
+ 
 \citep{goldsmith1976autosegmental}, syllable structure \citep{ck83},
 prosodic structure \citep{hayes1980metrical}, and
 feature geometry \citep{sagey1986representation}.
@@ -155,15 +156,18 @@ an association relation. Many input-output mappings are
 naturally characterized by rearranging those association lines across
 tiers \citep{goldsmith1976autosegmental, clements1984autosegmental, odden2013introducing, hyman2009representation}.
 
-For example, one instance of reduplication in Estako, a Niger-Congo language,
+For example, one instance of reduplication in Estako, a tonal Niger-Congo language,
 is shown in Figure~\ref{fig:IOpair}.
-The word for `house` in Estako is pronounced [ówà] with a high tone
-on the first vowel and a low tone on the second vowel.
-To say `every X,' the base word is duplicated.
-However, instead of [ówàówà], `every house' in Estako is pronounced [ówǒwà],
-with a high, rising, and low tones on the first,
-second, and third vowels, respectively. When reduplication creates a sequence of
-adjacent vowels V\(_1\)V\(_2\), vowel V\(_1\) deletes. Its
+The word for `house` in Estako is pronounced [ówà] with a high (H)
+tone on the first vowel and a low (L) tone on the second vowel.
+In Estako, reduplication conveys a repetitive meaning ‘every X’. 
+Therefore, the reduplicated form of [ówà] ‘house’ is [ówǒwà] ‘every house’, 
+with high, rising, and low tones on the first, second, and third vowels, respectively.
+In ARs, segmental and tonal information are represented on separate tiers,
+but are coordinated in time by the association relation
+(shown in figures in this paper as lines).
+When reduplication creates a sequence of
+adjacent vowels V\(_1\)V\(_2\), the first vowel V\(_1\) delete. Its
 associated tone, however, does not.
 Instead, it reassociates to the following vowel.
 As shown in Figure~\ref{fig:IOpair}, this produces a rising tone on V\(_2\) in the output.
@@ -301,19 +305,20 @@ up one tier and consonant and vowels make up the other tier. The
 signature also contains two binary relations: \(<\) is the precedence
 relation and \(\alpha\) is the association relation. Well-formed
 autosegmental representations obey the following constraints.
-\begin{itemize}\itemsep-0.5ex
+
+\begin{itemize}
 \item The domain is partitioned into two sets: T (tonal tier) and S (segmental tier).
-\item Every element in T may only satisfy one of L or H and nothing else.
-\item Every element in S may only satisfy one of C or V and nothing else.
-\item If \(<(x,y)\) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\).
-  Also, for each tier, the precedence relation produces a total ordering over it.
-\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\).
-  The association relation is symmetric (though symmetry will not be shown in Figures for readability).
+\hijeff{Do we want to relax this - there could be more or other tiers, such as mora etc}
+\item Every element in T satisfies exactly one of L or H and nothing else.
+\item Every element in S satisfies exactly one of C or V and nothing else.
+\item If \(<(x,y)\) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\). Also, for each tier, the precedence relation produces a total ordering over it.
+\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\). The association relation is symmetric (though symmetry will not be shown in Figures for readability).
 \item For all
-  \((x, y), (x', y') \in\alpha,\; x < x' \Rightarrow (y < y') \vee (y =
+  \((x, y), (x', y') \in \alpha, x < x' \Rightarrow
+ (y < y') ∨ (y =
   y')\).
 \end{itemize}
-In short, an AR is a $\mathcal{T}$-partite graph whose vertices are
+In short, an AR is a $\mathcal{T}$-partite \hijeff{bipartite if only T and S}graph whose vertices are
 partitioned into $\mathcal{T}$ disjoint sets, with each tier
 linearly-ordered, whose elements are coordinated via a temporally
 well-behaved association relation. Figure~\ref{fig:armodel} shows an AR on the left,
@@ -374,10 +379,10 @@ Henceforth, we use the words `node' and `domain element' interchangeably.
 		\[
 		\begin{aligned}
 			D &= \{1,2,3,4\} \\
-			L &= \{1\}\quad H = \{2\} \\
-			C &= \varnothing\quad\quad  V= \{3,4\} \\
+			L &= \{1\} \quad H = \{2\} \\
+			C &= \varnothing \qquad V = \{3,4\} \\
 			\sigma &= \{3,4\} \\
-			\lhd &= \{
+			< &= \{
 			\langle 1,2 \rangle,
 			\langle 3,4 \rangle
 			\} \\
@@ -397,13 +402,16 @@ Henceforth, we use the words `node' and `domain element' interchangeably.
 	\label{fig:armodel}	
 \end{figure}
 
-The \emph{size} of an AR is defined as the \(|D| + |\alpha|/2\).
-We divide by two because \(\alpha\) is symmetric.
-Thus, the size of the AR in Figure~\ref{fig:armodel} is 7.
-The successor relation \(\lhd\) is the transitive reduction of precedence:
+The \emph{size} of an AR is defined as the \(|D| + |\alpha|/2\). \hijeff{then maybe should
+change $\alpha$ in the Figure 2 by adding the other directional pairs}
+We divide by two because \(alpha\) is symmetric.
+Thus, The size of the AR in Figure~\ref{fig:armodel} is 7.
+
+The successor relation \(\lhd\) is the transitive reduction of \(<\):
 \(x\lhd y\) if and only if
 \(x<y \wedge \neg (\exists z)[ x< z < y] \). Two nodes \(x,y\) are
 \emph{neighbors} if $x \lhd y \lor y \lhd x$.
+%\end{definition}
 
 Just as it is convenient to view ARs as graphs, it is also useful to
 represent them with \textit{adjacency matrices}, which use binary
@@ -884,8 +892,7 @@ resulting hypotheses through disjunction.
 	$P \gets \emptyset$\;
 %	\tcp*{pruned set}
 
-	$Q_d \gets \{\alpha(x,y)\}$
-        $Q_r \gets \{\neg \alpha(x,y)\}$\; 	
+	$Q \gets c_0$
 
 	\While{$Q \neq \emptyset$}{
 		
@@ -921,7 +928,6 @@ resulting hypotheses through disjunction.
 	\label{algo}
 \end{algorithm}
 
-\todo[inline]{Change the algo}
 The input data consists of a finite set of input-output ASG pairs,
 which can be partitioned into positive and negative evidence, denoted
 $D^+$ and $D^-$ respectively. It also requires a bound $k$ that limits
@@ -950,9 +956,7 @@ superfactors while still covering the same hypothesis space. Here, we
 propose one method that explicitly connects graph-theoretic
 representations with their logical counterparts.
 
-Recall Definition~\ref{def.size} defines the size of an
-ASG as the total number of elements and association lines.
-and states node labels are not counted toward structure size.
+Recall the size of an ASG as the total number of nodes and association lines.
 In addition, the next superfactors of a structure are those
 whose size increases minimally by \(1\). Consequently, increases
 in size can only arise through the introduction of new
