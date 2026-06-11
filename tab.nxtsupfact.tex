@@ -5,7 +5,7 @@
 	\small
 	\begin{tabular}{p{2.5cm}p{1.8cm}p{2.2cm}p{6.2cm}p{0.5cm}} 
 		\toprule
-		\textbf{Operation} & \textbf{Matrix} & \textbf{Graph} & \textbf{Logic} & \textbf{Size} \\
+		\textbf{Operation} & \textbf{Matrix} & \textbf{Graph} & \textbf{Logic} \(\textsf{struc}(x,y)\)& \textbf{Size} \\
 		\midrule
 				\footnotesize Initial 
 		&
@@ -49,7 +49,7 @@
 			\node[left] at (y) {$H(y)$};
 		\end{tikzpicture}
 		&
-		$		\alpha(x,y) \land H(y)$&3
+		$		\alpha(x,y) \land H(y)$&4
 		\\[2em]
 		\footnotesize Add node
 		&
@@ -76,7 +76,7 @@
 		\end{tikzpicture}
 		&
 		$
-		\alpha(x,y) \land H(x) \land \exists z \lhd(x,z)$&4
+		\alpha(x,y) \land H(x) \land \exists z \lhd(x,z)$&5
 		\\[2em]
 		
 		\footnotesize Add association
@@ -107,7 +107,7 @@
 			\node[right] at (z) {$z$};
 		\end{tikzpicture}
 		&
-		$		\alpha(x,y) \land H(x) \land  \exists z (\lhd(x,z) \land \alpha(y,z))$&5
+		$		\alpha(x,y) \land H(x) \land  \exists z (\lhd(x,z) \land \alpha(y,z))$&6
 		\\[2em]
 	
 		\bottomrule

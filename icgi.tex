@@ -306,22 +306,24 @@ signature also contains two binary relations: \(<\) is the precedence
 relation and \(\alpha\) is the association relation. Well-formed
 autosegmental representations obey the following constraints.
 
-\begin{itemize}
+\begin{itemize}\itemsep-0.5ex
 \item The domain is partitioned into two sets: T (tonal tier) and S (segmental tier).
-\hijeff{Do we want to relax this - there could be more or other tiers, such as mora etc}
+%\hijeff{Do we want to relax this - there could be more or other tiers, such as mora etc}
 \item Every element in T satisfies exactly one of L or H and nothing else.
 \item Every element in S satisfies exactly one of C or V and nothing else.
 \item If \(<(x,y)\) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\). Also, for each tier, the precedence relation produces a total ordering over it.
-\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\). The association relation is symmetric (though symmetry will not be shown in Figures for readability).
+\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\). The association relation is symmetric (though symmetry is not shown in Figures or logical formulas for readability).
 \item For all
   \((x, y), (x', y') \in \alpha, x < x' \Rightarrow
  (y < y') ∨ (y =
   y')\).
 \end{itemize}
-In short, an AR is a $\mathcal{T}$-partite \hijeff{bipartite if only T and S}graph whose vertices are
-partitioned into $\mathcal{T}$ disjoint sets, with each tier
+In short, an AR is a graph, whose vertices are
+partitioned into two disjoint sets, with each tier
 linearly-ordered, whose elements are coordinated via a temporally
-well-behaved association relation. Figure~\ref{fig:armodel} shows an AR on the left,
+well-behaved association relation.\footnote{It is straightforward
+  to generalize ARs to include \(n\)-partite graphs with n tiers.}
+Figure~\ref{fig:armodel} shows an AR on the left,
 its corresponding model-theoretic structure on the right, and the graph of the model in the center.
 Henceforth, we use the words `node' and `domain element' interchangeably.
 \begin{figure}[ht]
@@ -402,10 +404,13 @@ Henceforth, we use the words `node' and `domain element' interchangeably.
 	\label{fig:armodel}	
 \end{figure}
 
-The \emph{size} of an AR is defined as the \(|D| + |\alpha|/2\). \hijeff{then maybe should
-change $\alpha$ in the Figure 2 by adding the other directional pairs}
+The \emph{size} of an AR is defined as the size of the domain plus the size of the unary relations and half the size of the association relation. We leave out the precedence relation because its size is fixed given the lengths of each tier.
+%\hijeff{then maybe should
+%change $\alpha$ in the Figure 2 by adding the other directional pairs}
+%\hihan{I stated we would not show the symmetry for readability above}
 We divide by two because \(alpha\) is symmetric.
-Thus, The size of the AR in Figure~\ref{fig:armodel} is 7.
+Formally, the size of an AR is \(|D| + |H| + |L| + |C| + |V| + |\alpha|/2 \).
+Thus, the size of the AR in Figure~\ref{fig:armodel} is 11.
 
 The successor relation \(\lhd\) is the transitive reduction of \(<\):
 \(x\lhd y\) if and only if
@@ -462,15 +467,30 @@ An \(m \times n\) matrix \(A\) is contained in a matrix \(B\), denoted
 \(A \sqsubseteq B\), if there exists an \(m \times n\) submatrix of
 \(B\), denoted \(B'\), such that for all \(i \in [1,m]\) and
 \(j \in [1,n]\), \( b'_{ij} \geq a_{ij}\). \hihan{don't the labels have to match too?}
-For example, consider the structure given by \(\alpha(1,2) \wedge H(1) \wedge V(2)\).
+For example, consider the structure given by
+the formula \(\alpha(1,2) \wedge H(1) \wedge V(2)\).
 This structure is contained within the Figure~\ref{fig:armodel}.
 
 A matrix \(A\) is a \emph{subfactor} of \(B\) if and only if \(A\) is 
 contained in \(B\). Conversely, \(B\) is a \emph{superfactor} of \(A\).
 Furthermore, if the size difference between a superfactor and its
 subfactor is exactly one, the superfactor is called the
-\emph{next superfactor} of that subfactor. \hihan{Not quite, right?
-  Adding a label is a super factor too, see Table 3.}
+\emph{next superfactor} of that subfactor.
+
+
+There is a general connection between connected structures, logical formulas, and containment. For example, the structure in Figure~\ref{fig:armodel} corresponds to the logical formula
+\[
+  \exists w,x,y,z \big(
+  L(w)\land H(x)\land V(y)\land V(z)
+  \land w<x \land y<z
+  \land \alpha(w,y)\land \alpha(x,z) \land \alpha(x,y)
+  \big).
+\]
+When one considers which structures satisfy this formula, they all contain a structure isomorphic to the one in in Figure~\ref{fig:armodel}.
+
+Table~\ref{tab:nextsupfact} shows matrix, graphical, and logical representations of different structures where the the variables \(x,y\) (which are in scope by the predicate \(\textsf{struc}(x,y)\). Furthermore, pairs of adjacent rows in  Table~\ref{tab:nextsupfact} stand in the next superfactor relationship. The structure denoted by \(\alpha(x,y)\land H(y)\) is a next superfactor of \(\alpha(x,y)\) and so on. The `Operation' column indicates the change that was made to obtain the next superfactor from the structure in the previous row.
+
+\input{tab.nxtsupfact.tex}
 
 This containment relation provides a \textit{partial ordering} over
 the space of ARs. We illustrate this partial order with strings in
@@ -527,10 +547,7 @@ the hypothesis space through entailment relations between factors.
 \end{figure}
 
 
-\hihan{I'm thinking Table 3 should replace the string example here. It also shows how each structure corresponds to a logical formula. Finally, I think an overview of Courcellian transductions belongs in the prelims too.}
-
-
-\section{Logical Transduction}
+\section{Graph Transductions}
 
 We model a phonological process with graph transductions
 from input structures to output structures
@@ -794,11 +811,14 @@ Figure~\ref{fig:hiatus}. The value for $(T_1,V_1)$
 changes from $1$ (in the input) to $0$ (in the output),
 which indicates delinking; the value corresponding
 to $(T_1,V_2)$  changes from $0$ to $1$,
-which indicates reassociation.  Formally, \textsf{deassoc} and \textsf{reassoc}
-can also be identified by  $ \textsf{deassoc}
-= \{(i,j) \mid \mathrm{UR}_{ij}=1 \land \mathrm{SR}_{ij}=0\}$
-and $\textsf{reassoc} =
-\{(i,j) \mid \mathrm{UR}_{ij}=0 \land \mathrm{SR}_{ij}=1\}$.
+which indicates reassociation.
+Formally, the set of deassociated pairs
+and the set of reassociated pairs 
+can be identified by
+\(\{(i,j) \mid \mathrm{SR}_{ij}<\mathrm{UR}_{ij}\}\)
+and
+\(\{(i,j) \mid \mathrm{UR}_{ij}< \mathrm{SR}_{ij}\}\),
+respectively.
 
 \section{Association Learning}
 This section follows the ideas of using logical transductions to learn
@@ -827,7 +847,7 @@ all negative evidence.
 \citet{yolyan2025logical} worked with string-to-string functions.
 However, in autosegmental phonology, environments are
 expressed as structural relations over graphs.
-Because model-theoretic representations generally form a partial order \citet{chandleeBufia2019},
+Because model-theoretic representations generally form a partial order with the containment relation \citep{chandleeBufia2019},
 the same ideas apply to ARs. Equivalently, transformations can be 
 viewed as changes to the graph's adjacency matrix, where an entry 
 changes from $1\rightarrow0$ or $1\rightarrow0$.
@@ -907,7 +927,8 @@ resulting hypotheses through disjunction.
 			
 			\Else{
 				
-				\ForEach{$s \in \textsc{NextSupFact}(c) \land |s| < k \land \forall p \in P,\; s \not\sqsubseteq p$}{
+                          \ForEach{$s \in \textsc{NextSupFact}(c)
+                             \text{ such that } |s| < k \land (\forall p \in P)[s \not\sqsubseteq p]$}{
 					
 				
 						
@@ -970,7 +991,7 @@ Specifically, see the following order:
 \begin{enumerate}[label=(\roman*),noitemsep]
 	\item labeling unspecified nodes; if labeling 
 	does not contribute to the transformation, then 
-	backtracks to the under-specified variable.
+	backtracks to the under-specified variable.\hihan{see note below}
 	\item introducing a neighboring node, which may either
 	follow or precede an existing node on either tier, at both boundaries;
 	\item adding association lines, provided that both
@@ -981,8 +1002,6 @@ Table~\ref{tab:nextsupfact} presents a non-exhaustive set
 of examples illustrating the generation of
 \textsc{NextSupFact} from an initial \textsf{deassoc}
 hypothesis. 
-
-\input{tab.nxtsupfact.tex}
 
 As can be seen, each operation provides an equivalent
 interpretation from matrix, graph-theoretic, and logical
@@ -1063,9 +1082,7 @@ For deassociation, the learner then begins with the following initial hypothesis
 which states that any association line
 present in the input is deleted in the output.
 \[
-H_0:
-\quad
-\phi_{\alpha'(x,y)} = \alpha(x,y)
+H_0: \textsf{deassoc}(x,y)\quad = \alpha(x,y)
 \]
 
 The following step is to test H$_0$ against both positive
@@ -1169,7 +1186,7 @@ When evaluating the candidate hypotheses in Table~\ref{tab.h1abcd},
 we find that neither (\ref{tab.h1abcd}a) nor (\ref{tab.h1abcd}b)
 covers all positive examples. This indicates that tonal
 identity does not contribute to the transformation, and the
-learner therefore backtracks to the underspecified node.
+learner therefore backtracks to the underspecified node. \hihan{It seems like you are doing more here, and throughout, than algo 1. In particular, even though none of th 6a-d are consistent with the data, you differentiate between 6ab and 6cd. Algo 1 doesn't. Let's discuss.}
 Likewise, on the segmental tier, (\ref{tab.h1abcd}d) is
 inconsistent with the positive evidence and is rejected,
 whereas (\ref{tab.h1abcd}c) remains consistent with all
@@ -1177,7 +1194,7 @@ positive examples. The learner therefore refines the
 hypothesis as follows:\[
 H_1:
 \quad
-\phi_{\alpha'(x,y)} = \alpha(x,y) \land V(x)
+  \textsf{deassoc}(x,y) = \alpha(x,y) \land V(x)
 \]
 
 However, since (\ref{tab.h1abcd}c) is also attested in negative
@@ -1308,12 +1325,12 @@ updated hypotheses:
 \[
 H_{2a}:
 \quad
-\phi_{\alpha'(x,y)} = \alpha(x,y) \land V(x) \land \exists z (x \lhd z)
+  \textsf{deassoc}(x,y) = \alpha(x,y) \land V(x) \land \exists z (x \lhd z)
 \]
 \[
 H_{2d}:
 \quad
-\phi_{\alpha'(x,y)}
+ \textsf{deassoc}(x,y)
 =
 \alpha(x,y) \land V(x) \land \exists z (y \lhd z)
 \]
@@ -1434,9 +1451,9 @@ consistent with both positive and negative evidence.
 This formula encodes the same structural condition illustrated
 in Figure~\ref{fig:hiatus}. 
 \[
-\phi_{\alpha'(x,y)}
+\textsf{deassoc}(x,y)
 =
-\alpha(x,y) \land V(x) \land \exists z \big((x \lhd z) \land V(z)\big)
+\alpha(x,y) \land V(x) \land \exists z \big(x \lhd z \land V(z)\big)
 \]
 
 Importantly, one may observe that
@@ -1444,11 +1461,11 @@ triggering deassociation does not require T$_2$ to be associated
 with V$_2$. The learned hypothesis therefore predicts that
 deassociation applies whenever two vowels are adjacent,
 regardless of whether the following vowel is associated with
-a tone. \hijeff{delete or stay??}
+a tone. %\hijeff{delete or stay??}\hihan{stay}
 
 The \textsf{reassoc} inference follows the same process but with a different starting hypothesis
 \[
-\phi_{\alpha'(x,y)} \hijeff{we need to have two diff predicate names }
+  \textsf{reassoc}(x,y) %\hijeff{we need to have two diff predicate names }\hihan{reassoc!}
 =
 \neg \alpha(x,y)
 \]
@@ -1458,7 +1475,7 @@ reassociation site, in contrast to the deassociation case.
 %refer interested readers to the appendix for details MAYBE OR MAYBE NOT. 
 The learner eventually converges on the following hypothesis:
 \[
-\phi_{\alpha'(x,y)}
+  \textsf{reassoc}(x,y)
 =
 \neg \alpha(x,y) \land V(x) \land \exists z \big((z \lhd x) \land V(z) \land \alpha (z,y)\big)
 \]
@@ -1467,7 +1484,7 @@ We combine the two operations into the final transformation.
 
 \[
 \begin{aligned}
-\phi_{\alpha'(x,y)} :=\;&
+\phi_{\alpha(x,y)} :=\;&
 \alpha(x,y)\land V(x)
 \land \exists z\big((x\lhd z)\land V(z)\big)
 \\
@@ -1477,12 +1494,11 @@ We combine the two operations into the final transformation.
 \end{aligned}
 \]
 
-
-
 Lastly, the licensing function \(\phi_{\textsf{license}}\) filters
 out elements that are not associated in the surface representation.
 Such unlicensed elements are not realized phonetically and therefore
 do not appear in the output.
+
 \section{Conclusion} 
 
 This work has argued that phonological processes that involve 
