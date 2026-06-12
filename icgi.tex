@@ -116,6 +116,7 @@
 
 
 \section{Introduction}
+
 This paper presents a method for learning transformations over 
 multi-linear structures, with a particular focus on sequences which 
 are synchronized in time. 
@@ -126,8 +127,7 @@ in phonological theory in particular, and are known as
   hayes1980metrical, sagey1986representation, jardine2017local}.
 ARs are graph structures which consist of one or more sequences called `tiers'
 and cross-tier association relations.
-This work focuses on a 
-specific, but important, type of transformation where the 
+This work focuses on a specific, but important, type of transformation where the 
 association lines are modified. 
 We formalize these transformations as graph transductions
 \citep{Courcelle1994, EngelfrietHoogeboom2001,
@@ -152,17 +152,17 @@ an association relation. Many input-output mappings are
 naturally characterized by rearranging those association lines across
 tiers \citep{goldsmith1976autosegmental,CG1984autosegmental, hyman2009representation}.
 
-For example, one instance of reduplication in Estako, a tonal Niger-Congo language, is shown in Figure~\ref{fig:IOpair} \citep{EstakoREF}.
-Segmental and tonal information are represented on separate tiers, but are coordinated in time by the association relation (shown in figures in this paper as lines).
+For example, one instance of reduplication in Estako \citep{elimelech1976tonal}, a tonal Niger-Congo language, is shown in Figure~\ref{fig:IOpair}.
+Segmental (whether consonant or vowels) and tonal information are represented on separate tiers, but are coordinated in time by the association relation (shown in figures in this paper as lines).
 The word for ‘house’ in Estako is pronounced [ówà], with a high (H) tone on the first 
 vowel, marked by an acute accent (\texttt{´}), and a low (L) tone on 
 the second vowel, marked by a grave accent (\texttt{`}).
 In Estako, reduplication conveys a repetitive meaning of ‘every X’. 
-Interestingly, the reduplicated form of [ówà] ‘house’ is not is [ówàówà] as may be expected, but in fact [ówǒwà] ‘every house’, 
-with high, rising, and low tones on the first, second, and third vowels, respectively. In Estako, when reduplication creates a sequence of
+Interestingly, the reduplicated form of [ówà] ‘house’ is not is [ówàówà] as may be expected, but in fact [ówǒwà],
+with high, rising, and low tones associated with the three vowels, respectively. In many languages including Estako, when reduplication creates a sequence of
 adjacent vowels V\(_1\)V\(_2\), the first vowel V\(_1\) deletes but its
-associated tone does not. Instead, it reassociates to the following vowel V\(_2\).
-As shown in Figure~\ref{fig:IOpair}, this produces a rising tone on V\(_2\) in the output. 
+associated tone does not. Instead, it reassociates to the following vowel V\(_2\), and 
+produces a rising tone on V\(_2\) in the output, as shown in Figure~\ref{fig:IOpair}.
 
 %More generally, segmental and tonal information in ARs are represented on separate tiers,
 %but are coordinated in time by the association relation (shown in figures in this paper as lines).
@@ -255,7 +255,7 @@ involving a single deassociation and/or reassociation operation.
 We adopt the model-theoretic logical transduction framework of
 \citet{yolyan2025logical}. Yolyan synthesizes insights from from graph transductions \citep{Courcelle1994, EngelfrietHoogeboom2001,
   CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, Vu+2018, chandleeBufia2019} to learn a class of string-to-string functions. The transductions specify, via a collection of logical formulas, how to construct an output structure from a given an input structure. Yolyan searches for a minimal distinguishing structure based on the Bottom-Up Factor Inference Algorithm 
-\citep[BUFIA;][]{chandleeBufia2019, rawski2021structure, li2025learning, Swanson+2025, LiHeinzPhO2026}). 
+\citep[BUFIA;][]{chandleeBufia2019, rawski2021structure, li2025learning, Swanson+2025, LiHeinzPhO2026}. 
 BUFIA searches a partially ordered space of model-theoretic structures to 
 identify a minimal hypothesis consistent with the data. For transformation 
 learning, \citet{yolyan2025logical, yolyan2025phonological} uses this idea to find a minimal structure which distinguishs positive examples (those that undergo the change) from negative examples (those that do not).
@@ -946,105 +946,108 @@ To find the environment for \textsf{Add},
 BUFIA-AC is called with  \(h_0=\neg\alpha(x,y)\).
 Thus BUFIA-AC is called twice to learn the two environments independently.
 Those results are combined through disjunction to obtain the formula in Equation~\ref{eq:retainadd} as shown in Algorithm~\ref{algo2}.
-\begin{algorithm}[t]
-  \SetKwInput{KwData}{Input}
-  \SetKwInput{KwResult}{Output}
-\small
-\LinesNumbered
-
-\KwData{$D=     \{(I_1,O_1),\dots,(I_n,O_n)\}, h_0, k$
-	}
-\KwResult{An environment \(c\) or \(\bot\)
-	}
-
-        %	
-%	\KwOut{
-%		minimal structural environment $c$
+\input{algos.tex}
+%
+%\begin{algorithm}[t]
+%  \SetKwInput{KwData}{Input}
+%  \SetKwInput{KwResult}{Output}
+%\small
+%\LinesNumbered
+%
+%\KwData{$D=     \{(I_1,O_1),\dots,(I_n,O_n)\}, h_0, k$
 %	}
-	\(D^+ \gets \{\, I_i \mid I_i \neq O_i \,\}\)\;
-        
-	\(D^- \gets \{\, I_i \mid I_i = O_i \,\}\)\;
-        
-	$P \gets \emptyset$\;
-%	\tcp*{pruned set}
+%\KwResult{An environment \(c\) or \(\bot\)
+%	}
+%
+%        %	
+%%	\KwOut{
+%%		minimal structural environment $c$
+%%	}
+%	\(D^+ \gets \{\, I_i \mid I_i \neq O_i \,\}\)\;
+%        
+%	\(D^- \gets \{\, I_i \mid I_i = O_i \,\}\)\;
+%        
+%	$P \gets \emptyset$\;
+%%	\tcp*{pruned set}
+%
+%	$Q \gets h_0$\;
+%
+%	\While{$Q \neq \emptyset$}{
+%		
+%		$h \gets Q.\mathrm{Dequeue}()$\;
+%	
+%		\If{$\forall I_i \in D^+\; [\textsc{match}(h,I_i,O_i,h_0)]$}{
+%			
+%			\If{$\forall I_i \in D^-\; [\neg \textsc{match}(h,I_i,O_i,h_0)]$}{
+%				
+%				\Return{$h$}\;
+%			}
+%			
+%			\Else{
+%                          \ForEach{$s \in \textsc{NextSupFact}(h)$}{
+%                            \If{$|s| < k \land (\forall p \in P)[s \not\sqsubseteq p]$}{$Q.\mathrm{Enqueue}(s)$}\;
+%				}
+%			}
+%		}
+%		
+%		\Else{
+%		
+%			$P \gets P \cup \{h\}$\;
+%		}
+%	}
+%	\Return{$\bot$}\;
+%	
+%	\caption{BUFIA-AC}
+%	\label{algo1}
+%\end{algorithm}
+%
+%\begin{algorithm}[t]
+%  \SetKwInput{KwData}{Input}
+%  \SetKwInput{KwResult}{Output}
+%\small
+%\LinesNumbered
+%\setcounter{AlgoLine}{0}
+%
+%\KwData{$D = \{(I_1,O_1),\dots,(I_n,O_n)\}, k$}
+%\KwResult{The formula \(\phi_\alpha(x,y)\) or \(\bot\)}
+%
+%\(\textsf{Retain} \gets \textsf{BUFIA-AC}(D, \alpha(x,y), k)\)\;
+%
+%\(\textsf{Add} \gets \textsf{BUFIA-AC}(D, \neg\alpha(x,y), k)\)
+%
+%\If{\(\textsf{Retain} =\bot \;\lor\; \textsf{Add} =\bot\)}{
+%  \Return{\(\bot\)} }
+%\Else{
+%  \Return{\(\textsf{Retain} \lor \textsf{Add}\)}}
+%\caption{Learning Association Changes}
+%\label{algo2}
+%\end{algorithm}
+%
+%\begin{algorithm}[t]
+%  \SetKwInput{KwData}{Input}
+%  \SetKwInput{KwResult}{Output}
+%\small
+%\LinesNumbered
+%\setcounter{AlgoLine}{0}
+%
+%\KwData{$h, I, O, h_0$}
+%\KwResult{True or False}
+%\If{\(h_0\)=\(\alpha(x,y)\)}{
+%  \If{\(h\sqsubseteq I\)}{
+%    \If{\(\forall (i,j) \in D(I,O)\)\\
+%      \Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
+%      \Return{True}}
+%  }}
+%  \Else{\If{\(h\not\sqsubseteq I\)}{
+%      \If{\(\forall (i,j) \in R(I,O)\)\\
+%        \Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
+%      \Return{True}}
+%    }}
+%\Return{False}
+%\caption{Match}
+%\label{algo3}
+%\end{algorithm}
 
-	$Q \gets h_0$\;
-
-	\While{$Q \neq \emptyset$}{
-		
-		$h \gets Q.\mathrm{Dequeue}()$\;
-	
-		\If{$\forall I_i \in D^+\; [\textsc{match}(h,I_i,O_i,h_0)]$}{
-			
-			\If{$\forall I_i \in D^-\; [\neg \textsc{match}(h,I_i,O_i,h_0)]$}{
-				
-				\Return{$h$}\;
-			}
-			
-			\Else{
-                          \ForEach{$s \in \textsc{NextSupFact}(h)$}{
-                            \If{$|s| < k \land (\forall p \in P)[s \not\sqsubseteq p]$}{$Q.\mathrm{Enqueue}(s)$}\;
-				}
-			}
-		}
-		
-		\Else{
-		
-			$P \gets P \cup \{h\}$\;
-		}
-	}
-	\Return{$\bot$}\;
-	
-	\caption{BUFIA-AC}
-	\label{algo1}
-\end{algorithm}
-
-\begin{algorithm}[t]
-  \SetKwInput{KwData}{Input}
-  \SetKwInput{KwResult}{Output}
-\small
-\LinesNumbered
-\setcounter{AlgoLine}{0}
-
-\KwData{$D = \{(I_1,O_1),\dots,(I_n,O_n)\}, k$}
-\KwResult{The formula \(\phi_\alpha(x,y)\) or \(\bot\)}
-
-\(\textsf{Retain} \gets \textsf{BUFIA-AC}(D, \alpha(x,y), k)\)\;
-
-\(\textsf{Add} \gets \textsf{BUFIA-AC}(D, \neg\alpha(x,y), k)\)
-
-\If{\(\textsf{Retain} =\bot \;\lor\; \textsf{Add} =\bot\)}{
-  \Return{\(\bot\)} }
-\Else{
-  \Return{\(\textsf{Retain} \lor \textsf{Add}\)}}
-\caption{Learning Association Changes}
-\label{algo2}
-\end{algorithm}
-
-\begin{algorithm}[t]
-  \SetKwInput{KwData}{Input}
-  \SetKwInput{KwResult}{Output}
-\small
-\LinesNumbered
-\setcounter{AlgoLine}{0}
-
-\KwData{$h, I, O, h_0$}
-\KwResult{True or False}
-\If{\(h_0\)=\(\alpha(x,y)\)}{
-  \If{\(h\sqsubseteq I\)}{
-    \If{\(\forall (i,j) \in D(I,O)\)\\
-      \Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
-      \Return{True}}
-  }}
-  \Else{\If{\(h\not\sqsubseteq I\)}{
-      \If{\(\forall (i,j) \in R(I,O)\)\\
-        \Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
-      \Return{True}}
-    }}
-\Return{False}
-\caption{Match}
-\label{algo3}
-\end{algorithm}
 
 The input data consists of a finite set of input-output AR pairs,
 which are partitioned into positive and negative evidence, denoted
@@ -1457,7 +1460,7 @@ This opens up more discussions about how linguistically meaningful
 representations can facilitate grammar inference.
 
 
-%\bibliographystyle{apalike}
+\bibliographystyle{apalike}
 \bibliography{ref}
 
 \end{document}
