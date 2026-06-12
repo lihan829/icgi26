@@ -1,0 +1,93 @@
+\begin{table}[ht!]
+	\centering
+	\begin{tabular}{ccccc}
+		\toprule
+		& (\ref{tab.h2}a)& (\ref{tab.h2}b)&(\ref{tab.h2}c)&(\ref{tab.h2}d)\\
+		\midrule
+		& 
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (0.8,0) {};
+			
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw[dashed] (x) -- (z);
+			
+			\node[left] at (x) {$V(x)$};
+			\node[right] at (y) {$y$};
+			\node[right] at (z) {$z$};
+		\end{tikzpicture}
+		&
+			\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (-0.8,0) {};
+			
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw[dashed] (x) -- (z);
+			
+			\node[right] at (x) {$V(x)$};
+			\node[right] at (y) {$y$};
+			\node[left] at (z) {$z$};
+		\end{tikzpicture}
+		&
+	\begin{tikzpicture}[baseline=(current bounding box.center)]
+		\node (x) at (0,0) {};
+		\node (y) at (0,1) {};
+		\node (z) at (-.8,1) {};
+		
+		\draw[fill=black] (x) circle (2pt);
+		\draw[fill=black] (y) circle (2pt);
+		\draw[fill=black] (z) circle (2pt);
+		
+		\draw (x) -- (y);
+		\draw[dashed] (y) -- (z);
+		
+		\node[right] at (x) {$V(x)$};
+		\node[right] at (y) {$y$};
+		\node[left] at (z) {$z$};
+	\end{tikzpicture}
+		&
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (.8,1) {};
+			
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw[dashed] (y) -- (z);
+			
+			\node[left] at (x) {$V(x)$};
+			\node[left] at (y) {$y$};
+			\node[right] at (z) {$z$};
+		\end{tikzpicture}
+		
+		\\
+		\midrule
+		
+		Contained by all $D^+$
+		& $\checkmark$ & $\times$ & $\times$ & $\checkmark$
+		\\
+		
+		Absent in all $D^-$
+		& $\times$ & $\times$ & $\times$ & $\times$
+		\\
+		
+		\bottomrule
+	\end{tabular}
+	
+
+	\caption{Next Superfactors of (\ref{tab.h1abcd}c) in H$_1$}
+	\label{tab.h2}
+\end{table}
