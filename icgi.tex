@@ -52,6 +52,8 @@
 \usepackage{wrapfig}
 %\usepackage{gb4e}
 
+\usepackage{wrapfig}
+
 \title{Learning Association-Line Transformations over Autosegmental Graphs}
 
 %\title[Short Title]{Full Title of Article\titlebreak This Title Has
@@ -1050,7 +1052,6 @@ Those results are combined through disjunction to obtain the formula in Equation
 %\label{algo3}
 %\end{algorithm}
 
-
 The input data consists of a finite set of input-output AR pairs,
 which are partitioned into positive and negative evidence, denoted
 $D^+$ and $D^-$ respectively. It also maintains a pruning set \(P\), and a queue, 
@@ -1059,12 +1060,18 @@ $D^+$ and $D^-$ respectively. It also maintains a pruning set \(P\), and a queue
 
 The algorithm conducts a breadth-first search over a partially ordered
 hypothesis space. At each step, a candidate hypothesis $h$ is first tested 
-against the positive evidence. For each (\(I,O)\in D^+\) $\textsc{match}(h, I, O,h_0)$ returns true iff \(h\) is contained in \(I\) and there are bijections \(r,c\) witnessing this containment such that \((r(x),c(y))=D(I,O)\). This latter condition ensures that the \(x,y\) coordinates are anchored to the positions in the structure that undergo the transformation.
-If \(h\) fails to match all positive examples \(D^+\), then the current hypothesis is incompatible with the observed transformation and thus is added to the pruning set $P$. Because any superfactor of \(h\) will also fail to be contained in the
-same positive example, such hypotheses need not be refined further.
+against the positive evidence. For each (\(I,O)\in D^+\) $\textsc{match}(h, I, O,h_0)$ returns true iff the hypothesized environment \(h\) matches the relevant positions in the structure that undergo the transformation.
+
+Formally, this is carried about by Algorithm~\ref{algo3} (Match).
+It uses \(h_0\) to determine whether it is looking for deassociations or reassociations and behaves accordingly.
+In the former case, it checks whether there are bijections \(r,c\) such that \((r(x),c(y))=D(I,O)\) for each (\(I,O)\in D^+\), and that these bijections witness \(h\) being contained in \(I\).
+These conditions ensure that the \(x,y\) coordinates are anchored to the positions in the structure that undergo the transformation.
+The reassociation case proceeds similarly.
+If \(h\) fails to match all positive examples \(D^+\), then the current hypothesis is incompatible with the observed transformation and thus is added to the pruning set $P$.
+Because any superfactor of \(h\) will also fail to be contained in the same positive example, such hypotheses need not be refined further.
 
 If \(h\) passes the positive test, it is then tested against all
-negative examples in $D^-$. As before \(h\) is checked to see whether
+negative examples in $D^-$. Then \(h\) is checked to see whether
 it matches any datum in $D^-$. If not, it is consistent with both the
 positive and negative evidence. Therefore \(h\) is returned as a valid
 environment, and BUFIA-AC terminates. Otherwise, \(h\) is too general.
@@ -1166,7 +1173,30 @@ but not in VCV-LH, where they are separated.
 %deassociation and reassociation occur, thus carries out both 
 %search for \textsf{Retain} and \text{Add}.
 
+We will see how Algorithm~\ref{algo2} (LAC) finds the environment shown in Figure~\ref{fig:ans} for \textsf{deassoc}.
+\begin{wrapfigure}{r}{0.25\linewidth}
+  \centering
+  \begin{tikzpicture}[baseline=(current bounding box.center)]
+    \node (x) at (0,0) {};
+    \node (y) at (0,1) {};
+    \node (z) at (.6,0) {};
+    
+    \draw[fill=black] (x) circle (2pt);
+    \draw[fill=black] (y) circle (2pt);
+    \draw[fill=black] (z) circle (2pt);
+
+    \draw (x) -- (y);
+    \draw[dashed] (x) -- (z);
+    
+    \node[left] at (x) {$V(x)$};
+    \node[right] at (y) {$y$};
+    \node[right] at (z) {$V(z)$};
+  \end{tikzpicture}
+  \caption{A distinguishing environment}
+  \label{fig:ans}
+\end{wrapfigure}
 We call Algorithm~\ref{algo2} (LAC) with the data \(D\) in Table~\ref{tab.toy} letting \(k=5\). It calls Algorithm~\ref{algo1} (BUFIA-AC) to search for predicate \textsf{deassoc} with \(D, k\) and with \(H_0=\alpha(x,y)\).
+
 
 BUFIA-AC first partitions the data into positive evidence
 \(D^{+}\) and negative evidence \(D^{-}\). In this toy example,
@@ -1177,13 +1207,12 @@ of the rest pairs marked with dashes in Table~\ref{tab.toy}.
 % H_0: \textsf{Retain} = \alpha(x,y)
 % \]
 
-The following step is to test H$_0$ against both positive
-and negative evidence. Trivailly, it is accepted by all positive 
+BUFIA-AC tests $h_0$ against both positive and negative evidence.
+Trivially, it is accepted by all positive 
 examples, but, when evaluated against the negative evidence, the 
 hypothesis is rejected: in CV-H, CV-L, and VCV-LH, the 
-association lines in the
-input remain associated in the output, contrary to the
-prediction of \(H_0\). BUFIA-AC therefore concludes that
+association lines in the input remain associated in the output, contrary to the
+prediction of \(h_0\). BUFIA-AC therefore concludes that
 the hypothesis is too general and must be made more
 specific.
 
@@ -1195,20 +1224,20 @@ by labeling previously unspecified nodes.
 %Concretely, it iterates over all symbols available on the 
 %corresponding tier and assigns them to previously unlabeled 
 %nodes.
-These superfactors are shown in Table~\ref{tab.h1abcd}: (\ref{tab.h1abcd}a) 
+These superfactors are shown in Table~\ref{tab.h1abcd}. Superfactors (\ref{tab.h1abcd}a) 
 and (\ref{tab.h1abcd}b) label $y$ as $H$ or $L$ on the tone tier, while
 (\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}d) label $x$ as 
-$V$ or $C$ on the segment tier.
+$V$ or $C$ on the segment tier. Superfactors (\ref{tab.h1abcd}e) through (\ref{tab.h1abcd}h) add a single node adjacent to a current one on a tier.
 \input{tab.supfac.of.H0}
 
 When evaluating the candidate hypotheses in Table~\ref{tab.h1abcd},
-BUFIA-AC determines neither (\ref{tab.h1abcd}a) nor (\ref{tab.h1abcd}b)
-cover all positive examples. They are thus are pruned.
+BUFIA-AC determines that superfactors (\ref{tab.h1abcd}a, b, d, g)
+do not match all positive examples. They are thus are pruned. 
 %This indicates that tonal
 %identity does not contribute to the transformation, and
 %\hihan{It seems like you are doing more here, and throughout, than algo 1. In particular, even though none of th 6a-d are consistent with the data, you differentiate between 6ab and 6cd. Algo 1 doesn't. Let's discuss.}
-(\ref{tab.h1abcd}c) is consistent with all positive examples.
-BUFIA-AC therefore continues with this hypothesis for \textsf{deassoc}.
+However, (\ref{tab.h1abcd} c, e, f, h) are consistent with all positive examples, and they are thus checked against the \(D-\).
+%BUFIA-AC therefore continues with this hypothesis for \textsf{deassoc}.
 % \[
 % H_1:\quad
 % \textsf{Retain} = \alpha(x,y)\land
@@ -1216,22 +1245,140 @@ BUFIA-AC therefore continues with this hypothesis for \textsf{deassoc}.
 % \]
 % \hihan{isn't this whole thing \textsf{deassoc}?}
 
-However, (\ref{tab.h1abcd}c) is also attested in negative
-examples, hence it fails to distinguish contexts in which the
+Each of these superfactors (\ref{tab.h1abcd}c, e, f, g) matches some negative
+example, hence they each fail to distinguish contexts in which the
 transformation applies from those in which it does not.
-BUFIA-AC therefore generates the next superfactors of (\ref{tab.h1abcd}c) by
-introducing adjacent nodes on either tier.
+BUFIA-AC therefore generates their next superfactors and enqueues them.
+BUFIA-AC then dequeues the next \(h\), which is (\ref{tab.h1abcd}c). That this is next is a consequence of the ordering imposed by the constructon of superfactors: new labels then new nodes then new associations.
 %As tonal identity is  shown not relevant to the
 %transformation, node \(y\) remains underspecified rather than
 %being assigned a tonal label. 
-These superfactors are shown in Table~\ref{tab.h2}, where
-(\ref{tab.h2}a)--(\ref{tab.h2}b) introduce a new node that
-immediately precedes or follows the existing node on the
-segment tier, while (\ref{tab.h2}c)--(\ref{tab.h2}d) do so
+
+Hypothesis (\ref{tab.h1abcd}c) is consistent with \(D^+\) and so it is then checked against \(D^-\).
+It is not consistent  with \(D^-\) and so its superfactors are generated next.
+However, not all of its superfactors are enqueued.
+This is because the superfactors that add a label to the tonal node are pruned away by the factors in the pruned set \(P\).
+The superfactors that are not pruned away are  shown in Table~\ref{tab.h2}, where
+(\ref{tab.h2}a)--(\ref{tab.h2}b) introduce a new node that immediately precedes or follows the existing node on the segment tier, while (\ref{tab.h2}c)--(\ref{tab.h2}d) do so
 on the tone tier. These are added to the end of the queue.
 \input{tab.supfac.of.H1}
 
-The next item on the queue are the remaining superfactors i Table~\ref{tab.h1abcd}. These are inconsistent with the positive evidence and are pruned off. 
+The next item on the queue is (\ref{tab.h1abcd}e).
+It too is not consistent with \(D^-\) and its superfactors are generated and added to the queue.Note that there is some inefficiency here because the superfactor shown in Figure~\ref{fig:sfx2} is a next superfactor of both (\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}e).
+\begin{wrapfigure}{r}{0.25\linewidth}
+  \centering
+  \begin{tikzpicture}[baseline=(current bounding box.center)]
+    \node (x) at (0,0) {};
+    \node (y) at (0,1) {};
+    \node (z) at (.6,0) {};
+    
+    \draw[fill=black] (x) circle (2pt);
+    \draw[fill=black] (y) circle (2pt);
+    \draw[fill=black] (z) circle (2pt);
+
+    \draw (x) -- (y);
+    \draw[dashed] (x) -- (z);
+    
+    \node[left] at (x) {$V(x)$};
+    \node[right] at (y) {$y$};
+    \node[right] at (z) {$z$};
+  \end{tikzpicture}
+  \caption{A superfactor generated twice}
+  \label{fig:sfx2}
+\end{wrapfigure}
+Nonetheless, this procedure continues until the environment in Figure~\ref{fig:ans} is dequeued.
+This environment is consistent with both \(D^+\) and \(D^-\).
+
+Furthermore, it is the first hypothesis in the queue to be so.
+To see why, consider that the environment in Figure~\ref{fig:ans} is a next superfactor of Figure~\ref{fig:sfx2}. 
+In other words, it is a next superfactor of a next superfactor of Hypothesis (\ref{tab.h1abcd}c).
+In other words, the environment in Figure~\ref{fig:ans} is generated and placed on the queue after Figure~\ref{fig:sfx2} is dequeued and examined for consistency.
+
+Call a next superfactor of a next superfactor a 'grandchild.'
+The `grandchildren' of Hypothesis (\ref{tab.h1abcd}c) will all occur on the queue before the grandchildren of Hypotheses (\ref{tab.h1abcd} e, f, g) by the ordering imposed.
+So the only way BUFIA-AC would not return the environment in Figure~\ref{fig:ans} is if a next superfactor (\ref{tab.h1abcd} e, f, g) was consistent with both the positive and negative data. However, none of them are.
+
+The learner therefore converges on the environment in Figure~\ref{fig:ans} as a
+minimal structure that triggers the transformation and is
+consistent with both positive and negative evidence.
+This formula encodes the same structural condition illustrated
+in Figure~\ref{fig:hiatus}. 
+\begin{equation}
+  \textsf{Retain}
+  =
+  \alpha(x,y)
+  \land
+  V(x)\land \exists z \bigl(x \lhd z \land V(z)\bigr)
+\end{equation}
+
+Importantly, one may observe that triggering deassociation does not
+require T$_2$ to be associated with V$_2$. The learned hypothesis
+therefore predicts that deassociation applies whenever two vowels are
+adjacent, regardless of whether the following vowel is associated with
+a tone. %\hijeff{delete or stay??}\hihan{stay}
+
+Algorithm~\ref{algo2} (LAC) follows a similar process to determine \textsf{Add}.
+The learner eventually converges on the following hypothesis.
+\begin{equation}
+  \textsf{Add} 
+  =
+  \neg \alpha(x,y) \land V(x) \land \exists z \big((z \lhd x) \land V(z) \land \alpha (z,y)\big)
+\end{equation}
+Algorithm~\ref{algo2} (LAC) combines the two operations into the final transformation.
+\begin{align}
+\phi_{\alpha(x,y)} :=\;&
+\alpha(x,y)\land V(x)
+\land \exists z\big((x\lhd z)\land V(z)\big)
+\\\nonumber
+\lor\; &
+\neg\alpha(x,y)\land V(x)
+\land \exists z\big((z\lhd x)\land V(z)\land \alpha(z,y)\big)
+\end{align}
+
+Lastly, the graph transduction presented in Table~\ref{tab.transduction} is now complete. 
+The licensing function \(\phi_{\textsf{license}}\) filters
+out elements that are not associated in the surface representation.
+Such unlicensed elements are not realized phonetically and therefore
+do not appear in the output. In this way, the algorithms presented here have learned how to transform the association relation between the tonal and segmental tiers.
+
+\section{Conclusion} 
+
+This work has argued that phonological processes that involve 
+multi-tiered structures such as autosegmental representations
+can be uniformly captured using model theory and logical transductions. 
+The input-output mapping can be modeled by modifying a single relation, 
+$\alpha$, through two operations of \textsf{deassoc} and 
+\textsf{reassoc}.
+
+We also show how BUFIA-style learning can be naturally extended to
+such enriched representations by traversing a partially ordered
+hypothesis space. A crucial component is \textsc{NextSupFactor},
+which generates minimally more complex structures through node
+labeling, the introduction of neighboring nodes, and the addition of
+association relations, to navigate the search space.
+The resulting hypothesis is a structural environment, or
+equivalently a logical formula, that is consistent with both the
+positive and negative evidence.
+
+There are several directions for future research. One would be to characterize the class of AR transformations and prove that the above algorithms learn any transformation in this class with sufficient data. 
+Another important direction for future work is to relax the current
+restriction to single deassociation and reassociation processes.
+Doing so will require learning more complex hypotheses involving
+conjunctions of structural conditions.
+Another limitation of the current analysis is that the transduction relies 
+on quantification to capture across-tier dependencies.
+Future work can determine whether these processes can 
+be simplified in a quantifier-free (QF) process \citep{strother2019diss}.
+This opens up more discussions about how linguistically meaningful 
+representations can facilitate grammar inference.
+
+
+%\bibliographystyle{apalike}
+\bibliography{ref}
+
+\end{document}
+
+
 
 Again, the following step is to test against $D^+$ and $D^-$. 
 In this round, two candidates, namely (\ref{tab.h2}a) and (\ref{tab.h2}d), are
@@ -1282,10 +1429,9 @@ whereas (\ref{tab.h3}c)--(\ref{tab.h3}d)
 label \(z\) as \(H\) or \(L\) on the tonal tier.
 
 
-
 \begin{table}[ht!]
 	\centering
-	\begin{tabular}{ccccc}
+	\begin{tabular}{cccc}
 		\toprule
 		& (\ref{tab.h3}a)& (\ref{tab.h3}b)&(\ref{tab.h3}c)&(\ref{tab.h3}d)\\
 		\midrule
@@ -1358,15 +1504,15 @@ label \(z\) as \(H\) or \(L\) on the tonal tier.
 			\node[right] at (z) {$L(z)$};
 		\end{tikzpicture}
 		\\
-		\midrule
+		% \midrule
 		
-		Contained by all $D^+$
-		& $\checkmark$ & $\times$ & $\times$ & $\times$
-		\\
+		% Contained by all $D^+$
+		% & $\checkmark$ & $\times$ & $\times$ & $\times$
+		% \\
 		
-		Absent in $D^-$
-		& $\checkmark$ & $\times$ & $\times$ & $\times$
-		\\
+		% Absent in $D^-$
+		% & $\checkmark$ & $\times$ & $\times$ & $\times$
+		% \\
 		
 		\bottomrule
 	\end{tabular}
@@ -1375,6 +1521,7 @@ label \(z\) as \(H\) or \(L\) on the tonal tier.
 	
 	
 \end{table}
+
 Only candidate (\ref{tab.h3}a) is both contained in all positive
 evidence and absent from all negative evidence. 
 The learner therefore converges on this hypothesis as a
