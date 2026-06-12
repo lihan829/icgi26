@@ -45,10 +45,11 @@
     	\textcolor{orange}{\textbf{[#1]}}%
     }
 
-    \usepackage[table]{xcolor}
+ \usepackage[table]{xcolor}
 \usepackage{enumitem}
 \usepackage{phonrule}
 \usepackage{todonotes}
+\usepackage{wrapfig}
 %\usepackage{gb4e}
 
 \title{Learning Association-Line Transformations over Autosegmental Graphs}
@@ -313,8 +314,8 @@ ARs obey the following constraints:
 In short, an AR is a graph, whose vertices are
 partitioned into two disjoint sets, with each tier
 linearly-ordered, whose elements are coordinated via a temporally
-well-behaved association relation.\footnote{It is straightforward
-  to generalize ARs to include \(n\)-partite graphs with n tiers.}
+well-behaved association relation\footnote{It is straightforward
+  to generalize ARs to include \(n\)-partite graphs with \(n\) tiers.}.
 Figure~\ref{fig:armodel} shows an AR on the left,
 its corresponding model-theoretic structure on the right, and the graph of the model in the center.
 Henceforth, we use the words `node' and `domain element' interchangeably.
@@ -527,24 +528,7 @@ Note we also use the successor relation \(\lhd\), which is the transitive reduct
 % \hihan{Yes, it means we variables x,y are in scope of some predicate}.
 \input{tab.nxtsupfact.tex}
 
-This containment relation provides a \textit{partial ordering} over
-the space of ARs. We illustrate this partial order with strings in
-Figure~\ref{fig:hasse}. A superfactor is connected to its subfactors,
-which are positioned below it in the diagram. The partial ordering in
-turn leads to entailment relations. If a string contains some factor
-\(s\), then it contains all subfactors of \(s\). Similarly, if it does
-not contain \(s\), then it does not contain any superfactor of
-\(s\). Readers are referred to related work
-\citep{chandleeBufia2019,rawski2021structure,
-  swanson2025learning,Swanson+2025,payne2024generalized,li2025learning}
-for a more detailed discussion of the partial ordering itself. Here,
-we emphasize that this partial order forms the foundation of bottom-up
-learning algorithms, since it provides a principled way to navigate
-the hypothesis space through entailment relations between factors.
-
-\hihan{I think we should add a paragraph here about BUFIA, it's learning guarantees, and its time complexity.}
-
-\begin{figure}[t]
+\begin{wrapfigure}{r}{0.45\textwidth}
 \centering
 \begin{tikzpicture}[
 	every node/.style={inner sep=1pt, font=\small\itshape},
@@ -581,7 +565,25 @@ the hypothesis space through entailment relations between factors.
 	\end{tikzpicture}
 \caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
 \label{fig:hasse}
-\end{figure}
+\end{wrapfigure}This containment relation provides a \textit{partial ordering} over
+the space of ARs. We illustrate this partial order with strings in
+Figure~\ref{fig:hasse}. 
+A superfactor is connected to its subfactors,
+which are positioned below it in the diagram. The partial ordering in
+turn leads to entailment relations. If a string contains some factor
+\(s\), then it contains all subfactors of \(s\). Similarly, if it does
+not contain \(s\), then it does not contain any superfactor of
+\(s\). Readers are referred to related work
+\citep{chandleeBufia2019,rawski2021structure,
+  swanson2025learning,Swanson+2025,payne2024generalized,li2025learning}
+for a more detailed discussion of the partial ordering itself. Here,
+we emphasize that this partial order forms the foundation of bottom-up
+learning algorithms, since it provides a principled way to navigate
+the hypothesis space through entailment relations between factors.
+
+\hihan{I think we should add a paragraph here about BUFIA, it's learning guarantees, and its time complexity.}
+
+
 
 
 \section{Graph Transductions}
