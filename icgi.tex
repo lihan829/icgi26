@@ -654,7 +654,7 @@ Table~\ref{tab.transduction} provides the formulas described below.
   % \hihan{Perfect}
   
 \item The licensing formula $\phi_{\textsf{license}}(x)$
-  determines which nodes in the output are liscensed.
+  determines which nodes in the output are licensed.
   According to the semantics of graph transductions,
   unlicensed nodes disappear,
   along with any relations associated with them.
@@ -664,7 +664,7 @@ Table~\ref{tab.transduction} provides the formulas described below.
 \end{itemize}
 
 It follows that the transduction 
-defines an output strucure whose domain is the same as the input 
+defines an output structure whose domain is the same as the input 
 structure, except that unassociated elements are filtered out by
 $\phi_{\textsf{license}}(x)$. All 
 unary relations \(P(x)\) in the input signature are 
@@ -673,7 +673,7 @@ precedence relations are preserved. The only
 change is the association relation \(\alpha\).
 Thus, the problem of learning association-line 
 transformations can be reduced to learning the logical 
-formulas for \textsf{deassoc} and/or \textsf{reassoc}, or their equivalent strucural representations. 
+formulas for \textsf{deassoc} and/or \textsf{reassoc}, or their equivalent structural representations. 
 
 When no transformation occurs between the input and 
 output representations, neither \textsf{deassoc} nor 
@@ -681,7 +681,7 @@ output representations, neither \textsf{deassoc} nor
 False). The association relation therefore remains unchanged: 
 all input associations are preserved in the output 
 (\textsf{Retain} evaluates to True iff \(\alpha(x,y)\) holds in the input structure), and no new associations are 
-added (\textsf{Add} applies to none because it alwways evaluates False).
+added (\textsf{Add} applies to none because it always evaluates False).
 Since these two predicates are combined through disjunction, 
 two parallel learning processes apply simultaneously, one for \textsf{deassoc} and one for \textsf{reassoc}, 
 and their outputs are combined to define $\phi_\alpha$.
@@ -1269,7 +1269,7 @@ Each of these superfactors (\ref{tab.h1abcd}c, e, f, g) matches some negative
 example, hence they each fail to distinguish contexts in which the
 transformation applies from those in which it does not.
 BUFIA-AC therefore generates their next superfactors and enqueues them.
-BUFIA-AC then dequeues the next \(h\), which is (\ref{tab.h1abcd}c) because of the ordering imposed by the constructon of superfactors: new labels then new nodes then new associations.
+BUFIA-AC then dequeues the next \(h\), which is (\ref{tab.h1abcd}c) because of the ordering imposed by the construction of superfactors: new labels then new nodes then new associations.
 %As tonal identity is  shown not relevant to the
 %transformation, node \(y\) remains underspecified rather than
 %being assigned a tonal label. 
