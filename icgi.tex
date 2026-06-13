@@ -110,12 +110,12 @@
 
 \maketitle
 
-%\begin{abstract}
-%This is the abstract for this article.
-%\end{abstract}
-%\begin{keywords}
-%List of keywords
-%\end{keywords}
+\begin{abstract}
+This is the abstract for this article.
+\end{abstract}
+\begin{keywords}
+graph transductions, tonal phonology, bottom-up factor inference, 
+\end{keywords}
 
 
 \section{Introduction}
@@ -257,11 +257,13 @@ involving a single deassociation and/or reassociation operation.
 
 We adopt the model-theoretic logical transduction framework of
 \citet{yolyan2025logical}. Yolyan synthesizes insights from from graph transductions \citep{Courcelle1994, EngelfrietHoogeboom2001,
-  CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, Vu+2018, chandleeBufia2019} to learn a class of string-to-string functions. The transductions specify, via a collection of logical formulas, how to construct an output structure from a given an input structure. Yolyan searches for a minimal distinguishing structure based on the Bottom-Up Factor Inference Algorithm 
+  CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, Vu+2018, chandleeBufia2019} to learn a class of string-to-string functions.
+The transductions specify, via a collection of logical formulas, how to construct an output structure from a given an input structure.
+Yolyan searches for a minimal distinguishing structure based on the Bottom-Up Factor Inference Algorithm 
 \citep[BUFIA;][]{chandleeBufia2019, rawski2021structure, li2025learning, Swanson+2025, LiHeinzPhO2026}. 
-BUFIA searches a partially ordered space of model-theoretic structures to 
-identify a minimal hypothesis consistent with the data. For transformation 
-learning, \citet{yolyan2025logical, yolyan2025phonological} uses this idea to find a minimal structure which distinguishs positive examples (those that undergo the change) from negative examples (those that do not).
+BUFIA searches a partially ordered space of structures to 
+identify a minimal hypothesis consistent with the data.
+For transformation  learning, \citet{yolyan2025logical, yolyan2025phonological} uses this idea to find a minimal structure which distinguishs data undergoing the change from data which do not.
 
 This work brings together these representational and learning
 perspectives. Using a case study of tonal contour formation (as shown
@@ -299,7 +301,6 @@ up the tonal tier and C and V make up the segmental tier. The
 signature also contains two binary relations: \(<\) is the precedence
 relation and \(\alpha\) is the association relation. Well-formed
 ARs obey the following constraints:
-
 \begin{itemize}\itemsep-0.5ex
 \item The domain is partitioned into two sets: \(T\) (tonal tier) and \(S\) (segmental tier).
 %\hijeff{Do we want to relax this - there could be more or other tiers, such as mora etc}
@@ -399,13 +400,14 @@ Henceforth, we use the words `node' and `domain element' interchangeably.
 	\label{fig:armodel}	
 \end{figure}
 
-The \emph{size} of an AR is defined as the size of the domain plus the size of the unary relations and half the size of the association relation. We leave out the precedence relation because its size is fixed given the lengths of each tier.
+The \emph{size} of an AR is defined as the sum of its domain size, the size of its unary relations, and half the size of the association relation.
+The precedence relation's size is fixed by the lengths of each tier so is omitted.
 %\hijeff{then maybe should
 %change $\alpha$ in the Figure 2 by adding the other directional pairs}
 %\hihan{I stated we would not show the symmetry for readability above}
-We divide by two because \(\alpha\) is symmetric.
-Formally, the size of an AR is \(|D| + |H| + |L| + |C| + |V| + |\alpha|/2 \).
-Thus, the size of the AR in Figure~\ref{fig:armodel} is 11.
+We divide by \(|\alpha|\) two because it is symmetric.
+Thus, the size of an AR is \(|D| + |H| + |L| + |C| + |V| + |\alpha|/2 \).
+Hence, the AR in Figure~\ref{fig:armodel} has size 11.
 
 % Two nodes \(x,y\) are
 % \emph{neighbors} if $x \lhd y \lor y \lhd x$. \hijeff{this paragraph can be
@@ -418,7 +420,7 @@ represent them with \textit{adjacency matrices}, which use binary
 values to denote whether there is an edge between two nodes. 
 The indices along the rows and columns indicate the linear 
 order of elements on the tonal and segmental tiers. For
-example, Figure~\ref{fig:armodel}a.
+example, Figure~\ref{fig:armodel}(a) is a matrix representation of the graph in Figure~\ref{fig:armodel}.
 \begin{figure}[t]
   \centering
   \begin{minipage}{0.25\linewidth}
@@ -471,14 +473,8 @@ example, Figure~\ref{fig:armodel}a.
 \end{figure}
 Formally, the associations of AR \(\mathcal{A}=\langle D,L,H,C,V,\alpha,
 <\rangle %
-\) can be represented by 
-\[
-M_{[x,y]} =
-\begin{cases}
-1 & \text{if } (x,y)\in\alpha, \\
-0 & \text{otherwise},
-\end{cases}
-\]
+\) can be represented by \(M_{[x,y]} =1\) if \((x,y)\in\alpha\) and \(M_{[x,y]} =0\) otherwise.
+
 The motivation for adopting matrices is convenience.
 It will be important to identify structures contained within other structures.
 When working with strings, notions of subsequence and substring are well-defined.
@@ -497,14 +493,26 @@ of \(B\) if it can be formed by taking \((1 \leq k \leq m)\) contiguous rows and
 Formally, an \(m \times n\) matrix \(A\) is contained in a matrix \(B\), denoted
 \(A \sqsubseteq B\), if there exists an \(m \times n\) submatrix of
 \(B\), and bijections \(r, c\), denoting the row and column bijections, which map indices in \(A\) to indices in \(B\) such that for all \(i \in [1,m]\) and \(j \in [1,n]\) the following hold:
-\begin{enumerate}\itemsep-0.5ex
-\item \(r(i)=x\) and \(c(j)=y\), and
-\item \( B_{xy} \geq A_{ij}\), and
-\item \(V(i)\Rightarrow \neg C(r(i))\), \(C(i)\Rightarrow \neg V(r(i))\), and
-\item \(H(j)\Rightarrow \neg L(r(j))\), \(L(j)\Rightarrow \neg H(r(j))\).
-\end{enumerate}
 
-For example, the matrix in Figure~\ref{fig:matrixreps}b is contained within the matrix in Figure~\ref{fig:matrixreps} as witnessed by the bijections \(r(1)=1,\, c(1)=2\). On the other hand, the matrix in Figure~\ref{fig:matrixreps}c is not contained within the matrix in Figure~\ref{fig:matrixreps} because \(C(1)\Rightarrow \neg V(r(i))\) and for any bijection \(r\), \(V(r(1))\) is true.
+\vspace{2ex}
+
+\begin{minipage}{0.4\linewidth}
+  \begin{enumerate}\itemsep-0.5ex
+  \item \(r(i)=x\) and \(c(j)=y\), and
+  \item \( B_{xy} \geq A_{ij}\), and
+  \end{enumerate}
+\end{minipage}\hfill
+\begin{minipage}{0.5\linewidth}
+  \begin{enumerate}\itemsep-0.5ex
+    \setcounter{enumi}{2}
+    \item \(V(i)\Rightarrow \neg C(r(i))\), \(C(i)\Rightarrow \neg V(r(i))\), and
+    \item \(H(j)\Rightarrow \neg L(r(j))\), \(L(j)\Rightarrow \neg H(r(j))\).
+  \end{enumerate}
+\end{minipage}
+
+\vspace{2ex}
+
+For example, the matrix in Figure~\ref{fig:matrixreps}b is contained within the matrix in Figure~\ref{fig:matrixreps} as witnessed by the  \(r(1)=1,\, c(1)=2\). In contrast, the matrix in Figure~\ref{fig:matrixreps}(c) is not because \(C(1)\Rightarrow \neg V(r(i))\) and for any admissible bijection \(r\), \(V(r(1))\) is true.
 
 A matrix \(A\) is a \emph{subfactor} of \(B\) if and only if \(A\) is 
 contained in \(B\). Conversely, \(B\) is a \emph{superfactor} of \(A\).
@@ -514,17 +522,16 @@ subfactor is exactly one, the superfactor is called the
 
 
 There is a general connection between connected structures, logical formulas, and containment. For example, the structure in Figure~\ref{fig:armodel} corresponds to the logical formula:
-\[
-  \exists w,x,y,z \big(
+\[  \exists w,x,y,z \big(
   L(w)\land H(x)\land V(y)\land V(z)
   \land \big(w<x \land y<z\big)
   \land \alpha(w,y)\land \alpha(x,z) \land \alpha(x,y)
   \big).
 \]
-Any structures that satisfy this formula contains a structure isomorphic to the one in in Figure~\ref{fig:armodel}.
+Any structures satisfying this formula contains a structure isomorphic to the one in Figure~\ref{fig:armodel}.
 
 Table~\ref{tab:nextsupfact} shows matrix, graphical, and logical representations of different structures where the the variables \(x,y\) (which are in scope by the predicate \(\textsf{structure}(x,y)\). Furthermore, pairs of adjacent rows in  Table~\ref{tab:nextsupfact} stand in the next superfactor relationship. The structure denoted by \(\alpha(x,y)\land H(y)\) is a next superfactor of \(\alpha(x,y)\) and so on. The `Operation' column indicates the change that was made to obtain the next superfactor from the structure in the previous row.
-Note we also use the successor relation \(\lhd\), which is the transitive reduction of \(<\): \(x\lhd y\) if and only if \(x<y \wedge \neg (\exists z)[ x< z < y] \). We make use of both precedence and successor as needed.
+Note we also use the successor relation \(\lhd\): \(x\lhd y\) if and only if \(x<y \wedge \neg (\exists z)[ x< z < y] \). We make use of both precedence and successor as needed.
 % \hijeff{I'm not sure about struc (x,y) - we didn't mention this before. Does 
 %   this just mean we have two quatifiers x,y?}
 % \hihan{Yes, it means we variables x,y are in scope of some predicate}.
@@ -567,26 +574,30 @@ Note we also use the successor relation \(\lhd\), which is the transitive reduct
 	\end{tikzpicture}
 \caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
 \label{fig:hasse}
-\end{wrapfigure}This containment relation provides a \textit{partial ordering} over
-the space of ARs. We illustrate this partial order with strings in
-Figure~\ref{fig:hasse}. 
-A superfactor is connected to its subfactors,
-which are positioned below it in the diagram. The partial ordering in
-turn leads to entailment relations. If a string contains some factor
-\(s\), then it contains all subfactors of \(s\). Similarly, if it does
-not contain \(s\), then it does not contain any superfactor of
-\(s\). Readers are referred to related work
-\citep{chandleeBufia2019,rawski2021structure,
-  swanson2025learning,Swanson+2025,payne2024generalized,li2025learning}
-for a more detailed discussion of the partial ordering itself. Here,
+\end{wrapfigure}This containment relation provides a \textit{partial
+  ordering} over the space of ARs. We illustrate this partial order
+with strings in Figure~\ref{fig:hasse}.  A superfactor is connected to
+its subfactors, which are positioned below it in the diagram. The
+partial ordering in turn leads to entailment relations. If a string
+contains some factor \(s\), then it contains all subfactors of
+\(s\). Similarly, if it does not contain \(s\), then it does not
+contain any superfactor of \(s\). \citet{chandleeBufia2019} prove that
+a breadth-first search from the least structure to increasingly
+specific structures is guaranteed to find one or least,
+incomparable structures that satisfy some property.
+In the worst case, this search is exponential in the size of the data,
+but empirical work suggests it still effective,
+especially when the data is sparse \citep{Swanson+2025, LiHeinzPhO2026}. 
+Readers are referred to related work 
+\citep{rawski2021structure,
+  swanson2025learning,payne2024generalized,li2025learning},
+including the aforementioned studies,
+for more detailed discussion. Here,
 we emphasize that this partial order forms the foundation of bottom-up
 learning algorithms, since it provides a principled way to navigate
 the hypothesis space through entailment relations between factors.
 
-\hihan{I think we should add a paragraph here about BUFIA, it's learning guarantees, and its time complexity.}
-
-
-
+\vspace{-2ex}
 
 \section{Graph Transductions}
 
@@ -659,7 +670,7 @@ unary relations \(P(x)\) in the input signature are
 preserved in the corresponding output. Similarly,
 precedence relations are preserved. The only 
 change is the association relation \(\alpha\).
-In this way, the problem of learning association-line 
+Thus, the problem of learning association-line 
 transformations can be reduced to learning the logical 
 formulas for \textsf{deassoc} and/or \textsf{reassoc}, or their equivalent strucural representations. 
 
@@ -671,9 +682,8 @@ all input associations are preserved in the output
 (\textsf{Retain} evaluates to True iff \(\alpha(x,y)\) holds in the input structure), and no new associations are 
 added (\textsf{Add} applies to none because it alwways evaluates False).
 Since these two predicates are combined through disjunction, 
-two parallel learning processes apply simultaneously, one \textsf{deassoc} and one for \textsf{reassoc}, 
-and their outputs are combined to define the final 
-association relation $\phi_\alpha$.
+two parallel learning processes apply simultaneously, one for \textsf{deassoc} and one for \textsf{reassoc}, 
+and their outputs are combined to define $\phi_\alpha$.
 
 To illustrate, 
 %consider contour formation
@@ -872,12 +882,22 @@ Formally, the set of deassociated pairs
 and the set of reassociated pairs 
 can be identified by Equations~\ref{eq:deassoc}
 and~\ref{eq:reassoc}, respectively.
-\begin{align}
-  \label{eq:deassoc}
-  D(UR,SR)=\{(i,j) \mid \mathrm{SR}_{ij}<\mathrm{UR}_{ij}\}\\
-  \label{eq:reassoc}
-  R(UR,SR)=\{(i,j) \mid \mathrm{UR}_{ij}< \mathrm{SR}_{ij}\}  
-\end{align}
+
+\vspace{-1ex}
+\noindent\hfill
+\begin{minipage}{0.475\linewidth}
+  \begin{equation}
+    \label{eq:deassoc}
+    D(UR,SR)=\{(i,j) \mid \mathrm{SR}_{ij}<\mathrm{UR}_{ij}\}\\
+  \end{equation}
+\end{minipage}\hfill
+\begin{minipage}{0.475\linewidth}
+  \begin{equation}
+    \label{eq:reassoc}
+    R(UR,SR)=\{(i,j) \mid \mathrm{UR}_{ij}< \mathrm{SR}_{ij}\}  
+  \end{equation}
+\end{minipage}\hfill
+\vspace{-1ex}
 
 \section{Association Learning}
 This section follows the ideas of using logical transductions to learn
@@ -903,11 +923,9 @@ goal of learning is therefore to identify the smallest common
 environment that is contained in all positive evidence, but absent from
 all negative evidence. 
 
-\citet{yolyan2025logical} worked with string-to-string functions.
-However, for ARs, environments are
-expressed as structural relations over graphs.
-Because model-theoretic representations generally form a partial order with the containment relation \citep{chandleeBufia2019},
-the same ideas apply to ARs.
+\citet{yolyan2025logical} worked with string-to-string functions, but the same ideas apply to ARs.
+This is because ARs, like any model-theoretic representation, form a partial order with the containment relation \citep{chandleeBufia2019}.
+
 %Equivalently, transformations can be 
 %viewed as changes to the graph's adjacency matrix, where an entry 
 %changes from $1\rightarrow0$ or $1\rightarrow0$.
@@ -939,7 +957,7 @@ the same ideas apply to ARs.
 % \end{figure}
 
 
-The core learning algorithm is shown in Algorithm~\ref{algo1} (BUFIA-AC).
+The core learning algorithm is shown in Algorithm~1 (BUFIA-AC).
 It takes as input a set of input-output pairs, an initial hypothesized environment \(H_0\), and a bound \(k\in\mathbb{N}\) on the size of environments to consider.
 %Initially, the learner identifies changing association sites by comparing the input and output association matrices.
 %Learning then proceeds separately for the \textsf{Retain} 
@@ -949,8 +967,9 @@ BUFIA-AC is called with the most general hypothesis \(h_0=\alpha(x,y)\).
 To find the environment for \textsf{Add},
 BUFIA-AC is called with  \(h_0=\neg\alpha(x,y)\).
 Thus BUFIA-AC is called twice to learn the two environments independently.
-Those results are combined through disjunction to obtain the formula in Equation~\ref{eq:retainadd} as shown in Algorithm~\ref{algo2}.
+Those results are combined through disjunction to obtain the formula in Equation~\ref{eq:retainadd} as shown in Algorithm~2.
 \input{algos.tex}
+
 %
 %\begin{algorithm}[t]
 %  \SetKwInput{KwData}{Input}
@@ -1062,7 +1081,7 @@ The algorithm conducts a breadth-first search over a partially ordered
 hypothesis space. At each step, a candidate hypothesis $h$ is first tested 
 against the positive evidence. For each (\(I,O)\in D^+\) $\textsc{match}(h, I, O,h_0)$ returns true iff the hypothesized environment \(h\) matches the relevant positions in the structure that undergo the transformation.
 
-Formally, this is carried about by Algorithm~\ref{algo3} (Match).
+Formally, this is carried about by Algorithm~3 (Match).
 It uses \(h_0\) to determine whether it is looking for deassociations or reassociations and behaves accordingly.
 In the former case, it checks whether there are bijections \(r,c\) such that \((r(x),c(y))=D(I,O)\) for each (\(I,O)\in D^+\), and that these bijections witness \(h\) being contained in \(I\).
 These conditions ensure that the \(x,y\) coordinates are anchored to the positions in the structure that undergo the transformation.
@@ -1081,13 +1100,12 @@ they do not contain a pruned hypothesis and do not exceed the
 complexity bound \(k\).
 
 Since hypotheses are explored breadth-first, the first valid hypothesis
-returned by the learner is guaranteed to be a minimal structural
+returned by the learner is guaranteed to be a minimal
 environment consistent with all positive and negative evidence.
-
-In terms of \textsc{NextSupFact}, there are many possible ways to generate
-superfactors while still covering the same hypothesis space. Importantly, each
+In terms of \textsc{NextSupFact}, there are many ways to generate
+superfactors and enqueue them for the same hypothesis space. Each
 operation increases the size of the current structure by exactly one,
-thus ensuring that \textsc{NextSupFact} generates only minimal
+ensuring that \textsc{NextSupFact} generates only minimal
 superfactors:
 \begin{enumerate}[label=(\roman*),noitemsep]
 	\item assigning labels to previously unspecified nodes;
@@ -1096,22 +1114,24 @@ superfactors:
 	\item add one association line, provided that both
 	nodes are already present in the structure.
 \end{enumerate}
-We add these superfactors to the queue in the order shown above. Consequently, Algorithm~\ref{algo1} will consider superfactors with new labels before superfactors with new nodes before superfactors with new association lines. Within those groups, the superfactors must also be ordered.\footnote{This can be done in many ways and can impact the algorithm's output. See \citet{rawski2021structure} for discussion on this point.}
+We add these superfactors to the queue in the order shown above.
+Consequently, Algorithm~1 considers superfactors with new labels before ones with new nodes before those with new association lines.
+Within those groups, the superfactors must also be ordered.\footnote{This can be done in many ways and can impact the algorithm's output. See \citet{rawski2021structure} for discussion on this point.}
 
 Table~\ref{tab:nextsupfact} presents a non-exhaustive set
 of examples illustrating the generation of
 \textsc{NextSupFact} from an initial \textsf{deassoc}
 hypothesis \(\alpha(x,y)\). 
 As can be seen, each operation provides an equivalent
-interpretation from matrix, graph-theoretic, and logical
+interpretation from the matrix, graph-theoretic, and logical
 perspectives. New quantifiers are
 only introduced through successor %\hijeff{local }precedence
 relations, corresponding to the 
-addition of neighboring nodes in the graph structure. Within the same 
-quantifier scope, the learner may further specialize the hypothesis 
+addition of neighboring nodes in the graph structure. Learners
+may further specialize the hypothesis 
 through conjunction, including adding association relations 
-(corresponding to changing matrix cells) or specifying node labels 
-and feature values.
+(which corresponds to changing matrix cells) or specifying node labels.
+
 
 \section{Case Study: Contour Formation}
 We use the contour formation to demonstrate both the logical 
@@ -1173,7 +1193,7 @@ but not in VCV-LH, where they are separated.
 %deassociation and reassociation occur, thus carries out both 
 %search for \textsf{Retain} and \text{Add}.
 
-We will see how Algorithm~\ref{algo2} (LAC) finds the environment shown in Figure~\ref{fig:ans} for \textsf{deassoc}.
+We will see how Algorithm~2 (LPA) finds the environment shown in Figure~\ref{fig:ans} for \textsf{Retain}.
 \begin{wrapfigure}{r}{0.25\linewidth}
   \centering
   \begin{tikzpicture}[baseline=(current bounding box.center)]
@@ -1195,7 +1215,8 @@ We will see how Algorithm~\ref{algo2} (LAC) finds the environment shown in Figur
   \caption{A distinguishing environment}
   \label{fig:ans}
 \end{wrapfigure}
-We call Algorithm~\ref{algo2} (LAC) with the data \(D\) in Table~\ref{tab.toy} letting \(k=5\). It calls Algorithm~\ref{algo1} (BUFIA-AC) to search for predicate \textsf{deassoc} with \(D, k\) and with \(H_0=\alpha(x,y)\).
+We call Algorithm~2 (LPA) with the data \(D\) in Table~\ref{tab.toy} letting \(k=5\).
+It calls Algorithm~1 (BUFIA-AC) to search for predicate \textsf{Retain} with \(D, k\) and with \(H_0=\alpha(x,y)\).
 
 
 BUFIA-AC first partitions the data into positive evidence
@@ -1208,18 +1229,15 @@ of the rest pairs marked with dashes in Table~\ref{tab.toy}.
 % \]
 
 BUFIA-AC tests $h_0$ against both positive and negative evidence.
-Trivially, it is accepted by all positive 
-examples, but, when evaluated against the negative evidence, the 
+Trivially, it matches every structure in \(D^+\), but, when evaluated against \(D^-\), the 
 hypothesis is rejected: in CV-H, CV-L, and VCV-LH, the 
-association lines in the input remain associated in the output, contrary to the
-prediction of \(h_0\). BUFIA-AC therefore concludes that
-the hypothesis is too general and must be made more
-specific.
+association lines in the input remain associated in the output, contrary to the expectation of \(h_0\).
+BUFIA-AC therefore concludes that the hypothesis is too general and must be made more specific.
 
 To refine the environment, BUFIA-AC generates increasingly
 minimally specific structures through \textsc{NextSupFac} generation.
 Following the new label/node/association-line ordering introduced above,
-the learner first enques the next superfactors obtained
+the learner first enqueues the next superfactors obtained
 by labeling previously unspecified nodes.
 %Concretely, it iterates over all symbols available on the 
 %corresponding tier and assigns them to previously unlabeled 
@@ -1227,7 +1245,9 @@ by labeling previously unspecified nodes.
 These superfactors are shown in Table~\ref{tab.h1abcd}. Superfactors (\ref{tab.h1abcd}a) 
 and (\ref{tab.h1abcd}b) label $y$ as $H$ or $L$ on the tone tier, while
 (\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}d) label $x$ as 
-$V$ or $C$ on the segment tier. Superfactors (\ref{tab.h1abcd}e) through (\ref{tab.h1abcd}h) add a single node adjacent to a current one on a tier.
+$V$ or $C$ on the segment tier.
+Superfactors (\ref{tab.h1abcd}e) through (\ref{tab.h1abcd}h) add one node adjacent to an existing one.
+
 \input{tab.supfac.of.H0}
 
 When evaluating the candidate hypotheses in Table~\ref{tab.h1abcd},
@@ -1236,7 +1256,7 @@ do not match all positive examples. They are thus are pruned.
 %This indicates that tonal
 %identity does not contribute to the transformation, and
 %\hihan{It seems like you are doing more here, and throughout, than algo 1. In particular, even though none of th 6a-d are consistent with the data, you differentiate between 6ab and 6cd. Algo 1 doesn't. Let's discuss.}
-However, (\ref{tab.h1abcd} c, e, f, h) are consistent with all positive examples, and they are thus checked against the \(D-\).
+However, (\ref{tab.h1abcd} c, e, f, h) are consistent with all of \(D^+\), and they are thus checked against \(D-\).
 %BUFIA-AC therefore continues with this hypothesis for \textsf{deassoc}.
 % \[
 % H_1:\quad
@@ -1244,27 +1264,27 @@ However, (\ref{tab.h1abcd} c, e, f, h) are consistent with all positive examples
 % \underbrace{V(x)}_{\text{current \textsf{deassoc} hypothesis}}
 % \]
 % \hihan{isn't this whole thing \textsf{deassoc}?}
-
 Each of these superfactors (\ref{tab.h1abcd}c, e, f, g) matches some negative
 example, hence they each fail to distinguish contexts in which the
 transformation applies from those in which it does not.
 BUFIA-AC therefore generates their next superfactors and enqueues them.
-BUFIA-AC then dequeues the next \(h\), which is (\ref{tab.h1abcd}c). That this is next is a consequence of the ordering imposed by the constructon of superfactors: new labels then new nodes then new associations.
+BUFIA-AC then dequeues the next \(h\), which is (\ref{tab.h1abcd}c) because of the ordering imposed by the constructon of superfactors: new labels then new nodes then new associations.
 %As tonal identity is  shown not relevant to the
 %transformation, node \(y\) remains underspecified rather than
 %being assigned a tonal label. 
 
+\input{tab.supfac.of.H1}
 Hypothesis (\ref{tab.h1abcd}c) is consistent with \(D^+\) and so it is then checked against \(D^-\).
 It is not consistent  with \(D^-\) and so its superfactors are generated next.
 However, not all of its superfactors are enqueued.
 This is because the superfactors that add a label to the tonal node are pruned away by the factors in the pruned set \(P\).
 The superfactors that are not pruned away are  shown in Table~\ref{tab.h2}, where
-(\ref{tab.h2}a)--(\ref{tab.h2}b) introduce a new node that immediately precedes or follows the existing node on the segment tier, while (\ref{tab.h2}c)--(\ref{tab.h2}d) do so
-on the tone tier. These are added to the end of the queue.
-\input{tab.supfac.of.H1}
+(\ref{tab.h2}a)--(\ref{tab.h2}b) introduce a new node that immediately precedes or follows the existing node on the segment tier, while (\ref{tab.h2}c)--(\ref{tab.h2}d) do so on the tone tier.
+These are added to the end of the queue.
+
 
 The next item on the queue is (\ref{tab.h1abcd}e).
-It too is not consistent with \(D^-\) and its superfactors are generated and added to the queue.Note that there is some inefficiency here because the superfactor shown in Figure~\ref{fig:sfx2} is a next superfactor of both (\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}e).
+It too is not consistent with \(D^-\) and its 
 \begin{wrapfigure}{r}{0.25\linewidth}
   \centering
   \begin{tikzpicture}[baseline=(current bounding box.center)]
@@ -1286,22 +1306,25 @@ It too is not consistent with \(D^-\) and its superfactors are generated and add
   \caption{A superfactor generated twice}
   \label{fig:sfx2}
 \end{wrapfigure}
+superfactors are generated and added to the queue.
+Note that there is  some inefficiency here
+because the superfactor shown in Figure~\ref{fig:sfx2} is a next superfactor of both (\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}e).
 Nonetheless, this procedure continues until the environment in Figure~\ref{fig:ans} is dequeued.
 This environment is consistent with both \(D^+\) and \(D^-\).
 
 Furthermore, it is the first hypothesis in the queue to be so.
 To see why, consider that the environment in Figure~\ref{fig:ans} is a next superfactor of Figure~\ref{fig:sfx2}. 
-In other words, it is a next superfactor of a next superfactor of Hypothesis (\ref{tab.h1abcd}c).
+As such, it is a next superfactor of a next superfactor of Hypothesis (\ref{tab.h1abcd}c).
 In other words, the environment in Figure~\ref{fig:ans} is generated and placed on the queue after Figure~\ref{fig:sfx2} is dequeued and examined for consistency.
 
-Call a next superfactor of a next superfactor a 'grandchild.'
-The `grandchildren' of Hypothesis (\ref{tab.h1abcd}c) will all occur on the queue before the grandchildren of Hypotheses (\ref{tab.h1abcd} e, f, g) by the ordering imposed.
+Call a next superfactor of a next superfactor a `grandchild.'
+The grandchildren of Hypothesis (\ref{tab.h1abcd}c) will all occur on the queue before the grandchildren of Hypotheses (\ref{tab.h1abcd} e, f, g) by the ordering imposed.
 So the only way BUFIA-AC would not return the environment in Figure~\ref{fig:ans} is if a next superfactor (\ref{tab.h1abcd} e, f, g) was consistent with both the positive and negative data. However, none of them are.
 
 The learner therefore converges on the environment in Figure~\ref{fig:ans} as a
 minimal structure that triggers the transformation and is
 consistent with both positive and negative evidence.
-This formula encodes the same structural condition illustrated
+This formula below encodes the same structural condition illustrated
 in Figure~\ref{fig:hiatus}. 
 \begin{equation}
   \textsf{Retain}
@@ -1317,14 +1340,14 @@ therefore predicts that deassociation applies whenever two vowels are
 adjacent, regardless of whether the following vowel is associated with
 a tone. %\hijeff{delete or stay??}\hihan{stay}
 
-Algorithm~\ref{algo2} (LAC) follows a similar process to determine \textsf{Add}.
+Algorithm~2 (LPA) follows a similar process to determine \textsf{Add}.
 The learner eventually converges on the following hypothesis.
 \begin{equation}
   \textsf{Add} 
   =
   \neg \alpha(x,y) \land V(x) \land \exists z \big((z \lhd x) \land V(z) \land \alpha (z,y)\big)
 \end{equation}
-Algorithm~\ref{algo2} (LAC) combines the two operations into the final transformation.
+Algorithm~2 (LPA) combines the two operations into the final transformation.
 \begin{align}
 \phi_{\alpha(x,y)} :=\;&
 \alpha(x,y)\land V(x)
@@ -1340,6 +1363,8 @@ The licensing function \(\phi_{\textsf{license}}\) filters
 out elements that are not associated in the surface representation.
 Such unlicensed elements are not realized phonetically and therefore
 do not appear in the output. In this way, the algorithms presented here have learned how to transform the association relation between the tonal and segmental tiers.
+
+\vspace{-1ex}
 
 \section{Conclusion} 
 

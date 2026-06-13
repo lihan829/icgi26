@@ -62,7 +62,7 @@
 		\SetKwInput{KwData}{Input}
 		\SetKwInput{KwResult}{Output}
 		\setcounter{AlgoLine}{0}
-		\textbf{	Algorithm 2: }
+		\textbf{Algorithm 2: Learning \(\phi_\alpha\) (LPA)}
 		
 		\KwData{$D = \{(I_1,O_1),\dots,(I_n,O_n)\}, k$}
 		\KwResult{The formula \(\phi_\alpha(x,y)\) or \(\bot\)}
@@ -78,24 +78,23 @@
 		\label{algo2}
 		
 		\vspace{1.2em}
-		\textbf{	Algorithm 3:}
+		\textbf{Algorithm 3: Match}
 		
 		\KwData{$h, I, O, h_0$}
 		\KwResult{True or False}
-		\If{\(h_0\)=\(\alpha(x,y)\)}{
-			\If{\(h\sqsubseteq I\)}{
-				\If{\(\forall (i,j) \in D(I,O)\)\\
-					\Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
-					\Return{True}}
+		\If{\(h_0 = \alpha(x,y)\)}{
+                  \If{ \( \forall (i,j) \in D(I,O)\)\\
+                    \Indp \( [\exists r,c: r(x)=i, c(y)=j, h\sqsubseteq I]\)}{
+			\Return{True}
 		}}
-		\Else{\If{\(h\not\sqsubseteq I\)}{
-				\If{\(\forall (i,j) \in R(I,O)\)\\
-					\Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
-					\Return{True}}
-		}}
+              \Else{
+                \If{ \(\forall (i,j) \in R(I,O)\)\\
+                  \([\exists r,c: r(x)=i, c(y)=j, h\not\sqsubseteq I]\)}{
+			\Return{True}}
+		}
 		\Return{False}
 		\label{algo3}
 		
-	\end{minipage}
-	
+              \end{minipage}
+              \vspace{-3ex}
 \end{figure}
