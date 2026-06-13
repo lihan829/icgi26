@@ -111,10 +111,17 @@
 \maketitle
 
 \begin{abstract}
-This is the abstract for this article.
+  This paper presents a method for learning transformations over
+  multi-linear structures, focusing on sequences which are
+  synchronized in time.  The methods makes use of a partially ordered
+  hypothesis space that it navigates in a bottom up way
+  \citep{chandleeBufia2019} to learn parameters of a graph
+  transduction \citep{CourcelleEngelfriet2012}.
+  It showcases the method with contour formation, a
+  common phenomenon in tonal phonology.
 \end{abstract}
 \begin{keywords}
-graph transductions, tonal phonology, bottom-up factor inference, 
+graph transductions, bottom-up inference, finite model theory, phonology
 \end{keywords}
 
 
@@ -170,7 +177,7 @@ produces a rising tone on V\(_2\) in the output, as shown in Figure~\ref{fig:IOp
 %More generally, segmental and tonal information in ARs are represented on separate tiers,
 %but are coordinated in time by the association relation (shown in figures in this paper as lines).
 
-\begin{figure}[ht!]
+\begin{figure}[t]
 \centering
 
 \begin{tikzpicture}[
@@ -242,28 +249,24 @@ produces a rising tone on V\(_2\) in the output, as shown in Figure~\ref{fig:IOp
 \label{fig:IOpair}
 \end{figure}
 
-A large body of theoretical work on African tonal 
+Research on African tonal 
 processes has demonstrated the advantages of autosegmental graphs 
 \citep{CG1984autosegmental, odden2013introducing,hyman2009representation}.  
-Computationally, using multi-tiered structures has been shown to 
+Computationally, ARs have been shown to 
 reduce the complexity of tonal patterns \citep{jardine2016computationally, Chandlee-jardine2021input}.
 Previous work has typically reduced these structures to string 
 representations, either through synchronized tapes or by hard-coding association types \citep{wiebe1992modelling,bird1994one,yli2013finite,yli2015three,rawski2020multi}.
+In contrast, we propose learning the association transformations directly over graphs.
+As a first step, we focus on tonal processes involving a single deassociation and/or reassociation operation.
 
-In contrast, we propose an approach that learns the association 
-transformations directly over graphs.
-As a preliminary study, we restrict our attention to tonal processes 
-involving a single deassociation and/or reassociation operation.
-
-We adopt the model-theoretic logical transduction framework of
-\citet{yolyan2025logical}. Yolyan synthesizes insights from from graph transductions \citep{Courcelle1994, EngelfrietHoogeboom2001,
+We adopt the approach by \citet{yolyan2025logical, yolyan2025phonological}, who synthesizes insights from from graph transductions \citep{Courcelle1994, EngelfrietHoogeboom2001,
   CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, Vu+2018, chandleeBufia2019} to learn a class of string-to-string functions.
-The transductions specify, via a collection of logical formulas, how to construct an output structure from a given an input structure.
+The transductions specify, via a collection of logical formulas, how to construct an output structure from a given input structure.
 Yolyan searches for a minimal distinguishing structure based on the Bottom-Up Factor Inference Algorithm 
 \citep[BUFIA;][]{chandleeBufia2019, rawski2021structure, li2025learning, Swanson+2025, LiHeinzPhO2026}. 
 BUFIA searches a partially ordered space of structures to 
 identify a minimal hypothesis consistent with the data.
-For transformation  learning, \citet{yolyan2025logical, yolyan2025phonological} uses this idea to find a minimal structure which distinguishs data undergoing the change from data which do not.
+For transformation learning, this means finding minimal structures which distinguish data undergoing the change from data which do not.
 
 This work brings together these representational and learning
 perspectives. Using a case study of tonal contour formation (as shown
@@ -576,26 +579,25 @@ Note we also use the successor relation \(\lhd\): \(x\lhd y\) if and only if \(x
 \label{fig:hasse}
 \end{wrapfigure}This containment relation provides a \textit{partial
   ordering} over the space of ARs. We illustrate this partial order
-with strings in Figure~\ref{fig:hasse}.  A superfactor is connected to
-its subfactors, which are positioned below it in the diagram. The
-partial ordering in turn leads to entailment relations. If a string
+with strings in Figure~\ref{fig:hasse}.  Superfactors are connected to
+their subfactors, and are positioned above them in the diagram. The
+partial ordering reflects entailment relations. If a string
 contains some factor \(s\), then it contains all subfactors of
 \(s\). Similarly, if it does not contain \(s\), then it does not
 contain any superfactor of \(s\). \citet{chandleeBufia2019} prove that
 a breadth-first search from the least structure to increasingly
-specific structures is guaranteed to find one or least,
-incomparable structures that satisfy some property.
+specific structures is guaranteed to find one or more
+incomparable structures satisfying some property.
 In the worst case, this search is exponential in the size of the data,
 but empirical work suggests it still effective,
 especially when the data is sparse \citep{Swanson+2025, LiHeinzPhO2026}. 
 Readers are referred to related work 
 \citep{rawski2021structure,
   swanson2025learning,payne2024generalized,li2025learning},
-including the aforementioned studies,
-for more detailed discussion. Here,
-we emphasize that this partial order forms the foundation of bottom-up
-learning algorithms, since it provides a principled way to navigate
-the hypothesis space through entailment relations between factors.
+for more detailed discussion.
+We emphasize that this partial order forms the foundation of bottom-up
+learning algorithms. It provides a principled way to navigate
+the hypotheses via entailment relations among factors.
 
 \vspace{-2ex}
 
@@ -611,9 +613,8 @@ as well as to study different representations
 jardineetal20qtheoryAP, Danis2025}.
 
 In this framework, a set of logic formulas define a function from ARs to ARs.
-The formulas are always evaluated with respect to the input structure.
-Whether they evaluate to true or false has consequences
-for the structure of the output.
+The formulas are always evaluated with respect to the input structure and together they 
+determine the structure of the output.
 Table~\ref{tab.transduction} provides the formulas described below.
 \begin{itemize}\itemsep-0.5ex
 \item The domain formula $\phi_{\textsf{Domain}}$ determines
