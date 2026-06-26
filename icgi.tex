@@ -1,30 +1,30 @@
 \PassOptionsToPackage{noend}{algorithm2e}
 \documentclass[pmlr]{jmlr}% new name PMLR (Proceedings of Machine Learning Research)
 
- % The following packages will be automatically loaded:
- % amsmath, amssymb, natbib, graphicx, url, algorithm2e
+% The following packages will be automatically loaded:
+% amsmath, amssymb, natbib, graphicx, url, algorithm2e
 
- %\usepackage{rotating}% for sideways figures and tables
+%\usepackage{rotating}% for sideways figures and tables
 \usepackage{longtable}% for long tables
 
- % The booktabs package is used by this sample document
- % (it provides \toprule, \midrule and \bottomrule).
- % Remove the next line if you don't require it.
+% The booktabs package is used by this sample document
+% (it provides \toprule, \midrule and \bottomrule).
+% Remove the next line if you don't require it.
 \usepackage{booktabs}
 \usepackage[load-configurations=version-1]{siunitx} % newer version
- %\usepackage{siunitx}
+%\usepackage{siunitx}
 
- % The following command is just for this sample document:
+% The following command is just for this sample document:
 \newcommand{\cs}[1]{\texttt{\char`\\#1}}
 
- % Define an unnumbered theorem just for this sample document:
+% Define an unnumbered theorem just for this sample document:
 \theorembodyfont{\upshape}
 \theoremheaderfont{\scshape}
 \theorempostheader{:}
 \theoremsep{\newline}
 \newtheorem*{note}{Note}
 
- % change the arguments, as appropriate, in the following:
+% change the arguments, as appropriate, in the following:
 \jmlrvolume{1}
 \jmlryear{2026}
 \jmlrworkshop{Workshop Title}
@@ -35,17 +35,17 @@
 \usetikzlibrary{arrows.meta, positioning, matrix, tikzmark}
 \usepackage{subcaption}
 \newcommand{\refs}{%
-    \textcolor{red}{\textbf{[NEED REF]}}%
-    }
+	\textcolor{red}{\textbf{[NEED REF]}}%
+}
 
 \newcommand{\hijeff}[1]{%
-    	\textcolor{violet}{\textbf{[#1]}}%
-    }
+	\textcolor{violet}{\textbf{[#1]}}%
+}
 \newcommand{\hihan}[1]{%
-    	\textcolor{orange}{\textbf{[#1]}}%
-    }
+	\textcolor{orange}{\textbf{[#1]}}%
+}
 
- \usepackage[table]{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{enumitem}
 \usepackage{phonrule}
 \usepackage{todonotes}
@@ -57,1351 +57,1350 @@
 \title{Learning Association-Line Transformations over Autosegmental Graphs}
 
 %\title[Short Title]{Full Title of Article\titlebreak This Title Has
-%A Line Break\titletag{\thanks{sample footnote}}}
+	%A Line Break\titletag{\thanks{sample footnote}}}
 %
- % Use \Name{Author Name} to specify the name.
+% Use \Name{Author Name} to specify the name.
 
- % Spaces are used to separate forenames from the surname so that
- % the surnames can be picked up for the page header and copyright footer.
- 
- % If the surname contains spaces, enclose the surname
- % in braces, e.g. \Name{John {Smith Jones}} similarly
- % if the name has a "von" part, e.g \Name{Jane {de Winter}}.
- % If the first letter in the forenames is a diacritic
- % enclose the diacritic in braces, e.g. \Name{{\'E}louise Smith}
+% Spaces are used to separate forenames from the surname so that
+% the surnames can be picked up for the page header and copyright footer.
 
- % *** Make sure there's no spurious space before \nametag ***
+% If the surname contains spaces, enclose the surname
+% in braces, e.g. \Name{John {Smith Jones}} similarly
+% if the name has a "von" part, e.g \Name{Jane {de Winter}}.
+% If the first letter in the forenames is a diacritic
+% enclose the diacritic in braces, e.g. \Name{{\'E}louise Smith}
 
- % Two authors with the same address
+% *** Make sure there's no spurious space before \nametag ***
+
+% Two authors with the same address
 %  \author{\Name{Author Name1\nametag{\thanks{with a note}}} \Email{abc@sample.com}\and
-%   \Name{Author Name2} \Email{xyz@sample.com}\\
-%   \addr Address}
+	%   \Name{Author Name2} \Email{xyz@sample.com}\\
+	%   \addr Address}
 
- % Three or more authors with the same address:
- % \author{\Name{Author Name1} \Email{an1@sample.com}\\
- %  \Name{Author Name2} \Email{an2@sample.com}\\
- %  \Name{Author Name3} \Email{an3@sample.com}\\
- %  \Name{Author Name4} \Email{an4@sample.com}\\
- %  \Name{Author Name5} \Email{an5@sample.com}\\
- %  \Name{Author Name6} \Email{an6@sample.com}\\
- %  \Name{Author Name7} \Email{an7@sample.com}\\
- %  \Name{Author Name8} \Email{an8@sample.com}\\
- %  \Name{Author Name9} \Email{an9@sample.com}\\
- %  \Name{Author Name10} \Email{an10@sample.com}\\
- %  \Name{Author Name11} \Email{an11@sample.com}\\
- %  \Name{Author Name12} \Email{an12@sample.com}\\
- %  \Name{Author Name13} \Email{an13@sample.com}\\
- %  \Name{Author Name14} \Email{an14@sample.com}\\
- %  \addr Address}
+% Three or more authors with the same address:
+% \author{\Name{Author Name1} \Email{an1@sample.com}\\
+	%  \Name{Author Name2} \Email{an2@sample.com}\\
+	%  \Name{Author Name3} \Email{an3@sample.com}\\
+	%  \Name{Author Name4} \Email{an4@sample.com}\\
+	%  \Name{Author Name5} \Email{an5@sample.com}\\
+	%  \Name{Author Name6} \Email{an6@sample.com}\\
+	%  \Name{Author Name7} \Email{an7@sample.com}\\
+	%  \Name{Author Name8} \Email{an8@sample.com}\\
+	%  \Name{Author Name9} \Email{an9@sample.com}\\
+	%  \Name{Author Name10} \Email{an10@sample.com}\\
+	%  \Name{Author Name11} \Email{an11@sample.com}\\
+	%  \Name{Author Name12} \Email{an12@sample.com}\\
+	%  \Name{Author Name13} \Email{an13@sample.com}\\
+	%  \Name{Author Name14} \Email{an14@sample.com}\\
+	%  \addr Address}
 
 
- % Authors with different addresses:
- % \author{\Name{Author Name1} \Email{abc@sample.com}\\
- % \addr Address 1
- % \AND
- % \Name{Author Name2} \Email{xyz@sample.com}\\
- % \addr Address 2
- %}
+% Authors with different addresses:
+% \author{\Name{Author Name1} \Email{abc@sample.com}\\
+	% \addr Address 1
+	% \AND
+	% \Name{Author Name2} \Email{xyz@sample.com}\\
+	% \addr Address 2
+	%}
 
 %\editor{Editor's name}
- % \editors{List of editors' names}
+% \editors{List of editors' names}
 
 \begin{document}
-
-\maketitle
-
-\begin{abstract}
-  This paper presents a method for learning transformations over
-  multi-linear structures, focusing on sequences which are
-  synchronized in time.  The methods makes use of a partially ordered
-  hypothesis space that it navigates in a bottom up way
-  \citep{chandleeBufia2019} to learn parameters of a graph
-  transduction \citep{CourcelleEngelfriet2012}.
-  It showcases the method with contour formation, a
-  common phenomenon in tonal phonology.
-\end{abstract}
-\begin{keywords}
-graph transductions, bottom-up inference, finite model theory, phonology
-\end{keywords}
-
-
-\section{Introduction}
-
-This paper presents a method for learning transformations over 
-multi-linear structures, with a particular focus on sequences which 
-are synchronized in time. 
-Multi-linear structures are widely used in linguistics
-in phonological theory in particular, and are known as
-\textit{Autosegmental Representations} 
-\citep[ARs;][]{CG1984autosegmental, goldsmith1976autosegmental,
-  hayes1980metrical, sagey1986representation, jardine2017local}.
-ARs are graph structures which consist of one or more sequences called `tiers'
-and cross-tier association relations.
-This work focuses on a specific, but important, type of transformation where the 
-association lines are modified. 
-We formalize these transformations as graph transductions
-\citep{Courcelle1994, EngelfrietHoogeboom2001,
-  CourcelleEngelfriet2012} over ARs \citep{jardine2015concatenation, jardine2017local, strother2019diss}
-and use a bottom-up factor inference method 
-\citep{chandleeBufia2019, rawski2021structure, yolyan2025logical} to infer which 
-association lines are preserved, deleted, or newly introduced from 
-observed input-output pairs. 
-
-Multi-linear structures have been widely used in linguistic
-theory, most notably in autosegmental phonology, to represent
-different levels of representations that are coordinated in time,
-including tone \footnote{Tone
-  refers to the pitch level of a vowel or syllable.
-  Languages which use pitch to mark lexical contrasts are called tonal languages.
-  English is not a tonal language, whereas Mandarin contrasts words such as
-  \textit{mā} `mother' and \textit{mǎ} `horse' solely by tone.}\citep{goldsmith1976autosegmental}, syllable structure \citep{ck83},
-prosodic structure \citep{hayes1980metrical}, and
-feature geometry \citep{sagey1986representation}.
-The core idea is that elements on different tiers are temporally synchronized via
-an association relation. Many input-output mappings are
-naturally characterized by rearranging those association lines across
-tiers \citep{goldsmith1976autosegmental,CG1984autosegmental, hyman2009representation}.
-
-For example, one instance of reduplication in Estako \citep{elimelech1976tonal}, a tonal Niger-Congo language, is shown in Figure~\ref{fig:IOpair}.
-Segmental (whether consonant or vowels) and tonal information are represented on separate tiers, but are coordinated in time by the association relation (shown in figures in this paper as lines).
-The word for ‘house’ in Estako is pronounced [ówà], with a high (H) tone on the first 
-vowel, marked by an acute accent (\texttt{´}), and a low (L) tone on 
-the second vowel, marked by a grave accent (\texttt{`}).
-In Estako, reduplication conveys a repetitive meaning of ‘every X’. 
-Interestingly, the reduplicated form of [ówà] ‘house’ is not is [ówàówà] as may be expected, but in fact [ówǒwà],
-with high, rising, and low tones associated with the three vowels, respectively. In many languages including Estako, when reduplication creates a sequence of
-adjacent vowels V\(_1\)V\(_2\), the first vowel V\(_1\) deletes but its
-associated tone does not. Instead, it reassociates to the following vowel V\(_2\), and 
-produces a rising tone on V\(_2\) in the output, as shown in Figure~\ref{fig:IOpair}.
-
-%More generally, segmental and tonal information in ARs are represented on separate tiers,
-%but are coordinated in time by the association relation (shown in figures in this paper as lines).
-
-\begin{figure}[t]
-\centering
-
-\begin{tikzpicture}[
-    node/.style={inner sep=1.5pt, minimum size=16pt},
-    assoc/.style={thick},
-    scale=0.9
-]
-
-% ================= INPUT =================
-
-% vowel tier
-\node[node] (v1) at (0,0) {ó};
-\node[node] (v2) at (1.5,0) {wà};
-\node[node] (plus) at (3.0,0) {$+$};
-\node[node] (v3) at (4.5,0) {ó};
-\node[node] (v4) at (6.0,0) {wà};
-
-% tone tier
-\node[node] (t1) at (0,1.2) {H};
-\node[node] (t2) at (1.5,1.2) {L};
-\node[node] (t3) at (4.5,1.2) {H};
-\node[node] (t4) at (6.0,1.2) {L};
-
-% associations
-\draw[assoc] (t1) -- (v1);
-\draw[assoc] (t2) -- (v2);
-\draw[assoc] (t3) -- (v3);
-\draw[assoc] (t4) -- (v4);
-
-% input label
-\node at (3.0,-0.8) {Input: /ówà/ + /ówà/};
-
-% ================= ARROW =================
-
-\draw[->, thick] (7.0,0.75) -- (8,0.75);
-
-% ================= OUTPUT =================
-
-% tone tier
-\node[node] (s1) at (9.0,1.2) {H};
-\node[node] (s2) at (10.2,1.2) {L};
-\node[node] (s3) at (11.4,1.2) {H};
-\node[node] (s4) at (12.6,1.2) {L};
-
-% vowel tier
-\node[node] (o1) at (9.0,0) {ó};
-\node[node] (o2) at (10.8,0) {wǒ};
-\node[node] (o3) at (12.6,0) {wà};
-
-% associations
-\draw[assoc] (s1) -- (o1);
-\draw[assoc] (s2) -- (o2);
-\draw[assoc] (s3) -- (o2);
-\draw[assoc] (s4) -- (o3);
-
-% associations
-\draw[assoc] (s1) -- (o1);
-\draw[assoc] (s2) -- (o2);
-\draw[assoc] (s3) -- (o2);
-\draw[assoc] (s4) -- (o3);
-
-% output label
-\node at (11.3,-0.8) {Output: [ówǒwà]};
-
-\end{tikzpicture}
-
-\caption{Association transformation in /ówà/ `house' + /ówà/ `house' $\rightarrow$ [ówǒwà] `every house'.
-  Deletion of the stem-final vowel triggers association change.}
-\label{fig:IOpair}
-\end{figure}
-
-Research on African tonal 
-processes has demonstrated the advantages of autosegmental graphs 
-\citep{CG1984autosegmental, odden2013introducing,hyman2009representation}.  
-Computationally, ARs have been shown to 
-reduce the complexity of tonal patterns \citep{jardine2016computationally, Chandlee-jardine2021input}.
-Previous work has typically reduced these structures to string 
-representations, either through synchronized tapes or by hard-coding association types \citep{wiebe1992modelling,bird1994one,yli2013finite,yli2015three,rawski2020multi}.
-In contrast, we propose learning the association transformations directly over graphs.
-As a first step, we focus on tonal processes involving a single deassociation and/or reassociation operation.
-
-We adopt the approach by \citet{yolyan2025logical, yolyan2025phonological}, who synthesizes insights from from graph transductions \citep{Courcelle1994, EngelfrietHoogeboom2001,
-  CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, Vu+2018, chandleeBufia2019} to learn a class of string-to-string functions.
-The transductions specify, via a collection of logical formulas, how to construct an output structure from a given input structure.
-Yolyan searches for a minimal distinguishing structure based on the Bottom-Up Factor Inference Algorithm 
-\citep[BUFIA;][]{chandleeBufia2019, rawski2021structure, li2025learning, Swanson+2025, LiHeinzPhO2026}. 
-BUFIA searches a partially ordered space of structures to 
-identify a minimal hypothesis consistent with the data.
-For transformation learning, this means finding minimal structures which distinguish data undergoing the change from data which do not.
-
-This work brings together these representational and learning
-perspectives. Using a case study of tonal contour formation (as shown
-in Figure~\ref{fig:IOpair}), we show how logical transductions over
-autosegmental graphs can be learned using a BUFIA-style learner. In
-contrast to Yolyan's previous work on string functions, the target of
-learning here is how association relations change.  While the case
-study is drawn from tonal phonology, the same approach can in
-principle be extended to other multi-linear structures.  To our
-knowledge, the learnability of such transformations has not previously
-been investigated.
-
-\section{Preliminaries}
-
-This section provides background on autosegmental graphs,
-matrix and logical representations thereof.
-We assume familiarity with first order logic.
-
-ARs represent the idea that different aspects of linguistic structure
-are organized on distinct levels while progressing simultaneously over time.
-Each tier encodes a particular type of information. In this 
-work, we assume a two-tiered structure: a tonal tier with two tones, H and L;
-and a segmental tier with two segment types, consonants (C) and vowels (V),
-though the definition remains the same in the general case. 
-
-We define ARs using model-theoretic
-relational structures \citep{jardine2017local}. A relational structure
-contains a domain \(D\) and instantiates a set of relations over that
-domain. The set of relations is called the \emph{signature} of the
-model.
-For concreteness, in this work, the signature of the model contains the unary
-relations \{L, H, C, V\} indicating which domain elements are low
-tones, high tones, consonant and vowels. The L and H make
-up the tonal tier and C and V make up the segmental tier. The
-signature also contains two binary relations: \(<\) is the precedence
-relation and \(\alpha\) is the association relation. Well-formed
-ARs obey the following constraints:
-\begin{itemize}\itemsep-0.5ex
-\item The domain is partitioned into two sets: \(T\) (tonal tier) and \(S\) (segmental tier).
-%\hijeff{Do we want to relax this - there could be more or other tiers, such as mora etc}
-\item Every element in \(T\) satisfies exactly one of L or H and nothing else.
-\item Every element in \(S\) satisfies exactly one of C or V and nothing else.
-\item If \(<(x,y)\) (equivalently \(x<y\)) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\). Also, for each tier, the precedence relation produces a total ordering over it.  
-\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\)\footnote{The association relation is symmetric, although symmetry is omitted from figures and logical formulas for readability. Hereafter, we use \(x\) to denote tonal elements and \(y\) to denote over segmental elements.}.
-
-\item For all
-  \((x, y), (x', y') \in \alpha, x < x' \Rightarrow
- (y < y') ∨ (y =
-  y')\). Informally, two association lines do not cross, a condition known as No-Crossing Constraint \citep[NCC,][]{goldsmith1976autosegmental,coleman1991no}
-\end{itemize}
-In short, an AR is a graph, whose vertices are
-partitioned into two disjoint sets, with each tier
-linearly-ordered, whose elements are coordinated via a temporally
-well-behaved association relation\footnote{It is straightforward
-  to generalize ARs to include \(n\)-partite graphs with \(n\) tiers.}.
-Figure~\ref{fig:armodel} shows an AR on the left,
-its corresponding model-theoretic structure on the right, and the graph of the model in the center.
-Henceforth, we use the words `node' and `domain element' interchangeably.
-\begin{figure}[t]
-	\centering
 	
-	% ================= AUTSEG =================
-	\begin{minipage}[c]{0.20\textwidth}
-		\centering
-		
-		\begin{tikzpicture}
-			\node (v1) at (0,0) {V};
-			\node (v2) at (1,0) {V};
-			\node (t1) at (0,1) {L};
-			\node (t2) at (1,1) {H};
-			
-			\draw (v1)--(t2);			
-			\draw (v1)--(t1);
-			\draw (v2)--(t2);
-		\end{tikzpicture}
-		
-	\end{minipage}
-	\hspace{0.03\textwidth}
-	% ================= GRAPH =================
-	\begin{minipage}[c]{0.20\textwidth}
+	\maketitle
+	
+	\begin{abstract}
+		This paper presents a method for learning transformations over
+		multi-linear structures, focusing on sequences which are
+		synchronized in time.  The methods makes use of a partially ordered
+		hypothesis space that it navigates in a bottom up way
+		\citep{chandleeBufia2019} to learn parameters of a graph
+		transduction \citep{CourcelleEngelfriet2012}.
+		It showcases the method with contour formation, a
+		common phenomenon in tonal phonology.
+	\end{abstract}
+	\begin{keywords}
+		graph transductions, bottom-up inference, finite model theory, phonology
+	\end{keywords}
+	
+	
+	\section{Introduction}
+	
+	This paper presents a method for learning transformations over 
+	multi-linear structures, with a particular focus on sequences which 
+	are synchronized in time. 
+	Multi-linear structures are widely used in linguistics
+	in phonological theory in particular, and are known as
+	\textit{Autosegmental Representations} 
+	\citep[ARs;][]{CG1984autosegmental, goldsmith1976autosegmental,
+		hayes1980metrical, sagey1986representation, jardine2017local}.
+	ARs are graph structures which consist of one or more sequences called `tiers'
+	and cross-tier association relations.
+	This work focuses on a specific, but important, type of transformation where the 
+	association lines are modified. 
+	We formalize these transformations as graph transductions
+	\citep{Courcelle1994, EngelfrietHoogeboom2001,
+		CourcelleEngelfriet2012} over ARs \citep{jardine2015concatenation, jardine2017local, strother2019diss}
+	and use a bottom-up factor inference method 
+	\citep{chandleeBufia2019, rawski2021structure, yolyan2025logical} to infer which 
+	association lines are preserved, deleted, or newly introduced from 
+	observed input-output pairs. 
+	
+	Multi-linear structures have been widely used in linguistic
+	theory, most notably in autosegmental phonology, to represent
+	different levels of representations that are coordinated in time,
+	including tone \footnote{Tone
+		refers to the pitch level of a vowel or syllable.
+		Languages which use pitch to mark lexical contrasts are called tonal languages.
+		English is not a tonal language, whereas Mandarin contrasts words such as
+		\textit{mā} `mother' and \textit{mǎ} `horse' solely by tone.}\citep{goldsmith1976autosegmental}, syllable structure \citep{ck83},
+	prosodic structure \citep{hayes1980metrical}, and
+	feature geometry \citep{sagey1986representation}.
+	The core idea is that elements on different tiers are temporally synchronized via
+	an association relation. Many input-output mappings are
+	naturally characterized by rearranging those association lines across
+	tiers \citep{goldsmith1976autosegmental,CG1984autosegmental, hyman2009representation}.
+	
+	For example, one instance of reduplication in Estako \citep{elimelech1976tonal}, a tonal Niger-Congo language, is shown in Figure~\ref{fig:IOpair}.
+	Segmental (whether consonant or vowels) and tonal information are represented on separate tiers, but are coordinated in time by the association relation (shown in figures in this paper as lines).
+	The word for ‘house’ in Estako is pronounced [ówà], with a high (H) tone on the first 
+	vowel, marked by an acute accent (\texttt{´}), and a low (L) tone on 
+	the second vowel, marked by a grave accent (\texttt{`}).
+	In Estako, reduplication conveys a repetitive meaning of ‘every X’. 
+	Interestingly, the reduplicated form of [ówà] ‘house’ is not is [ówàówà] as may be expected, but in fact [ówǒwà],
+	with high, rising, and low tones associated with the three vowels, respectively. In many languages including Estako, when reduplication creates a sequence of
+	adjacent vowels V\(_1\)V\(_2\), the first vowel V\(_1\) deletes but its
+	associated tone does not. Instead, it reassociates to the following vowel V\(_2\), and 
+	produces a rising tone on V\(_2\) in the output, as shown in Figure~\ref{fig:IOpair}.
+	
+	%More generally, segmental and tonal information in ARs are represented on separate tiers,
+	%but are coordinated in time by the association relation (shown in figures in this paper as lines).
+	
+	\begin{figure}[t]
 		\centering
 		
 		\begin{tikzpicture}[
-			node/.style={draw, circle, inner sep=2pt, minimum size=18pt},
+			node/.style={inner sep=1.5pt, minimum size=16pt},
 			assoc/.style={thick},
-			scale=0.8
+			scale=0.9
 			]
 			
-			\node[node] (t1) at (0,2) {1\textsubscript{L}};
-			\node[node] (t2) at (2,2) {2\textsubscript{H}};
+			% ================= INPUT =================
 			
-			\node[node] (s1) at (0,0) {3\textsubscript{V}};
-			\node[node] (s2) at (2,0) {4\textsubscript{V}};
+			% vowel tier
+			\node[node] (v1) at (0,0) {ó};
+			\node[node] (v2) at (1.5,0) {wà};
+			\node[node] (plus) at (3.0,0) {$+$};
+			\node[node] (v3) at (4.5,0) {ó};
+			\node[node] (v4) at (6.0,0) {wà};
 			
-			\draw (t1) -- node[midway, left] {$\alpha$} (s1);
-			\draw (t2) -- node[midway, right] {$\alpha$} (s2);
-			\draw (t2) -- node[midway, right] {$\alpha$} (s1);	
+			% tone tier
+			\node[node] (t1) at (0,1.2) {H};
+			\node[node] (t2) at (1.5,1.2) {L};
+			\node[node] (t3) at (4.5,1.2) {H};
+			\node[node] (t4) at (6.0,1.2) {L};
 			
-			\draw (t1) -- node[midway, above] {$<$} (t2);
-			\draw (s1) -- node[midway, above] {$<$} (s2);
+			% associations
+			\draw[assoc] (t1) -- (v1);
+			\draw[assoc] (t2) -- (v2);
+			\draw[assoc] (t3) -- (v3);
+			\draw[assoc] (t4) -- (v4);
+			
+			% input label
+			\node at (3.0,-0.8) {Input: /ówà/ + /ówà/};
+			
+			% ================= ARROW =================
+			
+			\draw[->, thick] (7.0,0.75) -- (8,0.75);
+			
+			% ================= OUTPUT =================
+			
+			% tone tier
+			\node[node] (s1) at (9.0,1.2) {H};
+			\node[node] (s2) at (10.2,1.2) {L};
+			\node[node] (s3) at (11.4,1.2) {H};
+			\node[node] (s4) at (12.6,1.2) {L};
+			
+			% vowel tier
+			\node[node] (o1) at (9.0,0) {ó};
+			\node[node] (o2) at (10.8,0) {wǒ};
+			\node[node] (o3) at (12.6,0) {wà};
+			
+			% associations
+			\draw[assoc] (s1) -- (o1);
+			\draw[assoc] (s2) -- (o2);
+			\draw[assoc] (s3) -- (o2);
+			\draw[assoc] (s4) -- (o3);
+			
+			% associations
+			\draw[assoc] (s1) -- (o1);
+			\draw[assoc] (s2) -- (o2);
+			\draw[assoc] (s3) -- (o2);
+			\draw[assoc] (s4) -- (o3);
+			
+			% output label
+			\node at (11.3,-0.8) {Output: [ówǒwà]};
 			
 		\end{tikzpicture}
 		
-	\end{minipage}
-	\hspace{0.03\textwidth}
-	% ================= MODEL =================
-	\begin{minipage}[c]{0.40\textwidth}
-		\centering
-		\footnotesize
-		
-		\[
-		\begin{aligned}
-			D &= \{1,2,3,4\} \\
-			L &= \{1\} \quad H = \{2\} \\
-			C &= \varnothing \qquad V = \{3,4\} \\
-			\sigma &= \{3,4\} \\
-			< &= \{
-			\langle 1,2 \rangle,
-			\langle 3,4 \rangle
-			\} \\
-			\alpha &= \{
-			\langle 1,3 \rangle,
-			\langle 2,4 \rangle,
-			\langle 2,3 \rangle
-			\}
-		\end{aligned}
-		\]
-		
-	\end{minipage}
-
-	\caption{
-		Three representations of a two-tier autosegmental graph.
-	}
-	\label{fig:armodel}	
-\end{figure}
-
-The \emph{size} of an AR is defined as the sum of its domain size, the size of its unary relations, and half the size of the association relation.
-The precedence relation's size is fixed by the lengths of each tier so is omitted.
-%\hijeff{then maybe should
-%change $\alpha$ in the Figure 2 by adding the other directional pairs}
-%\hihan{I stated we would not show the symmetry for readability above}
-We divide by \(|\alpha|\) two because it is symmetric.
-Thus, the size of an AR is \(|D| + |H| + |L| + |C| + |V| + |\alpha|/2 \).
-Hence, the AR in Figure~\ref{fig:armodel} has size 11.
-
-% Two nodes \(x,y\) are
-% \emph{neighbors} if $x \lhd y \lor y \lhd x$. \hijeff{this paragraph can be
-% 	 removed - i think we made it pretty clear in how to generaute nextsupfact
-% 	 what a neighbor is without using this.}\hihan{I agree}
-
-
-Just as it is convenient to view ARs as graphs, it is also useful to
-represent them with \textit{adjacency matrices}, which use binary
-values to denote whether there is an edge between two nodes. 
-The indices along the rows and columns indicate the linear 
-order of elements on the tonal and segmental tiers. For
-example, Figure~\ref{fig:armodel}(a) is a matrix representation of the graph in Figure~\ref{fig:armodel}.
-\begin{figure}[t]
-  \centering
-  \begin{minipage}{0.25\linewidth}
-    (a)
-  $\begin{array}{c|cc}
-	& L & H \\
-	\hline
-	V_1 & 1 & 1 \\
-	V_2 & 0 & 1 \\
- \end{array}$
-\end{minipage}\hspace{5mm}
-\begin{minipage}{0.25\linewidth}
-  (b)
-  $\begin{array}{c|c}
-     &   H \\
-     \hline
-     & 1  \\
-   \end{array}$\hspace{2em}
-   \begin{tikzpicture}[baseline=(current bounding box.center)]
-     \node (x) at (0,0) {};
-     \node (y) at (0,1) {};
-     \draw[fill=black] (x) circle (2pt);
-     \draw[fill=black] (y) circle (2pt);
-     \draw (x) -- (y);
-     \node[left] at (x) {};
-     \node[left] at (y) {H};
-   \end{tikzpicture}
- \end{minipage}\hspace{5mm}
- \begin{minipage}{0.25\linewidth}
-   (c)
-   $\begin{array}{c|c}
-      &   \\
-      \hline
-      C & 1 \\
-    \end{array}$\hspace{2em}
-    \begin{tikzpicture}[baseline=(current bounding box.center)]
-      \node (x) at (0,0) {};
-      \node (y) at (0,1) {};
-      \draw[fill=black] (x) circle (2pt);
-      \draw[fill=black] (y) circle (2pt);
-      \draw (x) -- (y);
-      \node[left] at (x) {C};
-      \node[left] at (y) {};
-    \end{tikzpicture}
-  \end{minipage}
-  \caption{Three matrix representations. The one in (a) is equivalent to
-    the AR in Figure~\ref{fig:armodel}. The (partial) ARs in (b) and (c)
-    are equivalent to the graphs to their right.}
-  \label{fig:matrixreps}
-\end{figure}
-Formally, the associations of AR \(\mathcal{A}=\langle D,L,H,C,V,\alpha,
-<\rangle %
-\) can be represented by \(M_{[x,y]} =1\) if \((x,y)\in\alpha\) and \(M_{[x,y]} =0\) otherwise.
-
-The motivation for adopting matrices is convenience.
-It will be important to identify structures contained within other structures.
-When working with strings, notions of subsequence and substring are well-defined.
-While \citet{chandleeBufia2019} and \citet{rogers-lambert-2019-classes}
-define parallel notions for arbitrary relational structures,
-which can also be applied to ARs,
-we find it simpler to develop these notions for ARs in the context of matrices.
-Let \(B\) be a matrix and \(A\) a be a n \(m \times n\) matrix. Informally, \(A\) is a \emph{submatrix}\footnote{The term ``submatrix" is
-generally defined by deleting arbitrary rows and/or columns from the original
-matrix. However, in our case, we require the remaining rows and columns must be
-\textit{contiguous} in the original matrix, which is related to the 
-notion of \textit{connectedness} in \citet{chandleeBufia2019}.}
-of \(B\) if it can be formed by taking \((1 \leq k \leq m)\) contiguous rows and
-\(\ell\ (1 \leq \ell \leq n)\) contiguous columns from \(B\), and the corresponding row and column labels are consistent. 
-
-Formally, an \(m \times n\) matrix \(A\) is contained in a matrix \(B\), denoted
-\(A \sqsubseteq B\), if there exists an \(m \times n\) submatrix of
-\(B\), and bijections \(r, c\), denoting the row and column bijections, which map indices in \(A\) to indices in \(B\) such that for all \(i \in [1,m]\) and \(j \in [1,n]\) the following hold:
-
-\vspace{2ex}
-
-\begin{minipage}{0.4\linewidth}
-  \begin{enumerate}\itemsep-0.5ex
-  \item \(r(i)=x\) and \(c(j)=y\), and
-  \item \( B_{xy} \geq A_{ij}\), and
-  \end{enumerate}
-\end{minipage}\hfill
-\begin{minipage}{0.5\linewidth}
-  \begin{enumerate}\itemsep-0.5ex
-    \setcounter{enumi}{2}
-    \item \(V(i)\Rightarrow \neg C(r(i))\), \(C(i)\Rightarrow \neg V(r(i))\), and
-    \item \(H(j)\Rightarrow \neg L(r(j))\), \(L(j)\Rightarrow \neg H(r(j))\).
-  \end{enumerate}
-\end{minipage}
-
-\vspace{2ex}
-
-For example, the matrix in Figure~\ref{fig:matrixreps}b is contained within the matrix in Figure~\ref{fig:matrixreps} as witnessed by the  \(r(1)=1,\, c(1)=2\). In contrast, the matrix in Figure~\ref{fig:matrixreps}(c) is not because \(C(1)\Rightarrow \neg V(r(i))\) and for any admissible bijection \(r\), \(V(r(1))\) is true.
-
-A matrix \(A\) is a \emph{subfactor} of \(B\) if and only if \(A\) is 
-contained in \(B\). Conversely, \(B\) is a \emph{superfactor} of \(A\).
-Furthermore, if the size difference between a superfactor and its
-subfactor is exactly one, the superfactor is called the
-\emph{next superfactor} of that subfactor.
-
-
-There is a general connection between connected structures, logical formulas, and containment. For example, the structure in Figure~\ref{fig:armodel} corresponds to the logical formula:
-\[  \exists w,x,y,z \big(
-  L(w)\land H(x)\land V(y)\land V(z)
-  \land \big(w<x \land y<z\big)
-  \land \alpha(w,y)\land \alpha(x,z) \land \alpha(x,y)
-  \big).
-\]
-Any structures satisfying this formula contains a structure isomorphic to the one in Figure~\ref{fig:armodel}.
-
-Table~\ref{tab:nextsupfact} shows matrix, graphical, and logical representations of different structures where the the variables \(x,y\) (which are in scope by the predicate \(\textsf{structure}(x,y)\). Furthermore, pairs of adjacent rows in  Table~\ref{tab:nextsupfact} stand in the next superfactor relationship. The structure denoted by \(\alpha(x,y)\land H(y)\) is a next superfactor of \(\alpha(x,y)\) and so on. The `Operation' column indicates the change that was made to obtain the next superfactor from the structure in the previous row.
-Note we also use the successor relation \(\lhd\): \(x\lhd y\) if and only if \(x<y \wedge \neg (\exists z)[ x< z < y] \). We make use of both precedence and successor as needed.
-% \hijeff{I'm not sure about struc (x,y) - we didn't mention this before. Does 
-%   this just mean we have two quatifiers x,y?}
-% \hihan{Yes, it means we variables x,y are in scope of some predicate}.
-\input{tab.nxtsupfact.tex}
-
-\begin{wrapfigure}{r}{0.45\textwidth}
-\centering
-\begin{tikzpicture}[
-	every node/.style={inner sep=1pt, font=\small\itshape},
-	edge/.style={},
-	]
-	\matrix (m) [matrix of nodes,
-	row sep=6mm,
-	column sep=10mm,
-	nodes={anchor=center},
-	]{
-%   \node (aaa) {aaa}; &\node (llb1) {...};&   \node (llb2) {...}; & \node (llb3) {...};&\node (llb4) {...};&\node (llb5) {...};&    \node (bbb) {bbb}; \\
-   &\node (aa) {aa}; & \node (ab) {ab}; && \node (ba) {ba}; & \node (bb) {bb}; \\
-	 && \node (a) {a}; & & \node (b) {b}; &  \\
-	 &&& \node (z) {$\epsilon$}; && \\};
-
-	\draw[edge] (z) -- (a);
-
-	\draw[edge] (z) -- (b);
+		\caption{Association transformation in /ówà/ `house' + /ówà/ `house' $\rightarrow$ [ówǒwà] `every house'.
+			Deletion of the stem-final vowel triggers association change.}
+		\label{fig:IOpair}
+	\end{figure}
 	
-	\draw[edge] (a) -- (aa) ;
-	\draw[edge] (a) -- (ab);
-	\draw[edge] (a) -- (ba);
+	Research on African tonal 
+	processes has demonstrated the advantages of autosegmental graphs 
+	\citep{CG1984autosegmental, odden2013introducing,hyman2009representation}.  
+	Computationally, ARs have been shown to 
+	reduce the complexity of tonal patterns \citep{jardine2016computationally, Chandlee-jardine2021input}.
+	Previous work has typically reduced these structures to string 
+	representations, either through synchronized tapes or by hard-coding association types \citep{wiebe1992modelling,bird1994one,yli2013finite,yli2015three,rawski2020multi}.
+	In contrast, we propose learning the association transformations directly over graphs.
+	As a first step, we focus on tonal processes involving a single deassociation and/or reassociation operation.
 	
-	\draw[edge] (b) -- (bb) ;
-	\draw[edge] (b) -- (ab);
-	\draw[edge] (b) -- (ba);
-	\draw[edge, dotted] (aa) -- ++(0,1.5em);
-%	\draw[edge, dotted] (aa) -- ++(1,1.5em);
-	\draw[edge, dotted] (ab) -- ++(0,1.5em);
-%	\draw[edge, dotted] (ab) -- ++(1,1.5em);	
-%	\draw[edge, dotted] (bb) -- ++(-1,1.5em);	
-	\draw[edge, dotted] (ba) -- ++(0,1.5em);
-	\draw[edge, dotted] (bb) -- ++(0,1.5em);
-	\end{tikzpicture}
-\caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
-\label{fig:hasse}
-\end{wrapfigure}This containment relation provides a \textit{partial
-  ordering} over the space of ARs. We illustrate this partial order
-with strings in Figure~\ref{fig:hasse}.  Superfactors are connected to
-their subfactors, and are positioned above them in the diagram. The
-partial ordering reflects entailment relations. If a string
-contains some factor \(s\), then it contains all subfactors of
-\(s\). Similarly, if it does not contain \(s\), then it does not
-contain any superfactor of \(s\). \citet{chandleeBufia2019} prove that
-a breadth-first search from the least structure to increasingly
-specific structures is guaranteed to find one or more
-incomparable structures satisfying some property.
-In the worst case, this search is exponential in the size of the data,
-but empirical work suggests it still effective,
-especially when the data is sparse \citep{Swanson+2025, LiHeinzPhO2026}. 
-Readers are referred to related work 
-\citep{rawski2021structure,
-  swanson2025learning,payne2024generalized,li2025learning},
-for more detailed discussion.
-We emphasize that this partial order forms the foundation of bottom-up
-learning algorithms. It provides a principled way to navigate
-the hypotheses via entailment relations among factors.
-
-\vspace{-2ex}
-
-\section{Graph Transductions}
-
-We model a phonological process with graph transductions
-from input structures to output structures
-\citep{Courcelle1994, EngelfrietHoogeboom2001, CourcelleEngelfriet2012}.
-Such transductions have been used to model phonological processes
-\citep{Strother-Garcia-2018, Dolatian-2020-diss, chandleejardine21bmrs},
-as well as to study different representations
-\citep{strother2019diss, oakdenNotationalEquivalenceTonal2020,
-jardineetal20qtheoryAP, Danis2025}.
-
-In this framework, a set of logic formulas define a function from ARs to ARs.
-The formulas are always evaluated with respect to the input structure and together they 
-determine the structure of the output.
-Table~\ref{tab.transduction} provides the formulas described below.
-\begin{itemize}\itemsep-0.5ex
-\item The domain formula $\phi_{\textsf{Domain}}$ determines
-  which ARs are in the domain of the function.
-  Here, we set this value to True, indicating this function is total.
-\item The copy set helps determine the size of the output structures.
-  Here, we set it to 1, which means every node in the output
-  corresponds to one element in the input. 
-\item For each unary relation $P\in\{L, H, C, V\}$, the formula \(\phi_{P}(x)\)
-  determines whether node \(x\) in the output has property \(P\).
-  Here, nodes in the output have the same properties
-  as their corresponding nodes in the input.
-\item The formula  \(\phi_{<}(x,y)\) determines which pairs of nodes
-  in the output structure stand in the precedence relation.
-  Here, pairs of nodes in the output stand in the precedence relation
-  only if their corresponding nodes in the input are in the precedence relation.
-\item The formula  \(\phi_{\alpha}(x,y)\) determines which pairs of nodes
-  in the output structure stand in the association relation.
-  Here pairs of nodes stand in the association relation provided
-  (i) they were associated in the input and they do not satisfy
-  the deassociation condition \textsf{deassoc} or 
-  (ii) they were not associated in the input and they do satisfy
-  the reassociation condition \textsf{reassoc}.
-  We refer to these two components as \textsf{Retain} and \textsf{Add}, 
-  respectively. The predicates \textsf{deassoc} and \textsf{reassoc} are 
-  language-specific logical formulas, which correspond to structures,
-  and which constitute the parameters to be learned.
-  
-  \begin{equation}
-  \phi_{\alpha}(x,y) :=
-  \underbrace{\bigl(\alpha(x,y) \land \neg \textsf{deassoc}(x,y)\bigr)}_{\textsf{Retain}}
-  \;\lor\;
-  \underbrace{\bigl(\neg \alpha(x,y) \land \textsf{reassoc}(x,y)\bigr)}_{\textsf{Add}}
-  \label{eq:retainadd}
-\end{equation}
-  % \hijeff{I know we agreed on calling it P and Q. But we just used P to indicate unary relation, which might be confusing. I changed the condition names to Retain vs Add. Let me know if this is too textual}
-  % \hihan{Perfect}
-  
-\item The licensing formula $\phi_{\textsf{license}}(x)$
-  determines which nodes in the output are licensed.
-  According to the semantics of graph transductions,
-  unlicensed nodes disappear,
-  along with any relations associated with them.
-  Here, only output nodes that stand
-  in an association relation in the output are licensed.
-  
-\end{itemize}
-
-It follows that the transduction 
-defines an output structure whose domain is the same as the input 
-structure, except that unassociated elements are filtered out by
-$\phi_{\textsf{license}}(x)$. All 
-unary relations \(P(x)\) in the input signature are 
-preserved in the corresponding output. Similarly,
-precedence relations are preserved. The only 
-change is the association relation \(\alpha\).
-Thus, the problem of learning association-line 
-transformations can be reduced to learning the logical 
-formulas for \textsf{deassoc} and/or \textsf{reassoc}, or their equivalent structural representations. 
-
-When no transformation occurs between the input and 
-output representations, neither \textsf{deassoc} nor 
-\textsf{reassoc} takes place (i.e., both have the value of
-False). The association relation therefore remains unchanged: 
-all input associations are preserved in the output 
-(\textsf{Retain} evaluates to True iff \(\alpha(x,y)\) holds in the input structure), and no new associations are 
-added (\textsf{Add} applies to none because it always evaluates False).
-Since these two predicates are combined through disjunction, 
-two parallel learning processes apply simultaneously, one for \textsf{deassoc} and one for \textsf{reassoc}, 
-and their outputs are combined to define $\phi_\alpha$.
-
-To illustrate, 
-%consider contour formation
-%as shown in Figure~\ref{fig:IOpair}. %When two vowels become 
-%adjacent, the first vowel, V$_1$, is deleted. The tone T$_1$,
-%originally associated with V$_1$, is delinked from 
-%V$_1$ and reassociates with the following vowel V$_2$.
-%As a result, V$_2$ bears both tones in their original order,
-%which surface together as a contour tone. 
-Figure~\ref{fig:hiatus} visualizes this contour formation from 
-Figure~\ref{fig:IOpair} in both 
-graph-theoretic and matrix representations.
-%From a logical perspective, this transformation is captured 
-%by three predicates: \textsf{deassoc}, \textsf{reassoc}, and 
-%$\phi_{\textsf{license}}$. 
-The \textsf{deassoc} function 
-identifies the association to be broken between T$_1$ and 
-the deleted vowel V$_1$ (the crossed-out line). The \textsf{Retain} conjunction 
-$\alpha(x,y)\land\neg\textsf{deassoc}(x,y)$ removes 
-this association $(T_1,V_1)$ while preserving all unaffected associations, 
-that is, $(T_2,V_2)$. The \textsf{reassoc} function then links T$_1$ to 
-the surviving vowel V$_2$ (the dotted line). As a result, V$_1$ is no longer
-associated with any element on the opposite tier and therefore fails to 
-satisfy the licensing condition $\phi_{\textsf{license}}$ in the output. 
-Consequently, V$_1$ is not licensed and is omitted from 
-the surface form (shown in gray).
-\begin{table}[t]
-	\centering	\small 
-	\begin{tabular}{llll}
-		\toprule
-		\textbf{Output} & & \textbf{Input} & \textbf{Interpretation} \\
-		\midrule
-		
-		$\phi_{\textsf{Domain}}$
-		&
-		$:=$
-		&
-		$\textsc{True}$
-		&
-		Preserve all input elements
-		\\[0.5em]
-		
-		
-		\textsc{Copy}
-		&
-		$:=$
-		&
-		1&
-		Define output domain same size as input
-		\\[0.5em]
-		
-		$\phi_{P}(x)$
-		&
-		$:=$
-		&
-		$P(x)$
-		&
-		Preserve elements and their labels
-		\\[0.5em]
-		
-		$\phi_{<}(x,y)$
-		&
-		$:=$
-		&
-		$<(x,y)$
-		&
-		Preserve linear order within tiers
-		\\[0.5em]
-		
-		$\phi_{\alpha}(x,y)$
-		&
-		$:=$
-		&
-		$\begin{aligned}
-			\bigl(\alpha(x,y) \land \neg \textsf{deassoc}(x,y)\bigr)\\ 
-			\lor \bigl(\neg \alpha(x,y) \land \textsf{reassoc}(x,y)\bigr)
-		\end{aligned}$
-		&
-		Update association relations
-		\\[0.5em]
-		$\phi_{\textsf{license}}(x)$
-		&
-		$:=$
-		&
-		$\exists y\, \phi_\alpha(x,y)$
-		&
-		Preserve only associated elements
-		\\
-		
-		\bottomrule
-	\end{tabular}
+	We adopt the approach by \citet{yolyan2025logical, yolyan2025phonological}, who synthesizes insights from from graph transductions \citep{Courcelle1994, EngelfrietHoogeboom2001,
+		CourcelleEngelfriet2012} with learning of classes of formal languages using model-theoretic representations \citep{Strother-Garcia-HeinzEtAl-2016-UMTGICSP, Vu+2018, chandleeBufia2019} to learn a class of string-to-string functions.
+	The transductions specify, via a collection of logical formulas, how to construct an output structure from a given input structure.
+	Yolyan searches for a minimal distinguishing structure based on the Bottom-Up Factor Inference Algorithm 
+	\citep[BUFIA;][]{chandleeBufia2019, rawski2021structure, li2025learning, Swanson+2025, LiHeinzPhO2026}. 
+	BUFIA searches a partially ordered space of structures to 
+	identify a minimal hypothesis consistent with the data.
+	For transformation learning, this means finding minimal structures which distinguish data undergoing the change from data which do not.
 	
-	\caption{Logical formulas defining an input-output AR transduction.}
-	\label{tab.transduction}
-\end{table}
-
-\begin{figure}
-	\centering
+	This work brings together these representational and learning
+	perspectives. Using a case study of tonal contour formation (as shown
+	in Figure~\ref{fig:IOpair}), we show how logical transductions over
+	autosegmental graphs can be learned using a BUFIA-style learner. In
+	contrast to Yolyan's previous work on string functions, the target of
+	learning here is how association relations change.  While the case
+	study is drawn from tonal phonology, the same approach can in
+	principle be extended to other multi-linear structures.  To our
+	knowledge, the learnability of such transformations has not previously
+	been investigated.
 	
-	\begin{minipage}[t]{0.48\textwidth}
+	\section{Preliminaries}
+	
+	This section provides background on autosegmental graphs,
+	matrix and logical representations thereof.
+	We assume familiarity with first order logic.
+	
+	ARs represent the idea that different aspects of a linguistic structure
+	are organized on distinct levels while progressing simultaneously over time.
+	Each tier encodes a particular type of information. In this 
+	work, we assume a two-tiered structure: a tonal tier with two tones, H and L;
+	and a segmental tier with two segment types, consonants (C) and vowels (V),
+	though the definition remains the same in the general case. 
+	
+	We define ARs using model-theoretic
+	relational structures \citep{jardine2017local}. A relational structure
+	contains a domain \(D\) and instantiates a set of relations over that
+	domain. The set of relations is called the \emph{signature} of the
+	model.
+	For concreteness, in this work, the signature of the model contains the unary
+	relations \{L, H, C, V\} indicating which domain elements are low
+	tones, high tones, consonant and vowels. The L and H make
+	up the tonal tier and C and V make up the segmental tier. The
+	signature also contains two binary relations: \(<\) is the precedence
+	relation and \(\alpha\) is the association relation. Well-formed
+	ARs obey the following constraints:
+	\begin{itemize}\itemsep-0.5ex
+		\item The domain is partitioned into two sets: \(T\) (tonal tier) and \(S\) (segmental tier).
+		%\hijeff{Do we want to relax this - there could be more or other tiers, such as mora etc}
+		\item Every element in \(T\) satisfies exactly one of L or H and nothing else.
+		\item Every element in \(S\) satisfies exactly one of C or V and nothing else.
+		\item If \(<(x,y)\) (equivalently \(x<y\)) is satisfied then either \(x\in T \wedge y\in T\) or \(x\in S  \wedge y\in S\). Also, for each tier, the precedence relation produces a total ordering over it.  
+		\item If \(\alpha(x,y)\) is satisfied then either \(x\in T \wedge y\in S\) or \(y\in T \wedge x\in S\)\footnote{The association relation is symmetric, although symmetry is omitted from figures and logical formulas for readability. Hereafter, we use \(x\) to denote tonal elements and \(y\) to denote over segmental elements.}.
+		
+		\item For all
+		\((x, y), (x', y') \in \alpha, x < x' \Rightarrow
+		(y < y') ∨ (y =
+		y')\). Informally, two association lines do not cross, a condition known as No-Crossing Constraint \citep[NCC,][]{goldsmith1976autosegmental,coleman1991no}
+	\end{itemize}
+	In short, an AR is a graph, whose vertices are
+	partitioned into two disjoint sets, with each tier
+	linearly-ordered, whose elements are coordinated via a temporally
+	well-behaved association relation\footnote{It is straightforward
+		to generalize ARs to include \(n\)-partite graphs with \(n\) tiers.}.
+	Figure~\ref{fig:armodel} shows an AR on the left,
+	its corresponding model-theoretic structure on the right, and the graph of the model in the center.
+	Henceforth, we use the words `node' and `domain element' interchangeably.
+	\begin{figure}[t]
 		\centering
 		
-		\begin{tabular}{c c c}
+		% ================= AUTSEG =================
+		\begin{minipage}[c]{0.20\textwidth}
+			\centering
 			
-			\textbf{UR} & $\Rightarrow$ & \textbf{SR} \\[0.5em]
-			
-			\begin{tikzpicture}[scale=0.7, every node/.style={inner sep=2pt}]
-				\node (v1) at (0,0) {V$_1$};
-				\node (v2) at (1.4,0) {V$_2$};
+			\begin{tikzpicture}
+				\node (v1) at (0,0) {V};
+				\node (v2) at (1,0) {V};
+				\node (t1) at (0,1) {L};
+				\node (t2) at (1,1) {H};
 				
-				\node (t1) at (0,1.3) {T$_1$};
-				\node (t2) at (1.4,1.3) {T$_2$};
-				
+				\draw (v1)--(t2);			
 				\draw (v1)--(t1);
 				\draw (v2)--(t2);
 			\end{tikzpicture}
 			
-			&&
+		\end{minipage}
+		\hspace{0.03\textwidth}
+		% ================= GRAPH =================
+		\begin{minipage}[c]{0.20\textwidth}
+			\centering
 			
-			\begin{tikzpicture}[scale=0.7, every node/.style={inner sep=2pt}]
-				\node [fill=gray!20](v1) at (0,0) {V$_1$};
-				\node (v2) at (1.4,0) {V$_2$};
+			\begin{tikzpicture}[
+				node/.style={draw, circle, inner sep=2pt, minimum size=18pt},
+				assoc/.style={thick},
+				scale=0.8
+				]
 				
-				\node (t1) at (0,1.3) {T$_1$};
-				\node (t2) at (1.4,1.3) {T$_2$};
+				\node[node] (t1) at (0,2) {1\textsubscript{L}};
+				\node[node] (t2) at (2,2) {2\textsubscript{H}};
 				
-				\draw (v1)--(t1) node[midway] {=};
-				\draw (v2)--(t2);
+				\node[node] (s1) at (0,0) {3\textsubscript{V}};
+				\node[node] (s2) at (2,0) {4\textsubscript{V}};
 				
-				\draw[dotted, thick] (v2)--(t1);
+				\draw (t1) -- node[midway, left] {$\alpha$} (s1);
+				\draw (t2) -- node[midway, right] {$\alpha$} (s2);
+				\draw (t2) -- node[midway, right] {$\alpha$} (s1);	
+				
+				\draw (t1) -- node[midway, above] {$<$} (t2);
+				\draw (s1) -- node[midway, above] {$<$} (s2);
+				
 			\end{tikzpicture}
 			
+		\end{minipage}
+		\hspace{0.03\textwidth}
+		% ================= MODEL =================
+		\begin{minipage}[c]{0.40\textwidth}
+			\centering
+			\footnotesize
+			
+			\[
+			\begin{aligned}
+				D &= \{1,2,3,4\} \\
+				L &= \{1\} \quad H = \{2\} \\
+				C &= \varnothing \qquad V = \{3,4\} \\
+				\sigma &= \{3,4\} \\
+				< &= \{
+				\langle 1,2 \rangle,
+				\langle 3,4 \rangle
+				\} \\
+				\alpha &= \{
+				\langle 1,3 \rangle,
+				\langle 2,4 \rangle,
+				\langle 2,3 \rangle
+				\}
+			\end{aligned}
+			\]
+			
+		\end{minipage}
+		
+		\caption{
+			Three representations of a two-tier autosegmental graph.
+		}
+		\label{fig:armodel}	
+	\end{figure}
+	
+	The \emph{size} of an AR is defined as the sum of its domain size, the size of its unary relations, and half the size of the association relation.
+	The precedence relation's size is fixed by the lengths of each tier so is omitted.
+	%\hijeff{then maybe should
+		%change $\alpha$ in the Figure 2 by adding the other directional pairs}
+	%\hihan{I stated we would not show the symmetry for readability above}
+	We divide by \(|\alpha|\) two because it is symmetric.
+	Thus, the size of an AR is \(|D| + |H| + |L| + |C| + |V| + |\alpha|/2 \).
+	Hence, the AR in Figure~\ref{fig:armodel} has size 11.
+	
+	% Two nodes \(x,y\) are
+	% \emph{neighbors} if $x \lhd y \lor y \lhd x$. \hijeff{this paragraph can be
+		% 	 removed - i think we made it pretty clear in how to generaute nextsupfact
+		% 	 what a neighbor is without using this.}\hihan{I agree}
+	
+	
+	Just as it is convenient to view ARs as graphs, it is also useful to
+	represent them with \textit{adjacency matrices}, which use binary
+	values to denote whether there is an edge between two nodes. 
+	The indices along the rows and columns indicate the linear 
+	order of elements on the tonal and segmental tiers. For
+	example, Figure~\ref{fig:matrixreps}a is a matrix representation of the graph in Figure~\ref{fig:armodel}.
+	\begin{figure}[t]
+		\centering
+		\begin{minipage}{0.25\linewidth}
+			(a)
+			$\begin{array}{c|cc}
+				& L & H \\
+				\hline
+				V_1 & 1 & 1 \\
+				V_2 & 0 & 1 \\
+			\end{array}$
+		\end{minipage}\hspace{5mm}
+		\begin{minipage}{0.25\linewidth}
+			(b)
+			$\begin{array}{c|c}
+				&   H \\
+				\hline
+				& 1  \\
+			\end{array}$\hspace{2em}
+			\begin{tikzpicture}[baseline=(current bounding box.center)]
+				\node (x) at (0,0) {};
+				\node (y) at (0,1) {};
+				\draw[fill=black] (x) circle (2pt);
+				\draw[fill=black] (y) circle (2pt);
+				\draw (x) -- (y);
+				\node[left] at (x) {};
+				\node[left] at (y) {H};
+			\end{tikzpicture}
+		\end{minipage}\hspace{5mm}
+		\begin{minipage}{0.25\linewidth}
+			(c)
+			$\begin{array}{c|c}
+				&   \\
+				\hline
+				C & 1 \\
+			\end{array}$\hspace{2em}
+			\begin{tikzpicture}[baseline=(current bounding box.center)]
+				\node (x) at (0,0) {};
+				\node (y) at (0,1) {};
+				\draw[fill=black] (x) circle (2pt);
+				\draw[fill=black] (y) circle (2pt);
+				\draw (x) -- (y);
+				\node[left] at (x) {C};
+				\node[left] at (y) {};
+			\end{tikzpicture}
+		\end{minipage}
+		\caption{Three matrix representations. The one in (a) is equivalent to
+			the AR in Figure~\ref{fig:armodel}. The (partial) ARs in (b) and (c)
+			are equivalent to the graphs to their right.}
+		\label{fig:matrixreps}
+	\end{figure}
+	Formally, the associations of AR \(\mathcal{A}=\langle D,L,H,C,V,\alpha,
+	<\rangle %
+	\) can be represented by \(M_{[x,y]} =1\) if \((x,y)\in\alpha\) and \(M_{[x,y]} =0\) otherwise.
+	
+	The motivation for adopting matrices is convenience.
+	It will be important to identify structures contained within other structures.
+	When working with strings, notions of subsequence and substring are well-defined.
+	While \citet{chandleeBufia2019} and \citet{rogers-lambert-2019-classes}
+	define parallel notions for arbitrary relational structures,
+	which can also be applied to ARs,
+	we find it simpler to develop these notions for ARs in the context of matrices.
+	Let \(B\) be a matrix and \(A\) a be a n \(m \times n\) matrix. Informally, \(A\) is a \emph{submatrix}\footnote{The term ``submatrix" is
+		generally defined by deleting arbitrary rows and/or columns from the original
+		matrix. However, in our case, we require the remaining rows and columns must be
+		\textit{contiguous} in the original matrix, which is related to the 
+		notion of \textit{connectedness} in \citet{chandleeBufia2019}.}
+	of \(B\) if it can be formed by taking \(k\) \((1 \leq k \leq m)\) contiguous rows and
+	\(\ell\ (1 \leq \ell \leq n)\) contiguous columns from \(B\), and the corresponding row and column labels are consistent. 
+	
+	Formally, an \(m \times n\) matrix \(A\) is contained in a matrix \(B\), denoted
+	\(A \sqsubseteq B\), if there exists an \(m \times n\) submatrix of
+	\(B\), and bijections \(r, c\), denoting the row and column bijections, which map indices in \(A\) to indices in \(B\) such that for all \(i \in [1,m]\) and \(j \in [1,n]\) the following hold:
+	
+	\vspace{2ex}
+	
+	\begin{minipage}{0.4\linewidth}
+		\begin{enumerate}\itemsep-0.5ex
+			\item \(r(i)=x\) and \(c(j)=y\), and
+			\item \( B_{xy} \geq A_{ij}\), and
+		\end{enumerate}
+	\end{minipage}\hfill
+	\begin{minipage}{0.5\linewidth}
+		\begin{enumerate}\itemsep-0.5ex
+			\setcounter{enumi}{2}
+			\item \(V(i)\Rightarrow \neg C(r(i))\), \(C(i)\Rightarrow \neg V(r(i))\), and
+			\item \(H(j)\Rightarrow \neg L(r(j))\), \(L(j)\Rightarrow \neg H(r(j))\).
+		\end{enumerate}
+	\end{minipage}
+	
+	\vspace{2ex}
+	
+	For example, the matrix in Figure~\ref{fig:matrixreps}b is contained within the matrix in Figure~\ref{fig:matrixreps}a as witnessed by the  \(r(1)=1,\, c(1)=2\). In contrast, the matrix in Figure~\ref{fig:matrixreps}(c) is not because \(C(1)\Rightarrow \neg V(r(i))\) and for any admissible bijection \(r\), \(V(r(1))\) is true.
+	
+	A matrix \(A\) is a \emph{subfactor} of \(B\) if and only if \(A\) is 
+	contained in \(B\). Conversely, \(B\) is a \emph{superfactor} of \(A\).
+	Furthermore, if the size difference between a superfactor and its
+	subfactor is exactly one, the superfactor is called the
+	\emph{next superfactor} of that subfactor.
+	
+	
+	There is a general connection between connected structures, logical formulas, and containment. For example, the structure in Figure~\ref{fig:armodel} corresponds to the logical formula:
+	\[  \exists w,x,y,z \big(
+	L(w)\land H(x)\land V(y)\land V(z)
+	\land \big(w<x \land y<z\big)
+	\land \alpha(w,y)\land \alpha(x,z) \land \alpha(x,y)
+	\big).
+	\]
+	Any structures satisfying this formula contains a structure isomorphic to the one in Figure~\ref{fig:armodel}.
+	
+	Table~\ref{tab:nextsupfact} shows matrix, graphical, and logical representations of different structures where the the variables \(x,y\) (which are in scope by the predicate \(\textsf{structure}(x,y)\). Furthermore, pairs of adjacent rows in  Table~\ref{tab:nextsupfact} stand in the next superfactor relationship. The structure denoted by \(\alpha(x,y)\land H(y)\) is a next superfactor of \(\alpha(x,y)\) and so on. The `Operation' column indicates the change that was made to obtain the next superfactor from the structure in the previous row.
+	Note we also use the successor relation \(\lhd\): \(x\lhd y\) if and only if \(x<y \wedge \neg (\exists z)[ x< z < y] \). We make use of both precedence and successor as needed.
+	% \hijeff{I'm not sure about struc (x,y) - we didn't mention this before. Does 
+		%   this just mean we have two quatifiers x,y?}
+	% \hihan{Yes, it means we variables x,y are in scope of some predicate}.
+	\input{tab.nxtsupfact.tex}
+	
+	\begin{wrapfigure}{r}{0.45\textwidth}
+		\centering
+		\begin{tikzpicture}[
+			every node/.style={inner sep=1pt, font=\small\itshape},
+			edge/.style={},
+			]
+			\matrix (m) [matrix of nodes,
+			row sep=6mm,
+			column sep=10mm,
+			nodes={anchor=center},
+			]{
+				%   \node (aaa) {aaa}; &\node (llb1) {...};&   \node (llb2) {...}; & \node (llb3) {...};&\node (llb4) {...};&\node (llb5) {...};&    \node (bbb) {bbb}; \\
+				&\node (aa) {aa}; & \node (ab) {ab}; && \node (ba) {ba}; & \node (bb) {bb}; \\
+				&& \node (a) {a}; & & \node (b) {b}; &  \\
+				&&& \node (z) {$\epsilon$}; && \\};
+			
+			\draw[edge] (z) -- (a);
+			
+			\draw[edge] (z) -- (b);
+			
+			\draw[edge] (a) -- (aa) ;
+			\draw[edge] (a) -- (ab);
+			\draw[edge] (a) -- (ba);
+			
+			\draw[edge] (b) -- (bb) ;
+			\draw[edge] (b) -- (ab);
+			\draw[edge] (b) -- (ba);
+			\draw[edge, dotted] (aa) -- ++(0,1.5em);
+			%	\draw[edge, dotted] (aa) -- ++(1,1.5em);
+			\draw[edge, dotted] (ab) -- ++(0,1.5em);
+			%	\draw[edge, dotted] (ab) -- ++(1,1.5em);	
+			%	\draw[edge, dotted] (bb) -- ++(-1,1.5em);	
+			\draw[edge, dotted] (ba) -- ++(0,1.5em);
+			\draw[edge, dotted] (bb) -- ++(0,1.5em);
+		\end{tikzpicture}
+		\caption{Strings over $\Sigma = \{a,b\}$ ordered by the containment relation (non-exhaustive)}
+		\label{fig:hasse}
+	\end{wrapfigure}This containment relation provides a \textit{partial
+		ordering} over the space of ARs. We illustrate this partial order
+	with strings in Figure~\ref{fig:hasse}.  Superfactors are connected to
+	their subfactors, and are positioned above them in the diagram. The
+	partial ordering reflects entailment relations. If a string
+	contains some factor \(s\), then it contains all subfactors of
+	\(s\). Similarly, if it does not contain \(s\), then it does not
+	contain any superfactor of \(s\). \citet{chandleeBufia2019} prove that
+	a breadth-first search from the least structure to increasingly
+	specific structures is guaranteed to find one or more
+	incomparable structures satisfying some property.
+	In the worst case, this search is exponential in the size of the data,
+	but empirical work suggests it still effective,
+	especially when the data is sparse \citep{Swanson+2025, LiHeinzPhO2026}. 
+	Readers are referred to related work 
+	\citep{rawski2021structure,
+		swanson2025learning,payne2024generalized,li2025learning},
+	for more detailed discussion.
+	We emphasize that this partial order forms the foundation of bottom-up
+	learning algorithms. It provides a principled way to navigate
+	the hypotheses via entailment relations among factors.
+	
+	\vspace{-2ex}
+	
+	\section{Graph Transductions}
+	
+	We model a phonological process with graph transductions
+	from input structures to output structures
+	\citep{Courcelle1994, EngelfrietHoogeboom2001, CourcelleEngelfriet2012}.
+	Such transductions have been used to model phonological processes
+	\citep{Strother-Garcia-2018, Dolatian-2020-diss, chandleejardine21bmrs},
+	as well as to study different representations
+	\citep{strother2019diss, oakdenNotationalEquivalenceTonal2020,
+		jardineetal20qtheoryAP, Danis2025}.
+	
+	In this framework, a set of logic formulas define a function from ARs to ARs.
+	The formulas are always evaluated with respect to the input structure and together they 
+	determine the structure of the output.
+	Table~\ref{tab.transduction} provides the formulas described below.
+	\begin{itemize}\itemsep-0.5ex
+		\item The domain formula $\phi_{\textsf{Domain}}$ determines
+		which ARs are in the domain of the function.
+		Here, we set this value to True, indicating this function is total.
+		\item The copy set helps determine the size of the output structures.
+		Here, we set it to 1, which means every node in the output
+		corresponds to one element in the input. 
+		\item For each unary relation $P\in\{L, H, C, V\}$, the formula \(\phi_{P}(x)\)
+		determines whether node \(x\) in the output has property \(P\).
+		Here, nodes in the output have the same properties
+		as their corresponding nodes in the input.
+		\item The formula  \(\phi_{<}(x,y)\) determines which pairs of nodes
+		in the output structure stand in the precedence relation.
+		Here, pairs of nodes in the output stand in the precedence relation
+		only if their corresponding nodes in the input are in the precedence relation.
+		\item The formula  \(\phi_{\alpha}(x,y)\) determines which pairs of nodes
+		in the output structure stand in the association relation.
+		Here pairs of nodes stand in the association relation provided
+		(i) they were associated in the input and they do not satisfy
+		the deassociation condition \textsf{deassoc} or 
+		(ii) they were not associated in the input and they do satisfy
+		the reassociation condition \textsf{reassoc}.
+		We refer to these two components as \textsf{Retain} and \textsf{Add}, 
+		respectively. The predicates \textsf{deassoc} and \textsf{reassoc} are 
+		language-specific logical formulas, which correspond to structures,
+		and which constitute the parameters to be learned.
+		
+		\begin{equation}
+			\phi_{\alpha}(x,y) :=
+			\underbrace{\bigl(\alpha(x,y) \land \neg \textsf{deassoc}(x,y)\bigr)}_{\textsf{Retain}}
+			\;\lor\;
+			\underbrace{\bigl(\neg \alpha(x,y) \land \textsf{reassoc}(x,y)\bigr)}_{\textsf{Add}}
+			\label{eq:retainadd}
+		\end{equation}
+		% \hijeff{I know we agreed on calling it P and Q. But we just used P to indicate unary relation, which might be confusing. I changed the condition names to Retain vs Add. Let me know if this is too textual}
+		% \hihan{Perfect}
+		
+		\item The licensing formula $\phi_{\textsf{license}}(x)$
+		determines which nodes in the output are licensed.
+		According to the semantics of graph transductions,
+		unlicensed nodes disappear,
+		along with any relations associated with them.
+		Here, only output nodes that stand
+		in an association relation in the output are licensed.
+		
+	\end{itemize}
+	
+	It follows that the transduction 
+	defines an output structure whose domain is the same as the input 
+	structure, except that unassociated elements are filtered out by
+	$\phi_{\textsf{license}}(x)$. All 
+	unary relations \(P(x)\) in the input signature are 
+	preserved in the corresponding output. Similarly,
+	precedence relations are preserved. The only 
+	change is the association relation \(\alpha\).
+	Thus, the problem of learning association-line 
+	transformations can be reduced to learning the logical 
+	formulas for \textsf{deassoc} and/or \textsf{reassoc}, or their equivalent structural representations. 
+	
+	When no transformation occurs between the input and 
+	output representations, neither \textsf{deassoc} nor 
+	\textsf{reassoc} takes place (i.e., both have the value of
+	False). The association relation therefore remains unchanged: 
+	all input associations are preserved in the output 
+	(\textsf{Retain} evaluates to True iff \(\alpha(x,y)\) holds in the input structure), and no new associations are 
+	added (\textsf{Add} applies to none because it always evaluates False).
+	Since these two predicates are combined through disjunction, 
+	two parallel learning processes apply simultaneously, one for \textsf{deassoc} and one for \textsf{reassoc}, 
+	and their outputs are combined to define $\phi_\alpha$.
+	
+	To illustrate, 
+	%consider contour formation
+	%as shown in Figure~\ref{fig:IOpair}. %When two vowels become 
+	%adjacent, the first vowel, V$_1$, is deleted. The tone T$_1$,
+	%originally associated with V$_1$, is delinked from 
+	%V$_1$ and reassociates with the following vowel V$_2$.
+	%As a result, V$_2$ bears both tones in their original order,
+	%which surface together as a contour tone. 
+	Figure~\ref{fig:hiatus} visualizes this contour formation from 
+	Figure~\ref{fig:IOpair} in both 
+	graph-theoretic and matrix representations.
+	%From a logical perspective, this transformation is captured 
+	%by three predicates: \textsf{deassoc}, \textsf{reassoc}, and 
+	%$\phi_{\textsf{license}}$. 
+	The \textsf{deassoc} function 
+	identifies the association to be broken between T$_1$ and 
+	the deleted vowel V$_1$ (the crossed-out line). The \textsf{Retain} conjunction 
+	$\alpha(x,y)\land\neg\textsf{deassoc}(x,y)$ removes 
+	this association $(T_1,V_1)$ while preserving all unaffected associations, 
+	that is, $(T_2,V_2)$. The \textsf{reassoc} function then links T$_1$ to 
+	the surviving vowel V$_2$ (the dotted line). As a result, V$_1$ is no longer
+	associated with any element on the opposite tier and therefore fails to 
+	satisfy the licensing condition $\phi_{\textsf{license}}$ in the output. 
+	Consequently, V$_1$ is not licensed and is omitted from 
+	the surface form (shown in gray).
+	\begin{table}[t]
+		\centering	\small 
+		\begin{tabular}{llll}
+			\toprule
+			\textbf{Output} & & \textbf{Input} & \textbf{Interpretation} \\
+			\midrule
+			
+			$\phi_{\textsf{Domain}}$
+			&
+			$:=$
+			&
+			$\textsc{True}$
+			&
+			Preserve all input elements
+			\\[0.5em]
+			
+			
+			\textsc{Copy}
+			&
+			$:=$
+			&
+			1&
+			Define output domain same size as input
+			\\[0.5em]
+			
+			$\phi_{P}(x)$
+			&
+			$:=$
+			&
+			$P(x)$
+			&
+			Preserve elements and their labels
+			\\[0.5em]
+			
+			$\phi_{<}(x,y)$
+			&
+			$:=$
+			&
+			$<(x,y)$
+			&
+			Preserve linear order within tiers
+			\\[0.5em]
+			
+			$\phi_{\alpha}(x,y)$
+			&
+			$:=$
+			&
+			$\begin{aligned}
+				\bigl(\alpha(x,y) \land \neg \textsf{deassoc}(x,y)\bigr)\\ 
+				\lor \bigl(\neg \alpha(x,y) \land \textsf{reassoc}(x,y)\bigr)
+			\end{aligned}$
+			&
+			Update association relations
+			\\[0.5em]
+			$\phi_{\textsf{license}}(x)$
+			&
+			$:=$
+			&
+			$\exists y\, \phi_\alpha(x,y)$
+			&
+			Preserve only associated elements
+			\\
+			
+			\bottomrule
 		\end{tabular}
 		
-	\end{minipage}
-	\hfill
-	\begin{minipage}[t]{0.48\textwidth}
+		\caption{Logical formulas defining an input-output AR transduction.}
+		\label{tab.transduction}
+	\end{table}
+	
+	\begin{figure}
 		\centering
 		
-		\begin{tabular}{c c c}
+		\begin{minipage}[t]{0.48\textwidth}
+			\centering
 			
-			\textbf{UR} & $\Rightarrow$ & \textbf{SR} \\[0.5em]
+			\begin{tabular}{c c c}
+				
+				\textbf{UR} & $\Rightarrow$ & \textbf{SR} \\[0.5em]
+				
+				\begin{tikzpicture}[scale=0.7, every node/.style={inner sep=2pt}]
+					\node (v1) at (0,0) {V$_1$};
+					\node (v2) at (1.4,0) {V$_2$};
+					
+					\node (t1) at (0,1.3) {T$_1$};
+					\node (t2) at (1.4,1.3) {T$_2$};
+					
+					\draw (v1)--(t1);
+					\draw (v2)--(t2);
+				\end{tikzpicture}
+				
+				&&
+				
+				\begin{tikzpicture}[scale=0.7, every node/.style={inner sep=2pt}]
+					\node [fill=gray!20](v1) at (0,0) {V$_1$};
+					\node (v2) at (1.4,0) {V$_2$};
+					
+					\node (t1) at (0,1.3) {T$_1$};
+					\node (t2) at (1.4,1.3) {T$_2$};
+					
+					\draw (v1)--(t1) node[midway] {=};
+					\draw (v2)--(t2);
+					
+					\draw[dotted, thick] (v2)--(t1);
+				\end{tikzpicture}
+				
+			\end{tabular}
 			
-			$
-			\begin{array}{c|cc}
-				& T_1 & T_2\\
-				\hline
-				V_1 & \cellcolor{gray!75}1 & 0 \\
-				V_2 & \cellcolor{gray!15}0 & 1 \\
-			\end{array}
-			$
+		\end{minipage}
+		\hfill
+		\begin{minipage}[t]{0.48\textwidth}
+			\centering
 			
-			&&
+			\begin{tabular}{c c c}
+				
+				\textbf{UR} & $\Rightarrow$ & \textbf{SR} \\[0.5em]
+				
+				$
+				\begin{array}{c|cc}
+					& T_1 & T_2\\
+					\hline
+					V_1 & \cellcolor{gray!75}1 & 0 \\
+					V_2 & \cellcolor{gray!15}0 & 1 \\
+				\end{array}
+				$
+				
+				&&
+				
+				$
+				\begin{array}{c|cc}
+					& T_1 & T_2\\
+					\hline
+					V_1 & \cellcolor{gray!15}0 & 0 \\
+					V_2 & \cellcolor{gray!75}1 & 1 \\
+				\end{array}
+				$
+				
+			\end{tabular}
 			
-			$
-			\begin{array}{c|cc}
-				& T_1 & T_2\\
-				\hline
-				V_1 & \cellcolor{gray!15}0 & 0 \\
-				V_2 & \cellcolor{gray!75}1 & 1 \\
-			\end{array}
-			$
+		\end{minipage}
+		\caption{Contour formation in both graph-theoretic and matrix representations.}
+		\label{fig:hiatus}
+	\end{figure}
+	
+	
+	
+	% Thus, $T_1, T_2$ and $V_2$ remain in the
+	%surface representation. If we define the relevant context as
+	%$\textsf{hiatus}(x,y) := V(x) \land V(y) \land \lhd(x,y)$,
+	%where $x$ is the first vowel ($V_1$) and $y$ is the second vowel ($V_2$),
+	%then the transformation can be expressed as follows:
+	%\[
+	%\begin{array}{ll}
+	%	\textsf{deassoc} = \alpha(t,v) \land \textsf{delete\_V (v)}\\
+	%	
+	%	\textsf{reassoc} = 	\textsf{survive\_V} \land\exists v\,(\alpha(t,v)\land \textsf{delete\_V})
+	%\end{array}
+	%\]
+	%\todo[inline]{not sure if I want this or not - bc we will still 
+		%define delete-V survive vowel etc}
+	
+	The \textsf{deassoc} and \textsf{reassoc} operations are
+	equivalently reflected in the adjacency matrices in
+	Figure~\ref{fig:hiatus}. The value for $(T_1,V_1)$ 
+	changes from $1$ (in the input) to $0$ (in the output),
+	which indicates delinking; the value corresponding
+	to $(T_1,V_2)$  changes from $0$ to $1$,
+	which indicates reassociation.
+	Formally, the set of deassociated pairs
+	and the set of reassociated pairs 
+	can be identified by Equations~\ref{eq:deassoc}
+	and~\ref{eq:reassoc}, respectively.
+	
+	\vspace{-1ex}
+	\noindent\hfill
+	\begin{minipage}{0.475\linewidth}
+		\begin{equation}
+			\label{eq:deassoc}
+			D(UR,SR)=\{(i,j) \mid \mathrm{SR}_{ij}<\mathrm{UR}_{ij}\}\\
+		\end{equation}
+	\end{minipage}\hfill
+	\begin{minipage}{0.475\linewidth}
+		\begin{equation}
+			\label{eq:reassoc}
+			R(UR,SR)=\{(i,j) \mid \mathrm{UR}_{ij}< \mathrm{SR}_{ij}\}  
+		\end{equation}
+	\end{minipage}\hfill
+	\vspace{-1ex}
+	
+	\section{Association Learning}
+	This section follows the ideas of using logical transductions to learn
+	phonological mappings in \citet{yolyan2025logical}, who in turn
+	leveraged the entailment relation in the partially ordered space
+	crucial to \citet{chandleeBufia2019} 
+	to find a smallest environment that triggers a change.
+	
+	Importantly, if an environment (which itself is a structure defined
+	model-theoretically,
+	henceforth we call it `environment') is sufficient to trigger a
+	transformation, then any superfactor containing that environment will
+	likewise undergo the same transformation. Conversely, if an environment 
+	fails to trigger the change, then none of its subfactors can do so.
+	Given a hypothesized environment, all data satisfying this
+	condition are expected to undergo the transformation (positive
+	evidence), while all data not satisfying this condition are expected
+	not to undergo the transformation (negative evidence). If some
+	positive data fails to undergo the transformation, then this hypothesis
+	is too restrictive; if some negative data nevertheless
+	undergo the transformation, then the hypothesis is too general. The
+	goal of learning is therefore to identify the smallest common
+	environment that is contained in all positive evidence, but absent from
+	all negative evidence. 
+	
+	\citet{yolyan2025logical} worked with string-to-string functions, but the same ideas apply to ARs.
+	This is because ARs, like any model-theoretic representation, form a partial order with the containment relation \citep{chandleeBufia2019}.
+	
+	%Equivalently, transformations can be 
+	%viewed as changes to the graph's adjacency matrix, where an entry 
+	%changes from $1\rightarrow0$ or $1\rightarrow0$.
+	
+	% To learn ASGs, we adapt the bottom-up factor inference framework of
+	% \citet{chandleeBufia2019} and the logical learning framework of
+	% \citet{yolyan2025logical} to graph-based autosegmental 
+	% representations \citep{LiHeinzPhO2026}.
+	
+	% \begin{figure}[t!]
+		%   \centering
+		%   \[
+		%     0 \rightarrow 1 \;/\;
+		%     \begin{array}{ccc}
+			%       ? & ? & ? \\
+			%       ? & {\_} & ? \\
+			%       ? & ? & ?
+			%     \end{array}
+		%     \quad \text{or} \quad 
+		%     1 \rightarrow 0 \;/\;
+		%     \begin{array}{ccc}
+			%       ? & ? & ? \\
+			%       ? & {\_} & ? \\
+			%       ? & ? & ?
+			%     \end{array}
+		%   \]
+		%   \caption{What contexts determine whether an association relation is inserted or removed.}
+		%   \label{fig:10rules}
+		% \end{figure}
+	
+	
+	The core learning algorithm is shown in Algorithm~1 (BUFIA-AC).
+	It takes as input a set of input-output pairs, an initial hypothesized environment \(h_0\), and a bound \(k\in\mathbb{N}\) on the size of environments to consider.
+	%Initially, the learner identifies changing association sites by comparing the input and output association matrices.
+	%Learning then proceeds separately for the \textsf{Retain} 
+	%and \textsf{Add} components.
+	To find the environment for \textsf{Retain},
+	BUFIA-AC is called with the most general hypothesis \(h_0=\alpha(x,y)\).
+	To find the environment for \textsf{Add},
+	BUFIA-AC is called with  \(h_0=\neg\alpha(x,y)\).
+	Thus BUFIA-AC is called twice to learn the two environments independently.
+	Those results are combined through disjunction to obtain the formula in Equation~\ref{eq:retainadd} as shown in Algorithm~2.
+	\input{algos.tex}
+	
+	%
+	%\begin{algorithm}[t]
+	%  \SetKwInput{KwData}{Input}
+	%  \SetKwInput{KwResult}{Output}
+	%\small
+	%\LinesNumbered
+	%
+	%\KwData{$D=     \{(I_1,O_1),\dots,(I_n,O_n)\}, h_0, k$
+		%	}
+	%\KwResult{An environment \(c\) or \(\bot\)
+		%	}
+	%
+	%        %	
+	%%	\KwOut{
+		%%		minimal structural environment $c$
+		%%	}
+	%	\(D^+ \gets \{\, I_i \mid I_i \neq O_i \,\}\)\;
+	%        
+	%	\(D^- \gets \{\, I_i \mid I_i = O_i \,\}\)\;
+	%        
+	%	$P \gets \emptyset$\;
+	%%	\tcp*{pruned set}
+	%
+	%	$Q \gets h_0$\;
+	%
+	%	\While{$Q \neq \emptyset$}{
+		%		
+		%		$h \gets Q.\mathrm{Dequeue}()$\;
+		%	
+		%		\If{$\forall I_i \in D^+\; [\textsc{match}(h,I_i,O_i,h_0)]$}{
+			%			
+			%			\If{$\forall I_i \in D^-\; [\neg \textsc{match}(h,I_i,O_i,h_0)]$}{
+				%				
+				%				\Return{$h$}\;
+				%			}
+			%			
+			%			\Else{
+				%                          \ForEach{$s \in \textsc{NextSupFact}(h)$}{
+					%                            \If{$|s| < k \land (\forall p \in P)[s \not\sqsubseteq p]$}{$Q.\mathrm{Enqueue}(s)$}\;
+					%				}
+				%			}
+			%		}
+		%		
+		%		\Else{
+			%		
+			%			$P \gets P \cup \{h\}$\;
+			%		}
+		%	}
+	%	\Return{$\bot$}\;
+	%	
+	%	\caption{BUFIA-AC}
+	%	\label{algo1}
+	%\end{algorithm}
+	%
+	%\begin{algorithm}[t]
+	%  \SetKwInput{KwData}{Input}
+	%  \SetKwInput{KwResult}{Output}
+	%\small
+	%\LinesNumbered
+	%\setcounter{AlgoLine}{0}
+	%
+	%\KwData{$D = \{(I_1,O_1),\dots,(I_n,O_n)\}, k$}
+	%\KwResult{The formula \(\phi_\alpha(x,y)\) or \(\bot\)}
+	%
+	%\(\textsf{Retain} \gets \textsf{BUFIA-AC}(D, \alpha(x,y), k)\)\;
+	%
+	%\(\textsf{Add} \gets \textsf{BUFIA-AC}(D, \neg\alpha(x,y), k)\)
+	%
+	%\If{\(\textsf{Retain} =\bot \;\lor\; \textsf{Add} =\bot\)}{
+		%  \Return{\(\bot\)} }
+	%\Else{
+		%  \Return{\(\textsf{Retain} \lor \textsf{Add}\)}}
+	%\caption{Learning Association Changes}
+	%\label{algo2}
+	%\end{algorithm}
+	%
+	%\begin{algorithm}[t]
+	%  \SetKwInput{KwData}{Input}
+	%  \SetKwInput{KwResult}{Output}
+	%\small
+	%\LinesNumbered
+	%\setcounter{AlgoLine}{0}
+	%
+	%\KwData{$h, I, O, h_0$}
+	%\KwResult{True or False}
+	%\If{\(h_0\)=\(\alpha(x,y)\)}{
+		%  \If{\(h\sqsubseteq I\)}{
+			%    \If{\(\forall (i,j) \in D(I,O)\)\\
+				%      \Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
+				%      \Return{True}}
+			%  }}
+	%  \Else{\If{\(h\not\sqsubseteq I\)}{
+			%      \If{\(\forall (i,j) \in R(I,O)\)\\
+				%        \Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
+				%      \Return{True}}
+			%    }}
+	%\Return{False}
+	%\caption{Match}
+	%\label{algo3}
+	%\end{algorithm}
+	
+	The input data consists of a finite set of input-output AR pairs,
+	which are partitioned into positive and negative evidence, denoted
+	$D^+$ and $D^-$ respectively. It also maintains a pruning set \(P\), and a queue \(Q\) of hypotheses to be checked. The queue is initialized with the structure \(c_0\) as the initial hypothesis.
+	%, namely \(\alpha(x,y)\) for further deassociation learning and \(\neg \alpha(x,y)\) for further reassociation learning.
+	
+	The algorithm conducts a breadth-first search over a partially ordered
+	hypothesis space. At each step, a candidate hypothesis $h$ is first tested 
+	against the positive evidence. For each (\(I,O)\in D^+\) $\textsc{match}(h, I, O,h_0)$ returns true iff the hypothesized environment \(h\) matches the relevant positions in the structure that undergo the transformation.
+	
+	Formally, this is carried about by Algorithm~3 (Match).
+	It uses \(h_0\) to determine whether it is looking for deassociations or reassociations and behaves accordingly.
+	In the former case, it checks whether there are bijections \(r,c\) such that \((r(x),c(y))=D(I,O)\) for each (\(I,O)\in D^+\), and that these bijections witness \(h\) being contained in \(I\).
+	These conditions ensure that the \(x,y\) coordinates are anchored to the positions in the structure that undergo the transformation.
+	The reassociation case proceeds similarly.
+	If \(h\) fails to match all positive examples \(D^+\), then the current hypothesis is incompatible with the observed transformation and thus is added to the pruning set $P$.
+	Because any superfactor of \(h\) will also fail to be contained in the same positive example, such hypotheses need not be refined further.
+	
+	If \(h\) passes the positive test, it is then tested against all
+	negative examples in $D^-$. Then \(h\) is checked to see whether
+	it matches any datum in $D^-$. If not, it is consistent with both the
+	positive and negative evidence. Therefore \(h\) is returned as a valid
+	environment, and BUFIA-AC terminates. Otherwise, \(h\) is too general.
+	In this case, the learner generates the next superfactors of \(h\)
+	using \textsc{NextSupFact} and adds them to the queue, provided that
+	they do not contain a pruned hypothesis and do not exceed the
+	complexity bound \(k\).
+	
+	Since hypotheses are explored breadth-first, the first valid hypothesis
+	returned by the learner is guaranteed to be a minimal
+	environment consistent with all positive and negative evidence.
+	In terms of \textsc{NextSupFact}, there are many ways to generate
+	superfactors and enqueue them for the same hypothesis space. Each
+	operation increases the size of the current structure by exactly one,
+	ensuring that \textsc{NextSupFact} generates only minimal
+	superfactors:
+	\begin{enumerate}[label=(\roman*),noitemsep]
+		\item assigning labels to previously unspecified nodes;
+		\item introducing a new neighboring node, which may either
+		follow or precede an existing node on either tier, at both boundaries;
+		\item add one association line, provided that both
+		nodes are already present in the structure.
+	\end{enumerate}
+	We add these superfactors to the queue in the order shown above.
+	Consequently, Algorithm~1 considers superfactors with new labels before ones with new nodes before those with new association lines.
+	Within those groups, the superfactors must also be ordered.\footnote{This can be done in many ways and can impact the algorithm's output. See \citet{rawski2021structure} for discussion on this point.}
+	
+	Table~\ref{tab:nextsupfact} presents a non-exhaustive set
+	of examples illustrating the generation of
+	\textsc{NextSupFact} from an initial \textsf{deassoc}
+	hypothesis \(\alpha(x,y)\). 
+	As can be seen, each operation provides an equivalent
+	interpretation from the matrix, graph-theoretic, and logical
+	perspectives. New quantifiers are
+	only introduced through successor %\hijeff{local }precedence
+	relations, corresponding to the 
+	addition of neighboring nodes in the graph structure. Learners
+	may further specialize the hypothesis 
+	through conjunction, including adding association relations 
+	(which corresponds to changing matrix cells) or specifying node labels.
+	
+	
+	\section{Case Study: Contour Formation}
+	We use the contour formation to demonstrate both the logical 
+	transduction framework and BUFIA-style learning over ARs.
+	%We assume a model $\mathcal{M}= \{H,L,C,V,\alpha,\lhd\}$.
+	%where \(H\) and \(L\) are tonal elements on the tone tier \(T\),
+	%while \(C\) and \(V\) belong to the segmental tier \(S\).
+	Table~\ref{tab.toy} gives five input-output pairs, and cells 
+	marked with a dash indicate the same output as the input. 
+	The headers provide shorthand notations for each pair. 
+	The contour formation process can be observed in the CVV-LH 
+	and CVV-HL examples, where both tones become associated with 
+	the same vowel. This transformation can equivalently be 
+	represented as a change in the association matrix. Notably, 
+	tonal identities themselves are irrelevant to the deassociation 
+	and reassociation process: both CVV-LH and CVV-HL undergo contour 
+	formation once the two tones are linked to a single vowel. 
+	By contrast, an LH sequence does not necessarily surface as 
+	a contour; whether it does depends on the structural 
+	configuration of the vowels. For example, the LH sequence 
+	surfaces as a contour in CVV-LH, where the vowels are adjacent, 
+	but not in VCV-LH, where they are separated.
+	
+	\input{tab.toy}
+	%\begin{table}[t]
+	%\small
+	%\centering
+	%\[
+	%A_i =
+	%\begin{array}{c|cc}
+	%    & {\color{gray!60} T} & {\color{gray!60} T} \\
+	%\hline
+	%{\color{gray!60} C}
+	%    & {\color{gray!60} 0}
+	%    & {\color{gray!60} 0} \\
+	%V   & 1 & {\color{gray!60} 0} \\
+	%V   & 0 & 1
+	%\end{array}
+	%\quad
+	%\Rightarrow
+	%\quad
+	%A_o =
+	%\begin{array}{c|cc}
+	%    & {\color{gray!60} T} & {\color{gray!60} T} \\
+	%\hline
+	%{\color{gray!60} C}
+	%    & {\color{gray!60} 0}
+	%    & {\color{gray!60} 0} \\
+	%V   & 0 & {\color{gray!60} 0} \\
+	%V   & 1 & 1
+	%\end{array}
+	%\]
+	%\caption{Input-output matrices ($A_i$) and ($A_o$) contour formation. The highlighted entries indicate changes in association relations.}
+	%\label{tab:contour-matrix}
+	%\end{table}
+	%
+	
+	%By comparing \(D^{+}\), the learner can observe both 
+	%deassociation and reassociation occur, thus carries out both 
+	%search for \textsf{Retain} and \text{Add}.
+	
+	We will see how Algorithm~2 (LPA) finds the environment shown in Figure~\ref{fig:ans} for \textsf{Retain}.
+	\begin{wrapfigure}{r}{0.25\linewidth}
+		\centering
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (.6,0) {};
 			
-		\end{tabular}
-		
-	\end{minipage}
-\caption{Contour formation in both graph-theoretic and matrix representations.}
-\label{fig:hiatus}
-\end{figure}
-
-
-
-% Thus, $T_1, T_2$ and $V_2$ remain in the
-%surface representation. If we define the relevant context as
-%$\textsf{hiatus}(x,y) := V(x) \land V(y) \land \lhd(x,y)$,
-%where $x$ is the first vowel ($V_1$) and $y$ is the second vowel ($V_2$),
-%then the transformation can be expressed as follows:
-%\[
-%\begin{array}{ll}
-%	\textsf{deassoc} = \alpha(t,v) \land \textsf{delete\_V (v)}\\
-%	
-%	\textsf{reassoc} = 	\textsf{survive\_V} \land\exists v\,(\alpha(t,v)\land \textsf{delete\_V})
-%\end{array}
-%\]
-%\todo[inline]{not sure if I want this or not - bc we will still 
-%define delete-V survive vowel etc}
-
-The \textsf{deassoc} and \textsf{reassoc} operations are
-equivalently reflected in the adjacency matrices in
-Figure~\ref{fig:hiatus}. The value for $(T_1,V_1)$ 
-changes from $1$ (in the input) to $0$ (in the output),
-which indicates delinking; the value corresponding
-to $(T_1,V_2)$  changes from $0$ to $1$,
-which indicates reassociation.
-Formally, the set of deassociated pairs
-and the set of reassociated pairs 
-can be identified by Equations~\ref{eq:deassoc}
-and~\ref{eq:reassoc}, respectively.
-
-\vspace{-1ex}
-\noindent\hfill
-\begin{minipage}{0.475\linewidth}
-  \begin{equation}
-    \label{eq:deassoc}
-    D(UR,SR)=\{(i,j) \mid \mathrm{SR}_{ij}<\mathrm{UR}_{ij}\}\\
-  \end{equation}
-\end{minipage}\hfill
-\begin{minipage}{0.475\linewidth}
-  \begin{equation}
-    \label{eq:reassoc}
-    R(UR,SR)=\{(i,j) \mid \mathrm{UR}_{ij}< \mathrm{SR}_{ij}\}  
-  \end{equation}
-\end{minipage}\hfill
-\vspace{-1ex}
-
-\section{Association Learning}
-This section follows the ideas of using logical transductions to learn
-phonological mappings in \citet{yolyan2025logical}, who in turn
-leveraged the entailment relation in the partially ordered space
-crucial to \citet{chandleeBufia2019} 
-to find a smallest environment that triggers a change.
-
-Importantly, if an environment (which itself is a structure defined
-model-theoretically,
-henceforth we call it `environment') is sufficient to trigger a
-transformation, then any superfactor containing that environment will
-likewise undergo the same transformation. Conversely, if an environment 
-fails to trigger the change, then none of its subfactors can do so.
-Given a hypothesized environment, all data satisfying this
-condition are expected to undergo the transformation (positive
-evidence), while all data not satisfying this condition are expected
-not to undergo the transformation (negative evidence). If some
-positive data fails to undergo the transformation, then this hypothesis
-is too restrictive; if some negative data nevertheless
-undergo the transformation, then the hypothesis is too general. The
-goal of learning is therefore to identify the smallest common
-environment that is contained in all positive evidence, but absent from
-all negative evidence. 
-
-\citet{yolyan2025logical} worked with string-to-string functions, but the same ideas apply to ARs.
-This is because ARs, like any model-theoretic representation, form a partial order with the containment relation \citep{chandleeBufia2019}.
-
-%Equivalently, transformations can be 
-%viewed as changes to the graph's adjacency matrix, where an entry 
-%changes from $1\rightarrow0$ or $1\rightarrow0$.
-
-% To learn ASGs, we adapt the bottom-up factor inference framework of
-% \citet{chandleeBufia2019} and the logical learning framework of
-% \citet{yolyan2025logical} to graph-based autosegmental 
-% representations \citep{LiHeinzPhO2026}.
-
-% \begin{figure}[t!]
-%   \centering
-%   \[
-%     0 \rightarrow 1 \;/\;
-%     \begin{array}{ccc}
-%       ? & ? & ? \\
-%       ? & {\_} & ? \\
-%       ? & ? & ?
-%     \end{array}
-%     \quad \text{or} \quad 
-%     1 \rightarrow 0 \;/\;
-%     \begin{array}{ccc}
-%       ? & ? & ? \\
-%       ? & {\_} & ? \\
-%       ? & ? & ?
-%     \end{array}
-%   \]
-%   \caption{What contexts determine whether an association relation is inserted or removed.}
-%   \label{fig:10rules}
-% \end{figure}
-
-
-The core learning algorithm is shown in Algorithm~1 (BUFIA-AC).
-It takes as input a set of input-output pairs, an initial hypothesized environment \(H_0\), and a bound \(k\in\mathbb{N}\) on the size of environments to consider.
-%Initially, the learner identifies changing association sites by comparing the input and output association matrices.
-%Learning then proceeds separately for the \textsf{Retain} 
-%and \textsf{Add} components.
-To find the environment for \textsf{Retain},
-BUFIA-AC is called with the most general hypothesis \(h_0=\alpha(x,y)\).
-To find the environment for \textsf{Add},
-BUFIA-AC is called with  \(h_0=\neg\alpha(x,y)\).
-Thus BUFIA-AC is called twice to learn the two environments independently.
-Those results are combined through disjunction to obtain the formula in Equation~\ref{eq:retainadd} as shown in Algorithm~2.
-\input{algos.tex}
-
-%
-%\begin{algorithm}[t]
-%  \SetKwInput{KwData}{Input}
-%  \SetKwInput{KwResult}{Output}
-%\small
-%\LinesNumbered
-%
-%\KwData{$D=     \{(I_1,O_1),\dots,(I_n,O_n)\}, h_0, k$
-%	}
-%\KwResult{An environment \(c\) or \(\bot\)
-%	}
-%
-%        %	
-%%	\KwOut{
-%%		minimal structural environment $c$
-%%	}
-%	\(D^+ \gets \{\, I_i \mid I_i \neq O_i \,\}\)\;
-%        
-%	\(D^- \gets \{\, I_i \mid I_i = O_i \,\}\)\;
-%        
-%	$P \gets \emptyset$\;
-%%	\tcp*{pruned set}
-%
-%	$Q \gets h_0$\;
-%
-%	\While{$Q \neq \emptyset$}{
-%		
-%		$h \gets Q.\mathrm{Dequeue}()$\;
-%	
-%		\If{$\forall I_i \in D^+\; [\textsc{match}(h,I_i,O_i,h_0)]$}{
-%			
-%			\If{$\forall I_i \in D^-\; [\neg \textsc{match}(h,I_i,O_i,h_0)]$}{
-%				
-%				\Return{$h$}\;
-%			}
-%			
-%			\Else{
-%                          \ForEach{$s \in \textsc{NextSupFact}(h)$}{
-%                            \If{$|s| < k \land (\forall p \in P)[s \not\sqsubseteq p]$}{$Q.\mathrm{Enqueue}(s)$}\;
-%				}
-%			}
-%		}
-%		
-%		\Else{
-%		
-%			$P \gets P \cup \{h\}$\;
-%		}
-%	}
-%	\Return{$\bot$}\;
-%	
-%	\caption{BUFIA-AC}
-%	\label{algo1}
-%\end{algorithm}
-%
-%\begin{algorithm}[t]
-%  \SetKwInput{KwData}{Input}
-%  \SetKwInput{KwResult}{Output}
-%\small
-%\LinesNumbered
-%\setcounter{AlgoLine}{0}
-%
-%\KwData{$D = \{(I_1,O_1),\dots,(I_n,O_n)\}, k$}
-%\KwResult{The formula \(\phi_\alpha(x,y)\) or \(\bot\)}
-%
-%\(\textsf{Retain} \gets \textsf{BUFIA-AC}(D, \alpha(x,y), k)\)\;
-%
-%\(\textsf{Add} \gets \textsf{BUFIA-AC}(D, \neg\alpha(x,y), k)\)
-%
-%\If{\(\textsf{Retain} =\bot \;\lor\; \textsf{Add} =\bot\)}{
-%  \Return{\(\bot\)} }
-%\Else{
-%  \Return{\(\textsf{Retain} \lor \textsf{Add}\)}}
-%\caption{Learning Association Changes}
-%\label{algo2}
-%\end{algorithm}
-%
-%\begin{algorithm}[t]
-%  \SetKwInput{KwData}{Input}
-%  \SetKwInput{KwResult}{Output}
-%\small
-%\LinesNumbered
-%\setcounter{AlgoLine}{0}
-%
-%\KwData{$h, I, O, h_0$}
-%\KwResult{True or False}
-%\If{\(h_0\)=\(\alpha(x,y)\)}{
-%  \If{\(h\sqsubseteq I\)}{
-%    \If{\(\forall (i,j) \in D(I,O)\)\\
-%      \Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
-%      \Return{True}}
-%  }}
-%  \Else{\If{\(h\not\sqsubseteq I\)}{
-%      \If{\(\forall (i,j) \in R(I,O)\)\\
-%        \Indp\([\exists r,c: r(x)=i, c(y)=j]\)}{
-%      \Return{True}}
-%    }}
-%\Return{False}
-%\caption{Match}
-%\label{algo3}
-%\end{algorithm}
-
-The input data consists of a finite set of input-output AR pairs,
-which are partitioned into positive and negative evidence, denoted
-$D^+$ and $D^-$ respectively. It also maintains a pruning set \(P\), and a queue, 
-\(Q\) of hypotheses to be checked. The queue is initialized with the structure \(c_0\) as the initial hypothesis.
-%, namely \(\alpha(x,y)\) for further deassociation learning and \(\neg \alpha(x,y)\) for further reassociation learning.
-
-The algorithm conducts a breadth-first search over a partially ordered
-hypothesis space. At each step, a candidate hypothesis $h$ is first tested 
-against the positive evidence. For each (\(I,O)\in D^+\) $\textsc{match}(h, I, O,h_0)$ returns true iff the hypothesized environment \(h\) matches the relevant positions in the structure that undergo the transformation.
-
-Formally, this is carried about by Algorithm~3 (Match).
-It uses \(h_0\) to determine whether it is looking for deassociations or reassociations and behaves accordingly.
-In the former case, it checks whether there are bijections \(r,c\) such that \((r(x),c(y))=D(I,O)\) for each (\(I,O)\in D^+\), and that these bijections witness \(h\) being contained in \(I\).
-These conditions ensure that the \(x,y\) coordinates are anchored to the positions in the structure that undergo the transformation.
-The reassociation case proceeds similarly.
-If \(h\) fails to match all positive examples \(D^+\), then the current hypothesis is incompatible with the observed transformation and thus is added to the pruning set $P$.
-Because any superfactor of \(h\) will also fail to be contained in the same positive example, such hypotheses need not be refined further.
-
-If \(h\) passes the positive test, it is then tested against all
-negative examples in $D^-$. Then \(h\) is checked to see whether
-it matches any datum in $D^-$. If not, it is consistent with both the
-positive and negative evidence. Therefore \(h\) is returned as a valid
-environment, and BUFIA-AC terminates. Otherwise, \(h\) is too general.
-In this case, the learner generates the next superfactors of \(h\)
-using \textsc{NextSupFact} and adds them to the queue, provided that
-they do not contain a pruned hypothesis and do not exceed the
-complexity bound \(k\).
-
-Since hypotheses are explored breadth-first, the first valid hypothesis
-returned by the learner is guaranteed to be a minimal
-environment consistent with all positive and negative evidence.
-In terms of \textsc{NextSupFact}, there are many ways to generate
-superfactors and enqueue them for the same hypothesis space. Each
-operation increases the size of the current structure by exactly one,
-ensuring that \textsc{NextSupFact} generates only minimal
-superfactors:
-\begin{enumerate}[label=(\roman*),noitemsep]
-	\item assigning labels to previously unspecified nodes;
-	\item introducing a new neighboring node, which may either
-	follow or precede an existing node on either tier, at both boundaries;
-	\item add one association line, provided that both
-	nodes are already present in the structure.
-\end{enumerate}
-We add these superfactors to the queue in the order shown above.
-Consequently, Algorithm~1 considers superfactors with new labels before ones with new nodes before those with new association lines.
-Within those groups, the superfactors must also be ordered.\footnote{This can be done in many ways and can impact the algorithm's output. See \citet{rawski2021structure} for discussion on this point.}
-
-Table~\ref{tab:nextsupfact} presents a non-exhaustive set
-of examples illustrating the generation of
-\textsc{NextSupFact} from an initial \textsf{deassoc}
-hypothesis \(\alpha(x,y)\). 
-As can be seen, each operation provides an equivalent
-interpretation from the matrix, graph-theoretic, and logical
-perspectives. New quantifiers are
-only introduced through successor %\hijeff{local }precedence
-relations, corresponding to the 
-addition of neighboring nodes in the graph structure. Learners
-may further specialize the hypothesis 
-through conjunction, including adding association relations 
-(which corresponds to changing matrix cells) or specifying node labels.
-
-
-\section{Case Study: Contour Formation}
-We use the contour formation to demonstrate both the logical 
-transduction framework and BUFIA-style learning over ARs.
-%We assume a model $\mathcal{M}= \{H,L,C,V,\alpha,\lhd\}$.
-%where \(H\) and \(L\) are tonal elements on the tone tier \(T\),
-%while \(C\) and \(V\) belong to the segmental tier \(S\).
-Table~\ref{tab.toy} gives five input-output pairs, and cells 
-marked with a dash indicate the same output as the input. 
-The headers provide shorthand notations for each pair. 
-The contour formation process can be observed in the CVV-LH 
-and CVV-HL examples, where both tones become associated with 
-the same vowel. This transformation can equivalently be 
-represented as a change in the association matrix. Notably, 
-tonal identities themselves are irrelevant to the deassociation 
-and reassociation process: both CVV-LH and CVV-HL undergo contour 
-formation once the two tones are linked to a single vowel. 
-By contrast, an LH sequence does not necessarily surface as 
-a contour; whether it does depends on the structural 
-configuration of the vowels. For example, the LH sequence 
-surfaces as a contour in CVV-LH, where the vowels are adjacent, 
-but not in VCV-LH, where they are separated.
-
-\input{tab.toy}
-%\begin{table}[t]
-%\small
-%\centering
-%\[
-%A_i =
-%\begin{array}{c|cc}
-%    & {\color{gray!60} T} & {\color{gray!60} T} \\
-%\hline
-%{\color{gray!60} C}
-%    & {\color{gray!60} 0}
-%    & {\color{gray!60} 0} \\
-%V   & 1 & {\color{gray!60} 0} \\
-%V   & 0 & 1
-%\end{array}
-%\quad
-%\Rightarrow
-%\quad
-%A_o =
-%\begin{array}{c|cc}
-%    & {\color{gray!60} T} & {\color{gray!60} T} \\
-%\hline
-%{\color{gray!60} C}
-%    & {\color{gray!60} 0}
-%    & {\color{gray!60} 0} \\
-%V   & 0 & {\color{gray!60} 0} \\
-%V   & 1 & 1
-%\end{array}
-%\]
-%\caption{Input-output matrices ($A_i$) and ($A_o$) contour formation. The highlighted entries indicate changes in association relations.}
-%\label{tab:contour-matrix}
-%\end{table}
-%
-
-%By comparing \(D^{+}\), the learner can observe both 
-%deassociation and reassociation occur, thus carries out both 
-%search for \textsf{Retain} and \text{Add}.
-
-We will see how Algorithm~2 (LPA) finds the environment shown in Figure~\ref{fig:ans} for \textsf{Retain}.
-\begin{wrapfigure}{r}{0.25\linewidth}
-  \centering
-  \begin{tikzpicture}[baseline=(current bounding box.center)]
-    \node (x) at (0,0) {};
-    \node (y) at (0,1) {};
-    \node (z) at (.6,0) {};
-    
-    \draw[fill=black] (x) circle (2pt);
-    \draw[fill=black] (y) circle (2pt);
-    \draw[fill=black] (z) circle (2pt);
-
-    \draw (x) -- (y);
-    \draw[dashed] (x) -- (z);
-    
-    \node[left] at (x) {$V(x)$};
-    \node[right] at (y) {$y$};
-    \node[right] at (z) {$V(z)$};
-  \end{tikzpicture}
-  \caption{A distinguishing environment}
-  \label{fig:ans}
-\end{wrapfigure}
-We call Algorithm~2 (LPA) with the data \(D\) in Table~\ref{tab.toy} letting \(k=5\).
-It calls Algorithm~1 (BUFIA-AC) to search for predicate \textsf{Retain} with \(D, k\) and with \(H_0=\alpha(x,y)\).
-
-
-BUFIA-AC first partitions the data into positive evidence
-\(D^{+}\) and negative evidence \(D^{-}\). In this toy example,
-\(D^{+}\) consists of CVV-LH and CVV-HL, and  \(D^{-}\) consists
-of the rest pairs marked with dashes in Table~\ref{tab.toy}.
-
-% \[
-% H_0: \textsf{Retain} = \alpha(x,y)
-% \]
-
-BUFIA-AC tests $h_0$ against both positive and negative evidence.
-Trivially, it matches every structure in \(D^+\), but, when evaluated against \(D^-\), the 
-hypothesis is rejected: in CV-H, CV-L, and VCV-LH, the 
-association lines in the input remain associated in the output, contrary to the expectation of \(h_0\).
-BUFIA-AC therefore concludes that the hypothesis is too general and must be made more specific.
-
-To refine the environment, BUFIA-AC generates increasingly
-minimally specific structures through \textsc{NextSupFac} generation.
-Following the new label/node/association-line ordering introduced above,
-the learner first enqueues the next superfactors obtained
-by labeling previously unspecified nodes.
-%Concretely, it iterates over all symbols available on the 
-%corresponding tier and assigns them to previously unlabeled 
-%nodes.
-These superfactors are shown in Table~\ref{tab.h1abcd}. Superfactors (\ref{tab.h1abcd}a) 
-and (\ref{tab.h1abcd}b) label $y$ as $H$ or $L$ on the tone tier, while
-(\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}d) label $x$ as 
-$V$ or $C$ on the segment tier.
-Superfactors (\ref{tab.h1abcd}e) through (\ref{tab.h1abcd}h) add one node adjacent to an existing one.
-
-\input{tab.supfac.of.H0}
-
-When evaluating the candidate hypotheses in Table~\ref{tab.h1abcd},
-BUFIA-AC determines that superfactors (\ref{tab.h1abcd}a, b, d, g)
-do not match all positive examples. They are thus are pruned. 
-%This indicates that tonal
-%identity does not contribute to the transformation, and
-%\hihan{It seems like you are doing more here, and throughout, than algo 1. In particular, even though none of th 6a-d are consistent with the data, you differentiate between 6ab and 6cd. Algo 1 doesn't. Let's discuss.}
-However, (\ref{tab.h1abcd} c, e, f, h) are consistent with all of \(D^+\), and they are thus checked against \(D-\).
-%BUFIA-AC therefore continues with this hypothesis for \textsf{deassoc}.
-% \[
-% H_1:\quad
-% \textsf{Retain} = \alpha(x,y)\land
-% \underbrace{V(x)}_{\text{current \textsf{deassoc} hypothesis}}
-% \]
-% \hihan{isn't this whole thing \textsf{deassoc}?}
-Each of these superfactors (\ref{tab.h1abcd}c, e, f, g) matches some negative
-example, hence they each fail to distinguish contexts in which the
-transformation applies from those in which it does not.
-BUFIA-AC therefore generates their next superfactors and enqueues them.
-BUFIA-AC then dequeues the next \(h\), which is (\ref{tab.h1abcd}c) because of the ordering imposed by the construction of superfactors: new labels then new nodes then new associations.
-%As tonal identity is  shown not relevant to the
-%transformation, node \(y\) remains underspecified rather than
-%being assigned a tonal label. 
-
-\input{tab.supfac.of.H1}
-Hypothesis (\ref{tab.h1abcd}c) is consistent with \(D^+\) and so it is then checked against \(D^-\).
-It is not consistent  with \(D^-\) and so its superfactors are generated next.
-However, not all of its superfactors are enqueued.
-This is because the superfactors that add a label to the tonal node are pruned away by the factors in the pruned set \(P\).
-The superfactors that are not pruned away are  shown in Table~\ref{tab.h2}, where
-(\ref{tab.h2}a)--(\ref{tab.h2}b) introduce a new node that immediately precedes or follows the existing node on the segment tier, while (\ref{tab.h2}c)--(\ref{tab.h2}d) do so on the tone tier.
-These are added to the end of the queue.
-
-
-The next item on the queue is (\ref{tab.h1abcd}e).
-It too is not consistent with \(D^-\) and its 
-\begin{wrapfigure}{r}{0.25\linewidth}
-  \centering
-  \begin{tikzpicture}[baseline=(current bounding box.center)]
-    \node (x) at (0,0) {};
-    \node (y) at (0,1) {};
-    \node (z) at (.6,0) {};
-    
-    \draw[fill=black] (x) circle (2pt);
-    \draw[fill=black] (y) circle (2pt);
-    \draw[fill=black] (z) circle (2pt);
-
-    \draw (x) -- (y);
-    \draw[dashed] (x) -- (z);
-    
-    \node[left] at (x) {$V(x)$};
-    \node[right] at (y) {$y$};
-    \node[right] at (z) {$z$};
-  \end{tikzpicture}
-  \caption{A superfactor generated twice}
-  \label{fig:sfx2}
-\end{wrapfigure}
-superfactors are generated and added to the queue.
-Note that there is  some inefficiency here
-because the superfactor shown in Figure~\ref{fig:sfx2} is a next superfactor of both (\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}e).
-Nonetheless, this procedure continues until the environment in Figure~\ref{fig:ans} is dequeued.
-This environment is consistent with both \(D^+\) and \(D^-\).
-
-Furthermore, it is the first hypothesis in the queue to be so.
-To see why, consider that the environment in Figure~\ref{fig:ans} is a next superfactor of Figure~\ref{fig:sfx2}. 
-As such, it is a next superfactor of a next superfactor of Hypothesis (\ref{tab.h1abcd}c).
-In other words, the environment in Figure~\ref{fig:ans} is generated and placed on the queue after Figure~\ref{fig:sfx2} is dequeued and examined for consistency.
-
-Call a next superfactor of a next superfactor a `grandchild.'
-The grandchildren of Hypothesis (\ref{tab.h1abcd}c) will all occur on the queue before the grandchildren of Hypotheses (\ref{tab.h1abcd} e, f, g) by the ordering imposed.
-So the only way BUFIA-AC would not return the environment in Figure~\ref{fig:ans} is if a next superfactor (\ref{tab.h1abcd} e, f, g) was consistent with both the positive and negative data. However, none of them are.
-
-The learner therefore converges on the environment in Figure~\ref{fig:ans} as a
-minimal structure that triggers the transformation and is
-consistent with both positive and negative evidence.
-This formula below encodes the same structural condition illustrated
-in Figure~\ref{fig:hiatus}. 
-\begin{equation}
-  \textsf{Retain}
-  =
-  \alpha(x,y)
-  \land
-  V(x)\land \exists z \bigl(x \lhd z \land V(z)\bigr)
-\end{equation}
-
-Importantly, one may observe that triggering deassociation does not
-require T$_2$ to be associated with V$_2$. The learned hypothesis
-therefore predicts that deassociation applies whenever two vowels are
-adjacent, regardless of whether the following vowel is associated with
-a tone. %\hijeff{delete or stay??}\hihan{stay}
-
-Algorithm~2 (LPA) follows a similar process to determine \textsf{Add}.
-The learner eventually converges on the following hypothesis.
-\begin{equation}
-  \textsf{Add} 
-  =
-  \neg \alpha(x,y) \land V(x) \land \exists z \big((z \lhd x) \land V(z) \land \alpha (z,y)\big)
-\end{equation}
-Algorithm~2 (LPA) combines the two operations into the final transformation.
-\begin{align}
-\phi_{\alpha(x,y)} :=\;&
-\alpha(x,y)\land V(x)
-\land \exists z\big((x\lhd z)\land V(z)\big)
-\\\nonumber
-\lor\; &
-\neg\alpha(x,y)\land V(x)
-\land \exists z\big((z\lhd x)\land V(z)\land \alpha(z,y)\big)
-\end{align}
-
-Lastly, the graph transduction presented in Table~\ref{tab.transduction} is now complete. 
-The licensing function \(\phi_{\textsf{license}}\) filters
-out elements that are not associated in the surface representation.
-Such unlicensed elements are not realized phonetically and therefore
-do not appear in the output. In this way, the algorithms presented here have learned how to transform the association relation between the tonal and segmental tiers.
-
-\vspace{-1ex}
-
-\section{Conclusion} 
-
-This work has argued that phonological processes that involve 
-multi-tiered structures such as autosegmental representations
-can be uniformly captured using model theory and logical transductions. 
-The input-output mapping can be modeled by modifying a single relation, 
-$\alpha$, through two operations of \textsf{deassoc} and 
-\textsf{reassoc}.
-
-We also show how BUFIA-style learning can be naturally extended to
-such enriched representations by traversing a partially ordered
-hypothesis space. A crucial component is \textsc{NextSupFactor},
-which generates minimally more complex structures through node
-labeling, the introduction of neighboring nodes, and the addition of
-association relations, to navigate the search space.
-The resulting hypothesis is a structural environment, or
-equivalently a logical formula, that is consistent with both the
-positive and negative evidence.
-
-There are several directions for future research. One would be to characterize the class of AR transformations and prove that the above algorithms learn any transformation in this class with sufficient data. 
-Another important direction for future work is to relax the current
-restriction to single deassociation and reassociation processes.
-Doing so will require learning more complex hypotheses involving
-conjunctions of structural conditions.
-Another limitation of the current analysis is that the transduction relies 
-on quantification to capture across-tier dependencies.
-Future work can determine whether these processes can 
-be simplified in a quantifier-free (QF) process \citep{strother2019diss}.
-This opens up more discussions about how linguistically meaningful 
-representations can facilitate grammar inference.
-
-
-%\bibliographystyle{apalike}
-\bibliography{ref}
-
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw[dashed] (x) -- (z);
+			
+			\node[left] at (x) {$V(x)$};
+			\node[right] at (y) {$y$};
+			\node[right] at (z) {$V(z)$};
+		\end{tikzpicture}
+		\caption{A distinguishing environment}
+		\label{fig:ans}
+	\end{wrapfigure}
+	We call Algorithm~2 (LPA) with the data \(D\) in Table~\ref{tab.toy} letting \(k=5\).
+	It calls Algorithm~1 (BUFIA-AC) to search for predicate \textsf{Retain} with \(D, k\) and with \(H_0=\alpha(x,y)\).
+	
+	
+	BUFIA-AC first partitions the data into positive evidence
+	\(D^{+}\) and negative evidence \(D^{-}\). In this toy example,
+	\(D^{+}\) consists of CVV-LH and CVV-HL, and  \(D^{-}\) consists
+	of the rest pairs marked with dashes in Table~\ref{tab.toy}.
+	
+	% \[
+	% H_0: \textsf{Retain} = \alpha(x,y)
+	% \]
+	
+	BUFIA-AC tests $h_0$ against both positive and negative evidence.
+	Trivially, it matches every structure in \(D^+\), but, when evaluated against \(D^-\), the 
+	hypothesis is rejected: in CV-H, CV-L, and VCV-LH, the 
+	association lines in the input remain associated in the output, contrary to the expectation of \(h_0\).
+	BUFIA-AC therefore concludes that the hypothesis is too general and must be made more specific.
+	
+	To refine the environment, BUFIA-AC generates increasingly
+	minimally specific structures through \textsc{NextSupFac} generation.
+	Following the new label/node/association-line ordering introduced above,
+	the learner first enqueues the next superfactors obtained
+	by labeling previously unspecified nodes.
+	%Concretely, it iterates over all symbols available on the 
+	%corresponding tier and assigns them to previously unlabeled 
+	%nodes.
+	These superfactors are shown in Table~\ref{tab.h1abcd}. Superfactors (\ref{tab.h1abcd}a) 
+	and (\ref{tab.h1abcd}b) label $y$ as $H$ or $L$ on the tone tier, while
+	(\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}d) label $x$ as 
+	$V$ or $C$ on the segment tier.
+	Superfactors (\ref{tab.h1abcd}e) through (\ref{tab.h1abcd}h) add one node adjacent to an existing one.
+	
+	\input{tab.supfac.of.H0}
+	
+	When evaluating the candidate hypotheses in Table~\ref{tab.h1abcd},
+	BUFIA-AC determines that superfactors (\ref{tab.h1abcd}a, \ref{tab.h1abcd}b, \ref{tab.h1abcd}d, \ref{tab.h1abcd}g)
+	do not match all positive examples. They are thus are pruned. 
+	%This indicates that tonal
+	%identity does not contribute to the transformation, and
+	%\hihan{It seems like you are doing more here, and throughout, than algo 1. In particular, even though none of th 6a-d are consistent with the data, you differentiate between 6ab and 6cd. Algo 1 doesn't. Let's discuss.}
+	However, (\ref{tab.h1abcd}c, \ref{tab.h1abcd}e, \ref{tab.h1abcd}f, \ref{tab.h1abcd}h) are consistent with all of \(D^+\), and they are thus checked against \(D-\).
+	%BUFIA-AC therefore continues with this hypothesis for \textsf{deassoc}.
+	% \[
+	% H_1:\quad
+	% \textsf{Retain} = \alpha(x,y)\land
+	% \underbrace{V(x)}_{\text{current \textsf{deassoc} hypothesis}}
+	% \]
+	% \hihan{isn't this whole thing \textsf{deassoc}?}
+	Each of these superfactors (\ref{tab.h1abcd}c, \ref{tab.h1abcd}e, \ref{tab.h1abcd}f, \ref{tab.h1abcd}g) matches some negative
+	example, hence they each fail to distinguish contexts in which the
+	transformation applies from those in which it does not.
+	BUFIA-AC therefore generates their next superfactors and enqueues them.
+	BUFIA-AC then dequeues the next \(h\), which is (\ref{tab.h1abcd}c) because of the ordering imposed by the construction of superfactors: new labels then new nodes then new associations.
+	%As tonal identity is  shown not relevant to the
+	%transformation, node \(y\) remains underspecified rather than
+	%being assigned a tonal label. 
+	
+	\input{tab.supfac.of.H1}
+	Hypothesis (\ref{tab.h1abcd}c) is consistent with \(D^+\) and so it is then checked against \(D^-\).
+	It is not consistent  with \(D^-\) and so its superfactors are generated next.
+	However, not all of its superfactors are enqueued.
+	This is because the superfactors that add a label to the tonal node are pruned away by the factors in the pruned set \(P\).
+	The superfactors that are not pruned away are  shown in Table~\ref{tab.h2}, where
+	(\ref{tab.h2}a)--(\ref{tab.h2}b) introduce a new node that immediately precedes or follows the existing node on the segment tier, while (\ref{tab.h2}c)--(\ref{tab.h2}d) do so on the tone tier.
+	These are added to the end of the queue.
+	
+	
+	The next item on the queue is (\ref{tab.h1abcd}e).
+	It too is not consistent with \(D^-\) and its 
+	\begin{wrapfigure}{r}{0.25\linewidth}
+		\centering
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (.6,0) {};
+			
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw[dashed] (x) -- (z);
+			
+			\node[left] at (x) {$V(x)$};
+			\node[right] at (y) {$y$};
+			\node[right] at (z) {$z$};
+		\end{tikzpicture}
+		\caption{A superfactor generated twice}
+		\label{fig:sfx2}
+	\end{wrapfigure}
+	superfactors are generated and added to the queue.
+	Note that there is  some inefficiency here
+	because the superfactor shown in Figure~\ref{fig:sfx2} is a next superfactor of both (\ref{tab.h1abcd}c) and (\ref{tab.h1abcd}e).
+	Nonetheless, this procedure continues until the environment in Figure~\ref{fig:ans} is dequeued.
+	This environment is consistent with both \(D^+\) and \(D^-\).
+	
+	Furthermore, it is the first hypothesis in the queue to be so.
+	To see why, consider that the environment in Figure~\ref{fig:ans} is a next superfactor of Figure~\ref{fig:sfx2}. 
+	As such, it is a next superfactor of a next superfactor of Hypothesis (\ref{tab.h1abcd}c).
+	In other words, the environment in Figure~\ref{fig:ans} is generated and placed on the queue after Figure~\ref{fig:sfx2} is dequeued and examined for consistency.
+	
+	Call a next superfactor of a next superfactor a `grandchild.'
+	The grandchildren of Hypothesis (\ref{tab.h1abcd}c) will all occur on the queue before the grandchildren of Hypotheses (\ref{tab.h1abcd}e, \ref{tab.h1abcd}f, \ref{tab.h1abcd}g) by the ordering imposed.
+	So the only way BUFIA-AC would not return the environment in Figure~\ref{fig:ans} is if a next superfactor (\ref{tab.h1abcd}e, \ref{tab.h1abcd}f, \ref{tab.h1abcd}g) was consistent with both the positive and negative data. However, none of them are.
+	
+	The learner therefore converges on the environment in Figure~\ref{fig:ans} as a
+	minimal structure that triggers the transformation and is
+	consistent with both positive and negative evidence.
+	This formula below encodes the same structural condition illustrated
+	in Figure~\ref{fig:hiatus}. 
+	\begin{equation}
+		\textsf{Retain}
+		=
+		\alpha(x,y)
+		\land
+		V(x)\land \exists z \bigl(x \lhd z \land V(z)\bigr)
+	\end{equation}
+	
+	Importantly, one may observe that triggering deassociation does not
+	require T$_2$ to be associated with V$_2$. The learned hypothesis
+	therefore predicts that deassociation applies whenever two vowels are
+	adjacent, regardless of whether the following vowel is associated with
+	a tone. %\hijeff{delete or stay??}\hihan{stay}
+	
+	Algorithm~2 (LPA) follows a similar process to determine \textsf{Add}.
+	The learner eventually converges on the following hypothesis.
+	\begin{equation}
+		\textsf{Add} 
+		=
+		\neg \alpha(x,y) \land V(x) \land \exists z \big((z \lhd x) \land V(z) \land \alpha (z,y)\big)
+	\end{equation}
+	Algorithm~2 (LPA) combines the two operations into the final transformation.
+	\begin{align}
+		\phi_{\alpha(x,y)} :=\;&
+		\alpha(x,y)\land V(x)
+		\land \exists z\big((x\lhd z)\land V(z)\big)
+		\\\nonumber
+		\lor\; &
+		\neg\alpha(x,y)\land V(x)
+		\land \exists z\big((z\lhd x)\land V(z)\land \alpha(z,y)\big)
+	\end{align}
+	
+	Lastly, the graph transduction presented in Table~\ref{tab.transduction} is now complete. 
+	The licensing function \(\phi_{\textsf{license}}\) filters
+	out elements that are not associated in the surface representation.
+	Such unlicensed elements are not realized phonetically and therefore
+	do not appear in the output. In this way, the algorithms presented here have learned how to transform the association relation between the tonal and segmental tiers.
+	
+	\vspace{-1ex}
+	
+	\section{Conclusion} 
+	
+	This work has argued that phonological processes that involve 
+	multi-tiered structures such as autosegmental representations
+	can be uniformly captured using model theory and logical transductions. 
+	The input-output mapping can be modeled by modifying a single relation, 
+	$\alpha$, through two operations of \textsf{deassoc} and 
+	\textsf{reassoc}.
+	
+	We also show how BUFIA-style learning can be naturally extended to
+	such enriched representations by traversing a partially ordered
+	hypothesis space. A crucial component is \textsc{NextSupFactor},
+	which generates minimally more complex structures through node
+	labeling, the introduction of neighboring nodes, and the addition of
+	association relations, to navigate the search space.
+	The resulting hypothesis is a structural environment, or
+	equivalently a logical formula, that is consistent with both the
+	positive and negative evidence.
+	
+	There are several directions for future research. One would be to characterize the class of AR transformations and prove that the above algorithms learn any transformation in this class with sufficient data. 
+	Another important direction for future work is to relax the current
+	restriction to single deassociation and reassociation processes.
+	Doing so will require learning more complex hypotheses involving
+	conjunctions of structural conditions.
+	Another limitation of the current analysis is that the transduction relies 
+	on quantification to capture across-tier dependencies.
+	Future work can determine whether these processes can 
+	be simplified in a quantifier-free (QF) process \citep{strother2019diss}.
+	This opens up more discussions about how linguistically meaningful 
+	representations can facilitate grammar inference.
+	
+	
+	%\bibliographystyle{apalike}
+	\bibliography{ref}
+	
 \end{document}
 
 
@@ -1426,23 +1425,23 @@ updated hypotheses:
 \[
 H_{2a}:
 \quad
-  \textsf{Retain} = \alpha(x,y) \land V(x) \land \exists z (x \lhd z)\hijeff{should we change $\lhd$ to <}
+\textsf{Retain} = \alpha(x,y) \land V(x) \land \exists z (x \lhd z)\hijeff{should we change $\lhd$ to <}
 \]
 
 \[
 H_{2d}:
 \quad
-  \textsf{Retain} 
+\textsf{Retain} 
 =
 \alpha(x,y) \land V(x) \land \exists z (y \lhd z)
 \]
 
 \hijeff{on a second thought, maybe we should add successor, otherwise we can't express the new node is immediately adjacent formally? Do you have any ideas that
-we can just stick to < relation?}
+	we can just stick to < relation?}
 
 However, both remaining candidates are still present in
 some negative examples and therefore remain too general and need
- further refinement. At this stage, the learner
+further refinement. At this stage, the learner
 could introduce additional nodes or add associations
 between \(z\) and a node on the opposite tier, but either
 operation would increase the size of the hypothesis.
@@ -1496,27 +1495,27 @@ label \(z\) as \(H\) or \(L\) on the tonal tier.
 			\node[right] at (z) {$C(z)$};
 		\end{tikzpicture}
 		&
-	\begin{tikzpicture}[baseline=(current bounding box.center)]
-		\node (x) at (0,0) {};
-		\node (y) at (0,1) {};
-		\node (z) at (0.6,1) {};
-		
-		\draw[fill=black] (x) circle (2pt);
-		\draw[fill=black] (y) circle (2pt);
-		\draw[fill=black] (z) circle (2pt);
-		
-		\draw (x) -- (y);
-		\draw[dashed] (y) -- (z);
-		
-	\node[right] at (x) {$V(x)$};
+		\begin{tikzpicture}[baseline=(current bounding box.center)]
+			\node (x) at (0,0) {};
+			\node (y) at (0,1) {};
+			\node (z) at (0.6,1) {};
+			
+			\draw[fill=black] (x) circle (2pt);
+			\draw[fill=black] (y) circle (2pt);
+			\draw[fill=black] (z) circle (2pt);
+			
+			\draw (x) -- (y);
+			\draw[dashed] (y) -- (z);
+			
+			\node[right] at (x) {$V(x)$};
 			\node[left] at (y) {$y$};
 			\node[right] at (z) {$H(z)$};
-	\end{tikzpicture}
+		\end{tikzpicture}
 		&
 		\begin{tikzpicture}[baseline=(current bounding box.center)]
 			\node (x) at (0,0) {};
 			\node (y) at (0,1) {};
-		\node (z) at (0.6,1) {};
+			\node (z) at (0.6,1) {};
 			
 			\draw[fill=black] (x) circle (2pt);
 			\draw[fill=black] (y) circle (2pt);
@@ -1574,7 +1573,7 @@ a tone. %\hijeff{delete or stay??}\hihan{stay}
 
 The \textsf{reassoc} inference follows the same process but with a different starting hypothesis
 \[
-  \textsf{Add} 
+\textsf{Add} 
 =
 \neg \alpha(x,y)
 \]
@@ -1584,7 +1583,7 @@ reassociation site, in contrast to the deassociation case.
 %refer interested readers to the appendix for details MAYBE OR MAYBE NOT. 
 The learner eventually converges on the following hypothesis:
 \[
-  \textsf{Add} 
+\textsf{Add} 
 =
 \neg \alpha(x,y) \land \underbrace{V(x) \land \exists z \big((z \lhd x) \land V(z) \land \alpha (z,y)\big)}_\textsf{valid reassoc}
 \]
@@ -1593,13 +1592,13 @@ We combine the two operations into the final transformation.
 
 \[
 \begin{aligned}
-\phi_{\alpha(x,y)} :=\;&
-\alpha(x,y)\land V(x)
-\land \exists z\big((x\lhd z)\land V(z)\big)
-\\
-\lor\; &
-\neg\alpha(x,y)\land V(x)
-\land \exists z\big((z\lhd x)\land V(z)\land \alpha(z,y)\big)
+	\phi_{\alpha(x,y)} :=\;&
+	\alpha(x,y)\land V(x)
+	\land \exists z\big((x\lhd z)\land V(z)\big)
+	\\
+	\lor\; &
+	\neg\alpha(x,y)\land V(x)
+	\land \exists z\big((z\lhd x)\land V(z)\land \alpha(z,y)\big)
 \end{aligned}
 \]
 
